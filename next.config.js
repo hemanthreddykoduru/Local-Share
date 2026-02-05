@@ -1,0 +1,32 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
+  reactStrictMode: true,
+  compress: true,
+  poweredByHeader: false,
+  images: {
+    unoptimized: true,
+  },
+  headers: async () => [
+    {
+      source: '/:path*',
+      headers: [
+        {
+          key: 'X-Content-Type-Options',
+          value: 'nosniff',
+        },
+        {
+          key: 'X-Frame-Options',
+          value: 'DENY',
+        },
+        {
+          key: 'X-XSS-Protection',
+          value: '1; mode=block',
+        },
+      ],
+    },
+  ],
+}
+
+module.exports = nextConfig

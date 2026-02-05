@@ -1,0 +1,29 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to validate text length
+    function isValidText(text) {
+      return text is string && 
+             text.size() > 0 && 
+             text.size() <= 1000;
+    }
+    
+    // Helper function to validate geo-cell format
+    function isValidGeoCell(geoCell) {
+      return geoCell is string && 
+             geoCell.matches('^-?[0-9]+_-?[0-9]+$');
+    }
+    
+    // Snippets collection rules
+    match /snippets/{snippetId} {
+      // TEMPORARY: Allow all reads and creates to debug permission issues
+      allow read, create: if true;
+      
+      // No updates or deletes from client
+      allow update: if false;
+      allow delete: if true;
+    }
+  }
+}
