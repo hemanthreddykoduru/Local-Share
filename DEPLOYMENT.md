@@ -68,7 +68,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=1:123456789:web:abc123
 ### Step 6: Install Dependencies
 
 ```bash
-cd /Users/hemanthmacbook/Desktop/CLIPBOARD
+cd /path/to/your/project
 npm install
 ```
 
