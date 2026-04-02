@@ -11,10 +11,72 @@ interface LocationPermissionProps {
 export default function LocationPermission({ locationState, onJoinPrivateRoom }: LocationPermissionProps) {
     const { isLoading, error, permissionGranted } = locationState;
     const [roomInput, setRoomInput] = useState('');
+    const [showJoinInput, setShowJoinInput] = useState(false);
+
+    const handleCreateRoom = () => {
+        if (!onJoinPrivateRoom) return;
+        const newCode = Math.floor(100000 + Math.random() * 900000).toString();
+        onJoinPrivateRoom(newCode);
+    };
+
+    const handleJoinRoom = () => {
+        if (!onJoinPrivateRoom || roomInput.length < 4) return;
+        onJoinPrivateRoom(roomInput.trim().toUpperCase());
+    };
 
     if (permissionGranted) {
-        return null; // Don't show if permission granted
+        return null;
     }
+
+    const RoomOptions = () => (
+        <div className="mt-8 border-t border-gray-100 pt-6">
+            <p className="text-sm font-semibold text-gray-700 mb-4">No GPS? Use a Private Room instead:</p>
+            <div className="flex flex-col gap-3">
+                {/* Create Room */}
+                <button
+                    onClick={handleCreateRoom}
+                    className="w-full flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+                >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    Create a New Room
+                </button>
+
+                {/* Join Room toggle */}
+                {!showJoinInput ? (
+                    <button
+                        onClick={() => setShowJoinInput(true)}
+                        className="w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-lg transition-colors"
+                    >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                        </svg>
+                        Join an Existing Room
+                    </button>
+                ) : (
+                    <div className="flex gap-2">
+                        <input
+                            type="text"
+                            placeholder="Enter 6-Digit Code"
+                            maxLength={6}
+                            value={roomInput}
+                            onChange={(e) => setRoomInput(e.target.value.toUpperCase())}
+                            autoFocus
+                            className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:outline-none placeholder-gray-400 text-center font-bold tracking-widest"
+                        />
+                        <button
+                            onClick={handleJoinRoom}
+                            disabled={roomInput.length < 4}
+                            className="bg-gray-800 hover:bg-gray-900 text-white font-medium px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            Join
+                        </button>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 
     return (
         <div className="w-full py-12 flex items-center justify-center">
@@ -54,8 +116,7 @@ export default function LocationPermission({ locationState, onJoinPrivateRoom }:
                                 <li>• Privacy-safe geo-cell system</li>
                             </ul>
                         </div>
-
-                        <div className="text-left text-xs text-gray-500 mb-6">
+                        <div className="text-left text-xs text-gray-500 mt-4 mb-2">
                             <p className="font-semibold mb-1">How to enable in Chrome:</p>
                             <ol className="list-decimal ml-4 space-y-1">
                                 <li>Click the 🔒 icon in the address bar</li>
@@ -65,33 +126,11 @@ export default function LocationPermission({ locationState, onJoinPrivateRoom }:
                         </div>
                         <button
                             onClick={() => window.location.reload()}
-                            className="mt-6 w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                            className="mt-4 w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
                         >
                             Try Again
                         </button>
-                        
-                        {onJoinPrivateRoom && (
-                            <div className="mt-8 border-t border-gray-100 pt-6">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-3">Or join a private room</h3>
-                                <div className="flex gap-2">
-                                    <input 
-                                        type="text" 
-                                        placeholder="6-Digit Code" 
-                                        maxLength={6}
-                                        value={roomInput}
-                                        onChange={(e) => setRoomInput(e.target.value.toUpperCase())}
-                                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:outline-none placeholder-gray-400"
-                                    />
-                                    <button 
-                                        onClick={() => onJoinPrivateRoom(roomInput)}
-                                        disabled={roomInput.length < 4}
-                                        className="bg-gray-800 hover:bg-gray-900 text-white font-medium px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                                    >
-                                        Join
-                                    </button>
-                                </div>
-                            </div>
-                        )}
+                        {onJoinPrivateRoom && <RoomOptions />}
                     </>
                 ) : (
                     <>
@@ -116,29 +155,7 @@ export default function LocationPermission({ locationState, onJoinPrivateRoom }:
                                 <li>• Your exact location is never stored</li>
                             </ul>
                         </div>
-                        
-                        {onJoinPrivateRoom && (
-                            <div className="mt-8 border-t border-gray-100 pt-6">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-3">Or join a private room directly</h3>
-                                <div className="flex gap-2">
-                                    <input 
-                                        type="text" 
-                                        placeholder="6-Digit Code" 
-                                        maxLength={6}
-                                        value={roomInput}
-                                        onChange={(e) => setRoomInput(e.target.value.toUpperCase())}
-                                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:outline-none placeholder-gray-400"
-                                    />
-                                    <button 
-                                        onClick={() => onJoinPrivateRoom(roomInput)}
-                                        disabled={roomInput.length < 4}
-                                        className="bg-gray-800 hover:bg-gray-900 text-white font-medium px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                                    >
-                                        Join
-                                    </button>
-                                </div>
-                            </div>
-                        )}
+                        {onJoinPrivateRoom && <RoomOptions />}
                     </>
                 )}
             </div>
