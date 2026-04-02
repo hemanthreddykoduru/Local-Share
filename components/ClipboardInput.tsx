@@ -84,7 +84,7 @@ export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="snippet-text" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -94,25 +94,25 @@ export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess
                         id="snippet-text"
                         value={text}
                         onChange={(e) => setText(e.target.value)}
-                        placeholder="Type your message here... (visible to people within ~200m)"
-                        className={`w-full px-4 py-3 border rounded-lg resize-none focus:outline-none focus:ring-2 transition-all ${text.length > MAX_LENGTH
+                        placeholder="Type your message here..."
+                        className={`w-full px-4 py-3 border rounded-xl resize-none focus:outline-none focus:ring-2 transition-all text-base ${text.length > MAX_LENGTH
                             ? 'border-red-300 focus:ring-red-500'
-                            : 'border-gray-300 focus:ring-primary-500'
+                            : 'border-gray-200 focus:ring-primary-500 focus:border-primary-400'
                             }`}
-                        rows={4}
+                        rows={3}
                         maxLength={MAX_LENGTH + 100}
                         disabled={isSubmitting}
                     />
-                    <div className="flex items-center justify-between mt-2">
-                        <span className={`text-sm ${remainingChars < 0 ? 'text-red-600 font-semibold' : remainingChars < 100 ? 'text-orange-600' : 'text-gray-500'}`}>
-                            {remainingChars < 0 ? `${Math.abs(remainingChars)} over limit` : `${remainingChars} characters left`}
+                    <div className="flex items-center justify-between mt-2 flex-wrap gap-2">
+                        <span className={`text-xs ${remainingChars < 0 ? 'text-red-600 font-semibold' : remainingChars < 100 ? 'text-orange-600' : 'text-gray-400'}`}>
+                            {remainingChars < 0 ? `${Math.abs(remainingChars)} over limit` : `${remainingChars} left`}
                         </span>
                         <div className="flex items-center gap-2">
-                            <span className="text-xs text-gray-500 font-medium">Expires in:</span>
+                            <span className="text-xs text-gray-400 font-medium">Expires in:</span>
                             <select 
                                 value={expiryMode}
                                 onChange={(e) => setExpiryMode(e.target.value as '30m' | '1h' | 'custom')}
-                                className="text-xs border-gray-300 rounded bg-gray-50 focus:bg-white focus:ring-primary-500 focus:border-primary-500 p-1 transition-colors cursor-pointer"
+                                className="text-xs border border-gray-200 rounded-lg bg-gray-50 focus:bg-white focus:ring-2 focus:ring-primary-500 focus:border-primary-400 px-2 py-1.5 transition-colors cursor-pointer"
                                 disabled={isSubmitting}
                             >
                                 <option value="30m">30 mins</option>
@@ -120,18 +120,18 @@ export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess
                                 <option value="custom">Custom</option>
                             </select>
                             {expiryMode === 'custom' && (
-                                <div className="flex items-center gap-1 animate-fade-in">
+                                <div className="flex items-center gap-1">
                                     <input 
                                         type="number"
                                         min="1"
                                         max="1440"
                                         value={customMinutes}
                                         onChange={(e) => setCustomMinutes(e.target.value)}
-                                        className="text-xs border-gray-300 rounded w-16 p-1 focus:ring-primary-500 focus:border-primary-500 bg-gray-50 focus:bg-white transition-colors"
+                                        className="text-xs border border-gray-200 rounded-lg w-16 px-2 py-1.5 focus:ring-2 focus:ring-primary-500 focus:border-primary-400 bg-gray-50 focus:bg-white transition-colors"
                                         disabled={isSubmitting}
                                         placeholder="Mins"
                                     />
-                                    <span className="text-xs text-gray-500">m</span>
+                                    <span className="text-xs text-gray-400">m</span>
                                 </div>
                             )}
                         </div>
@@ -147,9 +147,9 @@ export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess
                 <button
                     type="submit"
                     disabled={!isValid || isSubmitting}
-                    className={`w-full py-3 px-6 rounded-lg font-semibold transition-all ${isValid && !isSubmitting
-                        ? 'bg-primary-600 hover:bg-primary-700 text-white shadow-md hover:shadow-lg'
-                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    className={`w-full py-3.5 px-6 rounded-xl font-semibold text-base transition-all active:scale-[0.98] ${isValid && !isSubmitting
+                        ? 'bg-primary-600 hover:bg-primary-700 text-white shadow-sm'
+                        : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                         }`}
                 >
                     {isSubmitting ? (
