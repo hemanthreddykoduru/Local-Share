@@ -1,15 +1,23 @@
-import Link from 'next/link';
 import { Metadata } from 'next';
+import AdUnit from '@/components/AdUnit';
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
+import AuthorBio from '@/components/AuthorBio';
+import RelatedPosts from '@/components/RelatedPosts';
 
 export const metadata: Metadata = {
     title: 'Top 5 Use Cases for Local Sharing - GPS Clipboard',
     description: 'Discover the best ways to use GPS Clipboard for events, classrooms, and community organization.',
 };
 
-export default function TopUseCases() {
+export default function TopUsageIdeas() {
     return (
-        <main className="min-h-screen bg-white">
-            <article className="max-w-3xl mx-auto px-4 py-16">
+        <main className="min-h-screen bg-white flex flex-col">
+            <SiteHeader />
+            <article className="max-w-3xl mx-auto px-4 py-16 flex-grow">
+                <div className="mb-8">
+                    <AdUnit slotId="BLOG_POST_TOP_AD" format="auto" />
+                </div>
                 <header className="mb-12 text-center">
                     <div className="text-sm font-semibold text-green-600 uppercase tracking-widest mb-4">Guides & Ideas</div>
                     <h1 className="text-4xl font-extrabold text-gray-900 mb-6">Top 5 Use Cases for GPS Clipboard</h1>
@@ -70,21 +78,22 @@ export default function TopUseCases() {
                 <div className="mt-16 pt-8 border-t border-gray-200">
                     <h3 className="text-lg font-bold text-gray-900 mb-4">Read Next</h3>
                     <div className="grid md:grid-cols-2 gap-6">
-                        <Link href="/blog/secure-local-sharing" className="block p-6 border rounded-lg hover:bg-gray-50 transition">
+                        <a href="/blog/secure-local-sharing" className="block p-6 border rounded-lg hover:bg-gray-50 transition">
                             <div className="text-primary-600 text-sm font-semibold mb-2">Privacy</div>
                             <div className="font-bold text-gray-900">Why Anonymous Local Sharing is Safer</div>
-                        </Link>
-                        <Link href="/blog/how-geo-cells-work" className="block p-6 border rounded-lg hover:bg-gray-50 transition">
+                        </a>
+                        <a href="/blog/how-geo-cells-work" className="block p-6 border rounded-lg hover:bg-gray-50 transition">
                             <div className="text-purple-600 text-sm font-semibold mb-2">Technology</div>
                             <div className="font-bold text-gray-900">Under the Hood: How Geo-Cells Work</div>
-                        </Link>
+                        </a>
                     </div>
                 </div>
 
-                <div className="mt-8 text-center">
-                    <Link href="/blog" className="text-primary-600 hover:underline">← Back to Blog</Link>
-                </div>
+                <AuthorBio />
+                <RelatedPosts currentPath="/blog/top-usage-ideas" />
             </article>
+
+            <SiteFooter />
         </main>
     );
 }

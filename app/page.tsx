@@ -10,7 +10,7 @@ import AdsterraNative from '@/components/AdsterraNative';
 import AdBlockDetector from '@/components/AdBlockDetector';
 
 import ProfileModal from '@/components/ProfileModal';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useProfile } from '@/hooks/useProfile';
 
 export default function Home() {
@@ -18,6 +18,11 @@ export default function Home() {
     const [refreshKey, setRefreshKey] = useState(0);
     const [showProfileModal, setShowProfileModal] = useState(false);
     const { profile, updateName } = useProfile();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleSubmitSuccess = () => {
         // Trigger refresh of feed
@@ -40,7 +45,7 @@ export default function Home() {
 
                 <ClipboardInput
                     geoCell={locationState.geoCell!}
-                    alias={profile.name}
+                    alias={mounted ? profile.name : ''}
                     userId={profile.id}
                     onSubmitSuccess={handleSubmitSuccess}
                 />
@@ -54,10 +59,10 @@ export default function Home() {
     return (
         <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
             {/* AdBlock Detector */}
-            <AdBlockDetector />
+            {/* <AdBlockDetector /> */}
 
             {/* Header */}
-            <header className="bg-white shadow-sm border-b border-gray-200">
+            <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
                 <div className="max-w-4xl mx-auto px-4 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -68,10 +73,15 @@ export default function Home() {
                                 </svg>
                             </div>
                             <div>
-                                <h1 className="text-xl font-bold text-gray-800">Local Share</h1>
+                                <h1 className="text-xl font-bold text-gray-800"><a href="/">Local Share</a></h1>
                                 <p className="text-xs text-gray-500">Local Share & Community Text Drop</p>
                             </div>
                         </div>
+                        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+                            <a href="/blog" className="hover:text-primary-600 transition-colors">Blog</a>
+                            <a href="/faq" className="hover:text-primary-600 transition-colors">FAQ</a>
+                            <a href="/about" className="hover:text-primary-600 transition-colors">About</a>
+                        </nav>
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-3">
                                 <button
@@ -82,7 +92,7 @@ export default function Home() {
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                     </svg>
-                                    <span className="hidden sm:inline">{profile.name}</span>
+                                    <span className="hidden sm:inline">{mounted ? profile.name : ''}</span>
                                 </button>
                                 <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full ${locationState.permissionGranted ? 'bg-green-100' : 'bg-gray-100'}`}>
                                     <div className={`w-2 h-2 rounded-full ${locationState.permissionGranted ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}></div>
@@ -98,58 +108,56 @@ export default function Home() {
 
             {/* Main Content & Sidebar Layout */}
             {/* Main Content & Sidebar Layout */}
-            {/* Adsterra Leaderboard (728x90) - Visible on Desktop */}
-            <div className="hidden md:block max-w-7xl mx-auto px-4 mt-16 text-center">
-                <AdsterraSlot confKey="902fd7bb53e5c530ed5c74f8aac32749" height={90} width={728} />
+            <div className="max-w-7xl mx-auto px-4 mt-8 text-center">
             </div>
 
             <div className="max-w-full mx-auto px-2 py-0">
-                <div className="flex flex-col lg:flex-row gap-2 justify-center">
-                    {/* Left Sidebar */}
+                <div className="flex flex-col lg:flex-row gap-4 justify-center">
+                    {/* Left Sidebar - Content for AdSense Value */}
                     <aside className="w-full lg:w-[300px] flex-shrink-0 lg:order-first order-last space-y-4">
                         {/* Sticky Container */}
-                        <div className="lg:sticky lg:top-8 space-y-4">
-                            {/* Adsterra Skyscraper 160x600 (Requested for "empty left side") */}
-                            <AdsterraSlot confKey="522e88f625d0d1bd94d2fe32ffd25ae0" height={600} width={160} className="mx-auto" />
+                        <div className="lg:sticky lg:top-24 space-y-4">
 
-                            {/* Ad Unit - Clean (no container) - Keep AdSense for when approved */}
-                            <AdUnit slotId="SIDEBAR_AD_SLOT" />
+                            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                                <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                    <svg className="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    How it works
+                                </h3>
+                                <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                                    Local Share connects you with people in your immediate physical vicinity (approx. 200m). No accounts, no manual room codes.
+                                </p>
+                                <ul className="text-sm text-gray-600 space-y-2">
+                                    <li className="flex items-start gap-2">
+                                        <span className="text-green-500 mt-0.5">✓</span>
+                                        <span>We calculate a private geo-cell based on your GPS signal.</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <span className="text-green-500 mt-0.5">✓</span>
+                                        <span>Messages are shared only with others in your exact same cell.</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <span className="text-green-500 mt-0.5">✓</span>
+                                        <span>All data auto-deletes permanently after 1 hour for privacy.</span>
+                                    </li>
+                                </ul>
+                                <div className="mt-4 pt-4 border-t border-gray-100">
+                                    <a href="/blog/privacy-first-design" className="text-xs font-medium text-primary-600 hover:text-primary-800 flex items-center gap-1 group">
+                                        Read our Privacy Architecture
+                                        <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </aside>
 
                     {/* Main Interaction Area (Center) */}
                     <div className="flex-1 min-w-0 max-w-4xl">
                         {renderContent()}
-
-                        {/* Bottom Ads Section (Moved Inside Middle Column to remove gap) */}
-                        <div className="flex flex-col items-center justify-center">
-                            <p className="text-xs text-gray-400 mb-1 uppercase tracking-wide">Advertisement</p>
-
-                            {/* Desktop */}
-                            <div className="hidden md:block">
-                                <AdsterraSlot confKey="902fd7bb53e5c530ed5c74f8aac32749" height={90} width={728} />
-                            </div>
-
-                            {/* Tablet */}
-                            <div className="hidden sm:block md:hidden">
-                                <AdsterraSlot confKey="d8b53417bd3c184afba226eaa0cb71d5" height={60} width={468} />
-                            </div>
-
-                            {/* Mobile */}
-                            <div className="block sm:hidden">
-                                <AdsterraSlot confKey="15b635755a72dde4108826eabafe6653" height={50} width={320} />
-                            </div>
-                        </div>
                     </div>
 
                     {/* Right Sidebar */}
                     <aside className="hidden xl:block w-[160px] flex-shrink-0 space-y-4">
-                        <div className="lg:sticky lg:top-8 space-y-2">
-                            {/* Adsterra Skyscraper 160x600 (Top) */}
-                            <AdsterraSlot confKey="522e88f625d0d1bd94d2fe32ffd25ae0" height={600} width={160} />
-
-                            {/* Adsterra Skyscraper 160x600 (Bottom - Request) */}
-                            <AdsterraSlot confKey="522e88f625d0d1bd94d2fe32ffd25ae0" height={600} width={160} />
+                        <div className="lg:sticky lg:top-24 space-y-2">
                         </div>
                     </aside>
                 </div>

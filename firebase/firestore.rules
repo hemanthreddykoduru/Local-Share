@@ -21,8 +21,8 @@ service cloud.firestore {
       // TEMPORARY: Allow all reads and creates to debug permission issues
       allow read, create: if true;
       
-      // No updates or deletes from client
-      allow update: if false;
+      // Allow client to update the snippet text
+      allow update: if isValidText(request.resource.data.text);
       allow delete: if true;
     }
   }

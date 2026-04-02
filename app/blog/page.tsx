@@ -1,5 +1,8 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
+import AdUnit from '@/components/AdUnit';
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 
 export const metadata: Metadata = {
     title: 'The Local Share Blog - GPS Clipboard',
@@ -8,7 +11,8 @@ export const metadata: Metadata = {
 
 export default function BlogIndex() {
     return (
-        <main className="min-h-screen bg-white">
+        <main className="min-h-screen bg-white flex flex-col">
+            <SiteHeader />
             <header className="bg-primary-50 border-b border-primary-100 py-16 px-4">
                 <div className="max-w-4xl mx-auto text-center">
                     <h1 className="text-4xl font-extrabold text-gray-900 mb-4">The Local Share Blog</h1>
@@ -17,6 +21,9 @@ export default function BlogIndex() {
             </header>
 
             <div className="max-w-4xl mx-auto px-4 py-12">
+                <div className="mb-8">
+                    <AdUnit slotId="BLOG_TOP_AD" format="auto" />
+                </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {/* Article 1 */}
                     <article className="flex flex-col bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
@@ -180,9 +187,7 @@ export default function BlogIndex() {
                 </div>
             </div>
 
-            <div className="max-w-4xl mx-auto px-4 py-8 border-t">
-                <Link href="/" className="text-gray-500 hover:text-gray-900">← Back to App</Link>
-            </div>
+            <SiteFooter />
         </main>
     );
 }

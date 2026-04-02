@@ -1,4 +1,6 @@
 import { Metadata } from 'next';
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 
 export const metadata: Metadata = {
     title: 'FAQ - Local Share',
@@ -116,7 +118,8 @@ const faqs = [
 
 export default function FAQPage() {
     return (
-        <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
+            <SiteHeader />
             {/* Hero Section */}
             <section className="bg-primary-600 text-white py-16">
                 <div className="max-w-4xl mx-auto px-4 text-center">
@@ -164,21 +167,7 @@ export default function FAQPage() {
                 </div>
             </section>
 
-            {/* Footer */}
-            <footer className="py-8 bg-gray-50 border-t border-gray-200">
-                <div className="max-w-4xl mx-auto px-4 text-center text-sm text-gray-600">
-                    <div className="flex justify-center gap-6 mb-4">
-                        <a href="/" className="hover:text-gray-900 hover:underline">Home</a>
-                        <a href="/about" className="hover:text-gray-900 hover:underline">About</a>
-                        <a href="/blog" className="hover:text-gray-900 hover:underline">Blog</a>
-                        <a href="/privacy" className="hover:text-gray-900 hover:underline">Privacy</a>
-                        <a href="/terms" className="hover:text-gray-900 hover:underline">Terms</a>
-                    </div>
-                    <p className="text-xs text-gray-500">
-                        Local Share • Anonymous • Local • Secure
-                    </p>
-                </div>
-            </footer>
+            <SiteFooter />
         </main>
     );
 }

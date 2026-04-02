@@ -1,4 +1,6 @@
 import { Metadata } from 'next';
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 
 export const metadata: Metadata = {
     title: 'About Us - Local Share',
@@ -8,7 +10,8 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
     return (
-        <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
+            <SiteHeader />
             {/* Hero Section */}
             <section className="bg-primary-600 text-white py-16">
                 <div className="max-w-4xl mx-auto px-4 text-center">
@@ -120,6 +123,27 @@ export default function AboutPage() {
                 </div>
             </section>
 
+            {/* Our Team */}
+            <section className="bg-white py-12">
+                <div className="max-w-4xl mx-auto px-4">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">Meet the Team</h2>
+                    <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-8 flex flex-col md:flex-row gap-8 items-center md:items-start max-w-2xl mx-auto">
+                        <div className="flex-shrink-0">
+                            <div className="w-32 h-32 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-md">
+                                HR
+                            </div>
+                        </div>
+                        <div className="text-center md:text-left">
+                            <h3 className="text-2xl font-bold text-gray-800 mb-2">Hemanth Reddy</h3>
+                            <p className="text-primary-600 font-semibold mb-4">Founder & Lead Developer</p>
+                            <p className="text-gray-600 leading-relaxed">
+                                With a background in building efficient web applications, Hemanth created Local Share to solve a recurring problem he faced at tech meetups: the friction of sharing quick links with people sitting right next to him. His focus is on maintaining Local Share as a privacy-first, zero-install utility for local communities worldwide.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* Footer CTA */}
             <section className="bg-gray-100 py-12">
                 <div className="max-w-4xl mx-auto px-4 text-center">
@@ -136,21 +160,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* Footer */}
-            <footer className="py-8 bg-gray-50 border-t border-gray-200">
-                <div className="max-w-4xl mx-auto px-4 text-center text-sm text-gray-600">
-                    <div className="flex justify-center gap-6 mb-4">
-                        <a href="/" className="hover:text-gray-900 hover:underline">Home</a>
-                        <a href="/blog" className="hover:text-gray-900 hover:underline">Blog</a>
-                        <a href="/faq" className="hover:text-gray-900 hover:underline">FAQ</a>
-                        <a href="/privacy" className="hover:text-gray-900 hover:underline">Privacy</a>
-                        <a href="/terms" className="hover:text-gray-900 hover:underline">Terms</a>
-                    </div>
-                    <p className="text-xs text-gray-500">
-                        Local Share • Anonymous • Local • Secure
-                    </p>
-                </div>
-            </footer>
+            <SiteFooter />
         </main>
     );
 }

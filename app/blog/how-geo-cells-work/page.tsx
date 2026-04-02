@@ -1,5 +1,9 @@
-import Link from 'next/link';
 import { Metadata } from 'next';
+import AdUnit from '@/components/AdUnit';
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
+import AuthorBio from '@/components/AuthorBio';
+import RelatedPosts from '@/components/RelatedPosts';
 
 export const metadata: Metadata = {
     title: 'How Geo-Cells Work - The Tech Behind GPS Clipboard',
@@ -8,8 +12,12 @@ export const metadata: Metadata = {
 
 export default function HowGeoCellsWork() {
     return (
-        <main className="min-h-screen bg-white">
-            <article className="max-w-3xl mx-auto px-4 py-16">
+        <main className="min-h-screen bg-white flex flex-col">
+            <SiteHeader />
+            <article className="max-w-3xl mx-auto px-4 py-16 flex-grow">
+                <div className="mb-8">
+                    <AdUnit slotId="BLOG_POST_TOP_AD" format="auto" />
+                </div>
                 <header className="mb-12 text-center">
                     <div className="text-sm font-semibold text-purple-600 uppercase tracking-widest mb-4">Technology Deep Dive</div>
                     <h1 className="text-4xl font-extrabold text-gray-900 mb-6">Under the Hood: How Geo-Cells Connect You</h1>
@@ -91,21 +99,28 @@ function getGeoCell(lat, lon) {
                 <div className="mt-16 pt-8 border-t border-gray-200">
                     <h3 className="text-lg font-bold text-gray-900 mb-4">Read Next</h3>
                     <div className="grid md:grid-cols-2 gap-6">
-                        <Link href="/blog/secure-local-sharing" className="block p-6 border rounded-lg hover:bg-gray-50 transition">
+                        <a href="/blog/secure-local-sharing" className="block p-6 border rounded-lg hover:bg-gray-50 transition">
                             <div className="text-primary-600 text-sm font-semibold mb-2">Privacy</div>
                             <div className="font-bold text-gray-900">Why Anonymous Local Sharing is Safer</div>
-                        </Link>
-                        <Link href="/top-usage-ideas" className="block p-6 border rounded-lg hover:bg-gray-50 transition">
+                        </a>
+                        <a href="/blog/top-usage-ideas" className="block p-6 border rounded-lg hover:bg-gray-50 transition">
                             <div className="text-green-600 text-sm font-semibold mb-2">Guides</div>
                             <div className="font-bold text-gray-900">Top 5 Use Cases for Local Sharing</div>
-                        </Link>
+                        </a>
                     </div>
                 </div>
 
                 <div className="mt-8 text-center">
-                    <Link href="/blog" className="text-primary-600 hover:underline">← Back to Blog</Link>
+                    <p className="text-gray-600 text-sm">
+                        If you&apos;re curious, open multiple incognito windows side-by-side or ask a colleague in the same room to open <a href="/" className="text-primary-600 hover:underline">Local Share</a>. You&apos;ll see the magic of geo-cells matching you instantly over WebSockets.
+                    </p>
                 </div>
+
+                <AuthorBio />
+                <RelatedPosts currentPath="/blog/how-geo-cells-work" />
             </article>
+
+            <SiteFooter />
         </main>
     );
 }

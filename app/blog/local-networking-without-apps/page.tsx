@@ -1,4 +1,9 @@
 import { Metadata } from 'next';
+import AdUnit from '@/components/AdUnit';
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
+import AuthorBio from '@/components/AuthorBio';
+import RelatedPosts from '@/components/RelatedPosts';
 
 export const metadata: Metadata = {
     title: 'Local Networking Without Apps - How Local Share Makes Sharing Instant | Local Share Blog',
@@ -8,7 +13,8 @@ export const metadata: Metadata = {
 
 export default function LocalNetworkingWithoutAppsPage() {
     return (
-        <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
+            <SiteHeader />
             {/* Article Header */}
             <header className="bg-white shadow-sm border-b border-gray-200">
                 <div className="max-w-3xl mx-auto px-4 py-8">
@@ -27,6 +33,9 @@ export default function LocalNetworkingWithoutAppsPage() {
 
             {/* Article Content */}
             <article className="max-w-3xl mx-auto px-4 py-12">
+                <div className="mb-8">
+                    <AdUnit slotId="BLOG_POST_TOP_AD" format="auto" />
+                </div>
                 <div className="prose prose-lg max-w-none">
 
                     <section className="mb-8">
@@ -160,14 +169,12 @@ export default function LocalNetworkingWithoutAppsPage() {
                         </a>
                     </div>
                 </div>
+
+                <AuthorBio />
+                <RelatedPosts currentPath="/blog/local-networking-without-apps" />
             </article>
 
-            {/* Footer */}
-            <footer className="py-8 bg-gray-50 border-t border-gray-200">
-                <div className="max-w-4xl mx-auto px-4 text-center text-sm text-gray-600">
-                    <a href="/blog" className="text-primary-600 hover:underline font-medium">← Back to Blog</a>
-                </div>
-            </footer>
+            <SiteFooter />
         </main>
     );
 }

@@ -1,7 +1,11 @@
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
+
 export default function TermsOfService() {
     return (
-        <main className="min-h-screen bg-white py-12 px-4">
-            <div className="max-w-3xl mx-auto prose">
+        <main className="min-h-screen bg-white flex flex-col">
+            <SiteHeader />
+            <div className="max-w-3xl mx-auto prose py-12 px-4 flex-grow">
                 <h1>Terms of Service</h1>
                 <p>Last updated: January 22, 2026</p>
 
@@ -24,9 +28,9 @@ export default function TermsOfService() {
                 <p>Users are responsible for the content they post. We reserve the right to remove content that violates our policies, is illegal, or is deemed inappropriate. Do not share sensitive personal information.</p>
 
                 <div className="mt-8 pt-8 border-t">
-                    <a href="/" className="text-blue-600 hover:underline">← Back to Home</a>
                 </div>
             </div>
+            <SiteFooter />
         </main>
     );
 }

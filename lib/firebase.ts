@@ -11,6 +11,7 @@ import {
     limit as firestoreLimit,
     QueryConstraint,
     deleteDoc,
+    updateDoc,
     doc
 } from 'firebase/firestore';
 import { Snippet } from '@/types';
@@ -38,10 +39,9 @@ export async function fetchSnippetsForGeoCell(geoCell: string): Promise<Snippet[
         const snippetsRef = collection(db, 'snippets');
         const now = Timestamp.now();
 
-        // TEMPORARY: Show all messages globally for testing
         const q = query(
             snippetsRef,
-            // where('geo_cell', '==', geoCell),  // Disabled for testing
+            where('geo_cell', '==', geoCell),
             where('status', '==', 'active'),
             where('expires_at', '>', now),
             orderBy('expires_at'),
@@ -106,6 +106,24 @@ export async function deleteSnippet(id: string): Promise<boolean> {
         return true;
     } catch (error) {
         console.error('Error deleting snippet:', error);
+        return false;
+    }
+}
+
+/**
+ * Update a snippet's text
+ * @param id - Snippet ID
+ * @param newText - The new text for the snippet
+ */
+export async function updateSnippet(id: string, newText: string): Promise<boolean> {
+    try {
+        const docRef = doc(db, 'snippets', id);
+        await updateDoc(docRef, {
+            text: newText
+        });
+        return true;
+    } catch (error) {
+        console.error('Error updating snippet:', error);
         return false;
     }
 }

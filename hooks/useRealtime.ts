@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, query, where, onSnapshot, Timestamp } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, Timestamp, orderBy } from 'firebase/firestore';
 import { Snippet } from '@/types';
 
 /**
@@ -9,8 +9,17 @@ import { Snippet } from '@/types';
  */
 export function useRealtime(
     geoCell: string | null,
-    onNewSnippet: (snippet: Snippet) => void
+    onNewSnippet: (snippet: Snippet) => void,
+    onSnippetModified?: (snippet: Snippet) => void
 ) {
+    // Use a ref for the callback to avoid re-subscribing when callback changes
+    const onNewSnippetRef = useRef(onNewSnippet);
+    const onSnippetModifiedRef = useRef(onSnippetModified);
+    useEffect(() => {
+        onNewSnippetRef.current = onNewSnippet;
+        onSnippetModifiedRef.current = onSnippetModified;
+    }, [onNewSnippet, onSnippetModified]);
+
     useEffect(() => {
         if (!geoCell) return;
 
@@ -19,12 +28,13 @@ export function useRealtime(
         const snippetsRef = collection(db, 'snippets');
         const now = Timestamp.now();
 
-        // TEMPORARY: Show all messages globally for testing
         const q = query(
             snippetsRef,
-            // where('geo_cell', '==', geoCell),  // Disabled for testing
+            where('geo_cell', '==', geoCell),
             where('status', '==', 'active'),
-            where('expires_at', '>', now)
+            where('expires_at', '>', now),
+            orderBy('expires_at'),
+            orderBy('created_at', 'desc')
         );
 
         // Track if this is the initial load
@@ -43,7 +53,17 @@ export function useRealtime(
                     } as Snippet;
 
                     console.log('[useRealtime] New snippet detected:', newSnippet);
-                    onNewSnippet(newSnippet);
+                    onNewSnippetRef.current(newSnippet);
+                } else if (change.type === 'modified') {
+                    const modifiedSnippet = {
+                        id: change.doc.id,
+                        ...change.doc.data(),
+                    } as Snippet;
+
+                    console.log('[useRealtime] Modified snippet detected:', modifiedSnippet);
+                    if (onSnippetModifiedRef.current) {
+                        onSnippetModifiedRef.current(modifiedSnippet);
+                    }
                 }
             });
 
@@ -60,5 +80,5 @@ export function useRealtime(
             console.log('[useRealtime] Cleaning up listener');
             unsubscribe();
         };
-    }, [geoCell, onNewSnippet]);
+    }, [geoCell]); // Removed onNewSnippet from dependency array
 }
