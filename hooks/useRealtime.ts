@@ -10,15 +10,18 @@ import { Snippet } from '@/types';
 export function useRealtime(
     geoCell: string | null,
     onNewSnippet: (snippet: Snippet) => void,
-    onSnippetModified?: (snippet: Snippet) => void
+    onSnippetModified?: (snippet: Snippet) => void,
+    onSnippetRemoved?: (snippetId: string) => void
 ) {
     // Use a ref for the callback to avoid re-subscribing when callback changes
     const onNewSnippetRef = useRef(onNewSnippet);
     const onSnippetModifiedRef = useRef(onSnippetModified);
+    const onSnippetRemovedRef = useRef(onSnippetRemoved);
     useEffect(() => {
         onNewSnippetRef.current = onNewSnippet;
         onSnippetModifiedRef.current = onSnippetModified;
-    }, [onNewSnippet, onSnippetModified]);
+        onSnippetRemovedRef.current = onSnippetRemoved;
+    }, [onNewSnippet, onSnippetModified, onSnippetRemoved]);
 
     useEffect(() => {
         if (!geoCell) return;
@@ -63,6 +66,11 @@ export function useRealtime(
                     console.log('[useRealtime] Modified snippet detected:', modifiedSnippet);
                     if (onSnippetModifiedRef.current) {
                         onSnippetModifiedRef.current(modifiedSnippet);
+                    }
+                } else if (change.type === 'removed') {
+                    console.log('[useRealtime] Removed snippet detected:', change.doc.id);
+                    if (onSnippetRemovedRef.current) {
+                        onSnippetRemovedRef.current(change.doc.id);
                     }
                 }
             });

@@ -65,7 +65,13 @@ export default function ClipboardFeed({ geoCell, userId, activeRoom, onCreateRoo
         refresh();
     }, [refresh]);
 
-    useRealtime(geoCell, handleNewSnippet, handleModifiedSnippet);
+    // Handle deleted snippets from realtime subscription
+    const handleRemovedSnippet = useCallback((snippetId: string) => {
+        setLocalSnippets(prev => prev.filter(s => s.id !== snippetId));
+        refresh();
+    }, [refresh]);
+
+    useRealtime(geoCell, handleNewSnippet, handleModifiedSnippet, handleRemovedSnippet);
 
     // Combine fetched snippets with real-time ones
     const allSnippets = [...localSnippets, ...snippets].reduce((acc, snippet) => {
