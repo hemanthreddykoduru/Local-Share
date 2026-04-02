@@ -121,17 +121,17 @@ export default function FAQPage() {
         <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
             <SiteHeader />
             {/* Hero Section */}
-            <section className="bg-primary-600 text-white py-16">
-                <div className="max-w-4xl mx-auto px-4 text-center">
-                    <h1 className="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
-                    <p className="text-xl text-primary-100">
+            <section className="bg-gradient-to-br from-primary-600 to-primary-800 text-white py-20">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+                    <h1 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight">Frequently Asked Questions</h1>
+                    <p className="text-xl text-primary-100 max-w-2xl mx-auto">
                         Everything you need to know about using Local Share
                     </p>
                 </div>
             </section>
 
             {/* FAQ Content */}
-            <section className="max-w-4xl mx-auto px-4 py-12">
+            <section className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
                 {faqs.map((category, catIndex) => (
                     <div key={catIndex} className="mb-12">
                         <h2 className="text-2xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-primary-200">
@@ -160,7 +160,7 @@ export default function FAQPage() {
                     </p>
                     <a
                         href="/blog"
-                        className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                        className="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-all shadow-sm hover:shadow-md"
                     >
                         Visit Blog
                     </a>

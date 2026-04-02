@@ -13,17 +13,17 @@ export default function ContactPage() {
         <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
             <SiteHeader />
             {/* Hero Section */}
-            <section className="bg-primary-600 text-white py-16">
-                <div className="max-w-4xl mx-auto px-4 text-center">
-                    <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
-                    <p className="text-xl text-primary-100">
+            <section className="bg-gradient-to-br from-primary-600 to-primary-800 text-white py-20">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+                    <h1 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight">Contact Us</h1>
+                    <p className="text-xl text-primary-100 max-w-xl mx-auto">
                         We&apos;d love to hear from you
                     </p>
                 </div>
             </section>
 
             {/* Contact Content */}
-            <section className="max-w-4xl mx-auto px-4 py-12">
+            <section className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
                 <div className="grid md:grid-cols-2 gap-8">
                     {/* Contact Info */}
                     <div className="space-y-6">
@@ -147,12 +147,12 @@ export default function ContactPage() {
             </section>
 
             {/* CTA */}
-            <section className="bg-gray-100 py-12">
-                <div className="max-w-4xl mx-auto px-4 text-center">
+            <section className="bg-gray-50 py-16">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
                     <h2 className="text-2xl font-bold text-gray-800 mb-4">Ready to start sharing?</h2>
                     <a
                         href="/"
-                        className="inline-block bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+                        className="inline-block bg-primary-600 text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-primary-700 transition-all shadow-sm hover:shadow-md"
                     >
                         Open Local Share
                     </a>
