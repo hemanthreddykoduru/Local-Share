@@ -20,6 +20,8 @@ export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess
     const [text, setText] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [expiryMode, setExpiryMode] = useState<'30m' | '1h' | 'custom'>('1h');
+    const [customMinutes, setCustomMinutes] = useState('120');
 
     const remainingChars = MAX_LENGTH - text.length;
     const isValid = text.trim().length > 0 && text.length <= MAX_LENGTH;
@@ -42,8 +44,18 @@ export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess
             const sanitized = sanitizeText(text.trim());
             const filtered = filterProfanity(sanitized);
 
-            // Create expiration timestamp (1 hour from now)
-            const expiresAt = Timestamp.fromMillis(Date.now() + 3600000);
+            // Calculate expiration timestamp
+            let offsetMillis = 3600000; // 1 hour default
+            if (expiryMode === '30m') {
+                offsetMillis = 1800000;
+            } else if (expiryMode === 'custom') {
+                const parsed = parseInt(customMinutes, 10);
+                if (!isNaN(parsed) && parsed > 0 && parsed <= 1440) { // Max 24 hours
+                    offsetMillis = parsed * 60000;
+                }
+            }
+
+            const expiresAt = Timestamp.fromMillis(Date.now() + offsetMillis);
             const createdAt = Timestamp.now();
 
             // Add to Firestore directly
@@ -95,9 +107,34 @@ export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess
                         <span className={`text-sm ${remainingChars < 0 ? 'text-red-600 font-semibold' : remainingChars < 100 ? 'text-orange-600' : 'text-gray-500'}`}>
                             {remainingChars < 0 ? `${Math.abs(remainingChars)} over limit` : `${remainingChars} characters left`}
                         </span>
-                        <span className="text-xs text-gray-400">
-                            Expires in 1 hour
-                        </span>
+                        <div className="flex items-center gap-2">
+                            <span className="text-xs text-gray-500 font-medium">Expires in:</span>
+                            <select 
+                                value={expiryMode}
+                                onChange={(e) => setExpiryMode(e.target.value as '30m' | '1h' | 'custom')}
+                                className="text-xs border-gray-300 rounded bg-gray-50 focus:bg-white focus:ring-primary-500 focus:border-primary-500 p-1 transition-colors cursor-pointer"
+                                disabled={isSubmitting}
+                            >
+                                <option value="30m">30 mins</option>
+                                <option value="1h">1 hour</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                            {expiryMode === 'custom' && (
+                                <div className="flex items-center gap-1 animate-fade-in">
+                                    <input 
+                                        type="number"
+                                        min="1"
+                                        max="1440"
+                                        value={customMinutes}
+                                        onChange={(e) => setCustomMinutes(e.target.value)}
+                                        className="text-xs border-gray-300 rounded w-16 p-1 focus:ring-primary-500 focus:border-primary-500 bg-gray-50 focus:bg-white transition-colors"
+                                        disabled={isSubmitting}
+                                        placeholder="Mins"
+                                    />
+                                    <span className="text-xs text-gray-500">m</span>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
 
