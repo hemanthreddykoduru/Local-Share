@@ -1,13 +1,16 @@
 'use client';
 
+import { useState } from 'react';
 import { LocationState } from '@/types';
 
 interface LocationPermissionProps {
     locationState: LocationState;
+    onJoinPrivateRoom?: (code: string) => void;
 }
 
-export default function LocationPermission({ locationState }: LocationPermissionProps) {
+export default function LocationPermission({ locationState, onJoinPrivateRoom }: LocationPermissionProps) {
     const { isLoading, error, permissionGranted } = locationState;
+    const [roomInput, setRoomInput] = useState('');
 
     if (permissionGranted) {
         return null; // Don't show if permission granted
@@ -66,6 +69,29 @@ export default function LocationPermission({ locationState }: LocationPermission
                         >
                             Try Again
                         </button>
+                        
+                        {onJoinPrivateRoom && (
+                            <div className="mt-8 border-t border-gray-100 pt-6">
+                                <h3 className="text-sm font-semibold text-gray-700 mb-3">Or join a private room</h3>
+                                <div className="flex gap-2">
+                                    <input 
+                                        type="text" 
+                                        placeholder="6-Digit Code" 
+                                        maxLength={6}
+                                        value={roomInput}
+                                        onChange={(e) => setRoomInput(e.target.value.toUpperCase())}
+                                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:outline-none placeholder-gray-400"
+                                    />
+                                    <button 
+                                        onClick={() => onJoinPrivateRoom(roomInput)}
+                                        disabled={roomInput.length < 4}
+                                        className="bg-gray-800 hover:bg-gray-900 text-white font-medium px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        Join
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </>
                 ) : (
                     <>
@@ -90,6 +116,29 @@ export default function LocationPermission({ locationState }: LocationPermission
                                 <li>• Your exact location is never stored</li>
                             </ul>
                         </div>
+                        
+                        {onJoinPrivateRoom && (
+                            <div className="mt-8 border-t border-gray-100 pt-6">
+                                <h3 className="text-sm font-semibold text-gray-700 mb-3">Or join a private room directly</h3>
+                                <div className="flex gap-2">
+                                    <input 
+                                        type="text" 
+                                        placeholder="6-Digit Code" 
+                                        maxLength={6}
+                                        value={roomInput}
+                                        onChange={(e) => setRoomInput(e.target.value.toUpperCase())}
+                                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:outline-none placeholder-gray-400"
+                                    />
+                                    <button 
+                                        onClick={() => onJoinPrivateRoom(roomInput)}
+                                        disabled={roomInput.length < 4}
+                                        className="bg-gray-800 hover:bg-gray-900 text-white font-medium px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        Join
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </>
                 )}
             </div>

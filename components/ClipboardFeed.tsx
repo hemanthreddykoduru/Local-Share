@@ -11,15 +11,29 @@ import { Snippet } from '@/types';
 interface ClipboardFeedProps {
     geoCell: string;
     userId: string;
+    activeRoom?: string | null;
+    onCreateRoom?: (code: string) => void;
 }
 
-export default function ClipboardFeed({ geoCell, userId }: ClipboardFeedProps) {
+export default function ClipboardFeed({ geoCell, userId, activeRoom, onCreateRoom }: ClipboardFeedProps) {
     const { snippets, isLoading, error, refresh } = useClipboard(geoCell);
     const [localSnippets, setLocalSnippets] = useState<Snippet[]>([]);
     
     // QR Code Modal State
     const [showQR, setShowQR] = useState(false);
-    const hostUrl = typeof window !== 'undefined' ? window.location.origin : 'https://local-share.tech';
+    const displayRoomCode = activeRoom || '';
+    const hostUrl = typeof window !== 'undefined' 
+        ? `${window.location.origin}/?room=${displayRoomCode}`
+        : 'https://local-share.tech';
+
+    const handleShareRoom = () => {
+        if (!activeRoom && onCreateRoom) {
+            // Generate a random 6-digit code
+            const newCode = Math.floor(100000 + Math.random() * 900000).toString();
+            onCreateRoom(newCode);
+        }
+        setShowQR(true);
+    };
 
     // Handle new snippets from realtime subscription
     const handleNewSnippet = useCallback((newSnippet: Snippet) => {
@@ -131,7 +145,7 @@ export default function ClipboardFeed({ geoCell, userId }: ClipboardFeedProps) {
                 </div>
                 <div className="flex gap-3">
                     <button
-                        onClick={() => setShowQR(true)}
+                        onClick={handleShareRoom}
                         className="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1 px-3 py-1.5 rounded-lg border border-primary-200 bg-primary-50 hover:bg-primary-100 transition-colors"
                     >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,7 +178,15 @@ export default function ClipboardFeed({ geoCell, userId }: ClipboardFeedProps) {
                                 </svg>
                             </div>
                             <h3 className="text-2xl font-bold text-gray-900 mb-2">Join this Room</h3>
-                            <p className="text-gray-500 mb-8">Scan to instantly connect with people nearby.</p>
+                            <p className="text-gray-500 mb-6">Scan to connect, or enter this code directly:</p>
+                            
+                            {displayRoomCode && (
+                                <div className="mb-6">
+                                    <span className="text-4xl font-black text-gray-800 tracking-widest bg-gray-100 px-6 py-3 rounded-xl border border-gray-200">
+                                        {displayRoomCode}
+                                    </span>
+                                </div>
+                            )}
                             
                             <div className="bg-white p-4 rounded-xl border-2 border-gray-100 inline-block mb-8 shadow-sm">
                                 <QRCode value={hostUrl} size={200} className="w-48 h-48" />

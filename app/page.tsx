@@ -19,10 +19,30 @@ export default function Home() {
     const [showProfileModal, setShowProfileModal] = useState(false);
     const { profile, updateName } = useProfile();
     const [mounted, setMounted] = useState(false);
+    const [privateRoom, setPrivateRoom] = useState<string | null>(null);
 
     useEffect(() => {
         setMounted(true);
+        // Check URL for ?room=123456
+        if (typeof window !== 'undefined') {
+            const searchParams = new URLSearchParams(window.location.search);
+            const roomCode = searchParams.get('room');
+            if (roomCode) {
+                setPrivateRoom(roomCode.toUpperCase());
+            }
+        }
     }, []);
+
+    const handleRoomChange = (code: string) => {
+        const cleanCode = code.trim().toUpperCase();
+        setPrivateRoom(cleanCode);
+        // Update URL
+        if (typeof window !== 'undefined') {
+            const url = new URL(window.location.href);
+            url.searchParams.set('room', cleanCode);
+            window.history.pushState({}, '', url.toString());
+        }
+    };
 
     const handleSubmitSuccess = () => {
         // Trigger refresh of feed
@@ -34,9 +54,12 @@ export default function Home() {
     };
 
     // Conditional rendering for the main interaction area
+    const effectiveGeoCell = privateRoom ? `room_${privateRoom}` : locationState.geoCell;
+    const isReady = privateRoom !== null || locationState.permissionGranted;
+
     const renderContent = () => {
-        if (!locationState.permissionGranted) {
-            return <LocationPermission locationState={locationState} />;
+        if (!isReady) {
+            return <LocationPermission locationState={locationState} onJoinPrivateRoom={handleRoomChange} />;
         }
 
         return (
@@ -44,14 +67,20 @@ export default function Home() {
                 {/* Input Section */}
 
                 <ClipboardInput
-                    geoCell={locationState.geoCell!}
+                    geoCell={effectiveGeoCell!}
                     alias={mounted ? profile.name : ''}
                     userId={profile.id}
                     onSubmitSuccess={handleSubmitSuccess}
                 />
 
                 {/* Feed Section */}
-                <ClipboardFeed key={refreshKey} geoCell={locationState.geoCell!} userId={profile.id} />
+                <ClipboardFeed 
+                    key={refreshKey} 
+                    geoCell={effectiveGeoCell!} 
+                    userId={profile.id} 
+                    activeRoom={privateRoom}
+                    onCreateRoom={handleRoomChange}
+                />
             </div>
         );
     };
@@ -94,11 +123,17 @@ export default function Home() {
                                     </svg>
                                     <span className="hidden sm:inline">{mounted ? profile.name : ''}</span>
                                 </button>
-                                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full ${locationState.permissionGranted ? 'bg-green-100' : 'bg-gray-100'}`}>
-                                    <div className={`w-2 h-2 rounded-full ${locationState.permissionGranted ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}></div>
-                                    <span className={`text-xs font-medium ${locationState.permissionGranted ? 'text-green-700' : 'text-gray-500'}`}>
-                                        {locationState.permissionGranted ? 'Connected' : 'Waiting'}
-                                    </span>
+                                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full ${privateRoom ? 'bg-purple-100' : locationState.permissionGranted ? 'bg-green-100' : 'bg-gray-100'}`}>
+                                    {privateRoom ? (
+                                        <span className="text-xs font-semibold text-purple-700">🔒 Room {privateRoom}</span>
+                                    ) : (
+                                        <>
+                                            <div className={`w-2 h-2 rounded-full ${locationState.permissionGranted ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}></div>
+                                            <span className={`text-xs font-medium ${locationState.permissionGranted ? 'text-green-700' : 'text-gray-500'}`}>
+                                                {locationState.permissionGranted ? 'Connected' : 'Waiting'}
+                                            </span>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </div>
