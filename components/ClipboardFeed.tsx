@@ -19,14 +19,17 @@ export default function ClipboardFeed({ geoCell, userId, activeRoom, onCreateRoo
     const { snippets, isLoading, error, refresh } = useClipboard(geoCell);
     const [localSnippets, setLocalSnippets] = useState<Snippet[]>([]);
     
-    // QR Code Modal State
+    // Modals State
     const [showQR, setShowQR] = useState(false);
+    const [showJoinModal, setShowJoinModal] = useState(false);
+    const [joinCodeInput, setJoinCodeInput] = useState('');
+    
     const displayRoomCode = activeRoom || '';
     const hostUrl = typeof window !== 'undefined' 
         ? `${window.location.origin}/?room=${displayRoomCode}`
         : 'https://local-share.tech';
 
-    const handleShareRoom = () => {
+    const handleCreateRoom = () => {
         if (!activeRoom && onCreateRoom) {
             // Generate a random 6-digit code
             const newCode = Math.floor(100000 + Math.random() * 900000).toString();
@@ -143,16 +146,46 @@ export default function ClipboardFeed({ geoCell, userId, activeRoom, onCreateRoo
                         </p>
                     )}
                 </div>
-                <div className="flex gap-3">
-                    <button
-                        onClick={handleShareRoom}
-                        className="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1 px-3 py-1.5 rounded-lg border border-primary-200 bg-primary-50 hover:bg-primary-100 transition-colors"
-                    >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                        </svg>
-                        Share Room
-                    </button>
+                <div className="flex gap-2">
+                    {!activeRoom ? (
+                        <>
+                            <button
+                                onClick={handleCreateRoom}
+                                className="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1 px-3 py-1.5 rounded-lg border border-primary-200 bg-primary-50 hover:bg-primary-100 transition-colors"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+                                Create Room
+                            </button>
+                            <button
+                                onClick={() => setShowJoinModal(true)}
+                                className="text-sm text-gray-600 hover:text-gray-700 font-medium flex items-center gap-1 px-3 py-1.5 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" /></svg>
+                                Join Room
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <button
+                                onClick={() => setShowQR(true)}
+                                className="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1 px-3 py-1.5 rounded-lg border border-primary-200 bg-primary-50 hover:bg-primary-100 transition-colors"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                </svg>
+                                Share Code
+                            </button>
+                            <button
+                                onClick={() => { if (onCreateRoom) onCreateRoom(''); }}
+                                className="text-sm text-gray-600 hover:text-gray-700 font-medium flex items-center gap-1 px-3 py-1.5 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
+                                Leave
+                            </button>
+                        </>
+                    )}
                     <button
                         onClick={() => refresh()}
                         className="text-sm text-gray-500 hover:text-gray-800 font-medium flex items-center gap-1"
@@ -197,6 +230,49 @@ export default function ClipboardFeed({ geoCell, userId, activeRoom, onCreateRoo
                                 className="w-full py-3.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded-xl transition-colors focus:ring-2 focus:ring-gray-300 focus:outline-none"
                             >
                                 Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Join Room Modal */}
+            {showJoinModal && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in">
+                    <div className="bg-white rounded-3xl p-8 max-w-sm w-full mx-auto shadow-2xl relative">
+                        <button
+                            onClick={() => setShowJoinModal(false)}
+                            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <div className="text-center">
+                            <h3 className="text-2xl font-bold text-gray-900 mb-2">Join a Room</h3>
+                            <p className="text-gray-500 mb-6">Enter a 6-digit code to connect.</p>
+                            
+                            <input 
+                                type="text"
+                                maxLength={6}
+                                placeholder="6-Digit Code"
+                                value={joinCodeInput}
+                                onChange={(e) => setJoinCodeInput(e.target.value.toUpperCase())}
+                                className="w-full text-center text-3xl font-black tracking-widest text-gray-800 bg-gray-50 border border-gray-200 rounded-xl px-4 py-4 mb-6 focus:ring-2 focus:ring-primary-500 focus:outline-none"
+                            />
+                            
+                            <button
+                                onClick={() => {
+                                    if (joinCodeInput.length >= 4 && onCreateRoom) {
+                                        onCreateRoom(joinCodeInput);
+                                        setShowJoinModal(false);
+                                        setJoinCodeInput('');
+                                    }
+                                }}
+                                disabled={joinCodeInput.length < 4}
+                                className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl disabled:opacity-50 transition-all hover:bg-gray-800"
+                            >
+                                Join Room
                             </button>
                         </div>
                     </div>

@@ -35,11 +35,15 @@ export default function Home() {
 
     const handleRoomChange = (code: string) => {
         const cleanCode = code.trim().toUpperCase();
-        setPrivateRoom(cleanCode);
+        setPrivateRoom(cleanCode || null);
         // Update URL
         if (typeof window !== 'undefined') {
             const url = new URL(window.location.href);
-            url.searchParams.set('room', cleanCode);
+            if (cleanCode) {
+                url.searchParams.set('room', cleanCode);
+            } else {
+                url.searchParams.delete('room');
+            }
             window.history.pushState({}, '', url.toString());
         }
     };
