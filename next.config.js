@@ -8,25 +8,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  headers: async () => [
-    {
-      source: '/:path*',
-      headers: [
-        {
-          key: 'X-Content-Type-Options',
-          value: 'nosniff',
-        },
-        {
-          key: 'X-Frame-Options',
-          value: 'DENY',
-        },
-        {
-          key: 'X-XSS-Protection',
-          value: '1; mode=block',
-        },
-      ],
-    },
-  ],
+  // Security headers are handled by firebase.json (Firebase Hosting)
+  // The headers() function is not compatible with output: 'export' static sites
+  turbopack: {
+    root: __dirname,
+  },
 }
 
 module.exports = nextConfig
