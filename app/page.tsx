@@ -163,20 +163,20 @@ export default function Home() {
                                     How it works
                                 </h3>
                                 <p className="text-sm text-gray-600 mb-4 leading-relaxed">
-                                    Local Share connects you with people in your immediate physical vicinity (approx. 200m). No accounts, no manual room codes.
+                                    Share with people nearby via GPS, or create a private room with a 6-digit code — no accounts required.
                                 </p>
                                 <ul className="text-sm text-gray-600 space-y-2">
                                     <li className="flex items-start gap-2">
                                         <span className="text-green-500 mt-0.5">✓</span>
-                                        <span>We calculate a private geo-cell based on your GPS signal.</span>
+                                        <span>GPS mode connects you with people within ~200m automatically.</span>
                                     </li>
                                     <li className="flex items-start gap-2">
                                         <span className="text-green-500 mt-0.5">✓</span>
-                                        <span>Messages are shared only with others in your exact same cell.</span>
+                                        <span>Private Rooms let you share via a 6-digit code — no GPS needed.</span>
                                     </li>
                                     <li className="flex items-start gap-2">
                                         <span className="text-green-500 mt-0.5">✓</span>
-                                        <span>All data auto-deletes permanently after 1 hour for privacy.</span>
+                                        <span>All messages auto-delete after 1 hour for privacy.</span>
                                     </li>
                                 </ul>
                                 <div className="mt-4 pt-4 border-t border-gray-100">
@@ -186,6 +186,7 @@ export default function Home() {
                                     </a>
                                 </div>
                             </div>
+
                         </div>
                     </aside>
 
