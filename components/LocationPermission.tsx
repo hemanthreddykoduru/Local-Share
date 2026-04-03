@@ -5,18 +5,19 @@ import { LocationState } from '@/types';
 
 interface LocationPermissionProps {
     locationState: LocationState;
+    onCreatePrivateRoom?: (code: string) => void;
     onJoinPrivateRoom?: (code: string) => void;
 }
 
-export default function LocationPermission({ locationState, onJoinPrivateRoom }: LocationPermissionProps) {
+export default function LocationPermission({ locationState, onCreatePrivateRoom, onJoinPrivateRoom }: LocationPermissionProps) {
     const { isLoading, error, permissionGranted } = locationState;
     const [roomInput, setRoomInput] = useState('');
     const [showJoinInput, setShowJoinInput] = useState(false);
 
     const handleCreateRoom = () => {
-        if (!onJoinPrivateRoom) return;
+        if (!onCreatePrivateRoom) return;
         const newCode = Math.floor(100000 + Math.random() * 900000).toString();
-        onJoinPrivateRoom(newCode);
+        onCreatePrivateRoom(newCode);
     };
 
     const handleJoinRoom = () => {

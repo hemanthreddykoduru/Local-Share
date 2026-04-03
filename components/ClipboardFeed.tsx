@@ -13,9 +13,20 @@ interface ClipboardFeedProps {
     userId: string;
     activeRoom?: string | null;
     onCreateRoom?: (code: string) => void;
+    onJoinRoom?: (code: string) => void;
+    onLeaveRoom?: () => void;
+    isRoomCreator?: boolean;
 }
 
-export default function ClipboardFeed({ geoCell, userId, activeRoom, onCreateRoom }: ClipboardFeedProps) {
+export default function ClipboardFeed({ 
+    geoCell, 
+    userId, 
+    activeRoom, 
+    onCreateRoom,
+    onJoinRoom,
+    onLeaveRoom,
+    isRoomCreator
+}: ClipboardFeedProps) {
     const { snippets, isLoading, error, refresh } = useClipboard(geoCell);
     const [localSnippets, setLocalSnippets] = useState<Snippet[]>([]);
     
@@ -168,13 +179,14 @@ export default function ClipboardFeed({ geoCell, userId, activeRoom, onCreateRoo
                                 Share Code
                             </button>
                             <button
-                                onClick={() => { if (onCreateRoom) onCreateRoom(''); }}
-                                className="text-sm text-gray-600 hover:text-gray-700 font-medium flex items-center gap-1 px-3 py-1.5 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
+                                onClick={() => { if (onLeaveRoom) onLeaveRoom(); }}
+                                className="text-sm text-red-600 hover:text-red-700 font-medium flex items-center gap-1 px-3 py-1.5 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 transition-colors"
+                                title={isRoomCreator ? "Close this room and kick everyone" : "Leave this room"}
                             >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                 </svg>
-                                Leave
+                                {isRoomCreator ? 'End Room' : 'Leave'}
                             </button>
                         </>
                     )}
@@ -255,8 +267,8 @@ export default function ClipboardFeed({ geoCell, userId, activeRoom, onCreateRoo
                             
                             <button
                                 onClick={() => {
-                                    if (joinCodeInput.length >= 4 && onCreateRoom) {
-                                        onCreateRoom(joinCodeInput);
+                                    if (joinCodeInput.length >= 4 && onJoinRoom) {
+                                        onJoinRoom(joinCodeInput);
                                         setShowJoinModal(false);
                                         setJoinCodeInput('');
                                     }

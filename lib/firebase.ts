@@ -127,3 +127,59 @@ export async function updateSnippet(id: string, newText: string): Promise<boolea
         return false;
     }
 }
+
+// ─── Room Management ─────────────────────────────────────────────────────────
+
+/**
+ * Create a private room document in Firestore.
+ * The room is owned by the creator. Only the creator can delete it.
+ */
+export async function createRoom(roomCode: string, creatorId: string): Promise<boolean> {
+    try {
+        const roomRef = doc(db, 'rooms', roomCode);
+        const { setDoc } = await import('firebase/firestore');
+        await setDoc(roomRef, {
+            creator_id: creatorId,
+            active: true,
+            created_at: Timestamp.now(),
+        });
+        return true;
+    } catch (error) {
+        console.error('Error creating room:', error);
+        return false;
+    }
+}
+
+/**
+ * Delete a private room (creator only).
+ * This invalidates the room for all other users in real-time.
+ */
+export async function deleteRoom(roomCode: string): Promise<boolean> {
+    try {
+        const roomRef = doc(db, 'rooms', roomCode);
+        await deleteDoc(roomRef);
+        return true;
+    } catch (error) {
+        console.error('Error deleting room:', error);
+        return false;
+    }
+}
+
+/**
+ * Check if a room exists and is active before allowing a join.
+ * Returns the room data or null if it doesn't exist.
+ */
+export async function checkRoomExists(roomCode: string): Promise<{ creator_id: string } | null> {
+    try {
+        const { getDoc } = await import('firebase/firestore');
+        const roomRef = doc(db, 'rooms', roomCode);
+        const snap = await getDoc(roomRef);
+        if (snap.exists() && snap.data()?.active) {
+            return snap.data() as { creator_id: string };
+        }
+        return null;
+    } catch (error) {
+        console.error('Error checking room:', error);
+        return null;
+    }
+}

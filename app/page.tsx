@@ -10,8 +10,10 @@ import AdsterraNative from '@/components/AdsterraNative';
 import AdBlockDetector from '@/components/AdBlockDetector';
 
 import ProfileModal from '@/components/ProfileModal';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useProfile } from '@/hooks/useProfile';
+import { useRoom } from '@/hooks/useRoom';
+import { createRoom, deleteRoom, checkRoomExists } from '@/lib/firebase';
 
 export default function Home() {
     const locationState = useLocation();
@@ -20,6 +22,11 @@ export default function Home() {
     const { profile, updateName } = useProfile();
     const [mounted, setMounted] = useState(false);
     const [privateRoom, setPrivateRoom] = useState<string | null>(null);
+    // Track whether the current user is the room creator
+    const [isRoomCreator, setIsRoomCreator] = useState(false);
+
+    // Real-time room watcher — kicks users out when creator leaves
+    const { isRoomValid, isChecking: isRoomChecking, creatorId } = useRoom(privateRoom);
 
     useEffect(() => {
         setMounted(true);
@@ -33,20 +40,77 @@ export default function Home() {
         }
     }, []);
 
-    const handleRoomChange = (code: string) => {
-        const cleanCode = code.trim().toUpperCase();
-        setPrivateRoom(cleanCode || null);
-        // Update URL
+    // Auto-kick: if room becomes invalid (creator left), clear local room state
+    useEffect(() => {
+        if (privateRoom && !isRoomChecking && !isRoomValid) {
+            alert('This room has been closed by the creator.');
+            clearRoom();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isRoomValid, isRoomChecking, privateRoom]);
+
+    const clearRoom = useCallback(() => {
+        setPrivateRoom(null);
+        setIsRoomCreator(false);
         if (typeof window !== 'undefined') {
             const url = new URL(window.location.href);
-            if (cleanCode) {
-                url.searchParams.set('room', cleanCode);
-            } else {
-                url.searchParams.delete('room');
-            }
+            url.searchParams.delete('room');
             window.history.pushState({}, '', url.toString());
         }
-    };
+    }, []);
+
+    // Called by LocationPermission/ClipboardFeed Create Room buttons
+    const handleCreateRoom = useCallback(async (code: string) => {
+        const cleanCode = code.trim().toUpperCase();
+        const ok = await createRoom(cleanCode, profile.id);
+        if (!ok) {
+            alert('Failed to create room. Please try again.');
+            return;
+        }
+        setIsRoomCreator(true);
+        setPrivateRoom(cleanCode);
+        if (typeof window !== 'undefined') {
+            const url = new URL(window.location.href);
+            url.searchParams.set('room', cleanCode);
+            window.history.pushState({}, '', url.toString());
+        }
+    }, [profile.id]);
+
+    // Called by Join Room UI
+    const handleJoinRoom = useCallback(async (code: string) => {
+        const cleanCode = code.trim().toUpperCase();
+        const roomData = await checkRoomExists(cleanCode);
+        if (!roomData) {
+            alert('Room not found or has already been closed.');
+            return;
+        }
+        setIsRoomCreator(false);
+        setPrivateRoom(cleanCode);
+        if (typeof window !== 'undefined') {
+            const url = new URL(window.location.href);
+            url.searchParams.set('room', cleanCode);
+            window.history.pushState({}, '', url.toString());
+        }
+    }, []);
+
+    // Creator leaves → delete room → everyone gets kicked in real-time
+    const handleLeaveRoom = useCallback(async () => {
+        if (!privateRoom) return;
+        if (isRoomCreator) {
+            await deleteRoom(privateRoom);
+            // clearRoom will be called by the useEffect watching isRoomValid
+        } else {
+            clearRoom();
+        }
+    }, [privateRoom, isRoomCreator, clearRoom]);
+
+    // Backward-compat: used by LocationPermission which passes a code directly
+    const handleRoomChange = useCallback((code: string) => {
+        if (!code) { clearRoom(); return; }
+        // If code is new (user is creating), call handleCreateRoom
+        // LocationPermission already distinguishes Create vs Join
+        handleCreateRoom(code);
+    }, [handleCreateRoom, clearRoom]);
 
     const handleSubmitSuccess = () => {
         // Trigger refresh of feed
@@ -63,13 +127,18 @@ export default function Home() {
 
     const renderContent = () => {
         if (!isReady) {
-            return <LocationPermission locationState={locationState} onJoinPrivateRoom={handleRoomChange} />;
+            return (
+                <LocationPermission
+                    locationState={locationState}
+                    onCreatePrivateRoom={handleCreateRoom}
+                    onJoinPrivateRoom={handleJoinRoom}
+                />
+            );
         }
 
         return (
             <div className="space-y-3">
                 {/* Input Section */}
-
                 <ClipboardInput
                     geoCell={effectiveGeoCell!}
                     alias={mounted ? profile.name : ''}
@@ -83,7 +152,10 @@ export default function Home() {
                     geoCell={effectiveGeoCell!} 
                     userId={profile.id} 
                     activeRoom={privateRoom}
-                    onCreateRoom={handleRoomChange}
+                    onCreateRoom={handleCreateRoom}
+                    onJoinRoom={handleJoinRoom}
+                    onLeaveRoom={handleLeaveRoom}
+                    isRoomCreator={isRoomCreator}
                 />
             </div>
         );
