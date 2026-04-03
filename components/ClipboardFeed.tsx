@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import QRCode from 'react-qr-code';
 import { useClipboard } from '@/hooks/useClipboard';
 import { useRealtime } from '@/hooks/useRealtime';
 import SnippetCard from './SnippetCard';
@@ -226,7 +225,13 @@ export default function ClipboardFeed({
                             )}
                             
                             <div className="bg-white p-4 rounded-xl border-2 border-gray-100 inline-block mb-8 shadow-sm">
-                                <QRCode value={hostUrl} size={200} className="w-48 h-48" />
+                                <img 
+                                    src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(hostUrl)}`} 
+                                    width={192} 
+                                    height={192} 
+                                    className="w-48 h-48"
+                                    alt="Room QR Code" 
+                                />
                             </div>
                             
                             <button
