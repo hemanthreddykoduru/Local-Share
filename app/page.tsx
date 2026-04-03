@@ -24,6 +24,7 @@ export default function Home() {
     const [privateRoom, setPrivateRoom] = useState<string | null>(null);
     // Track whether the current user is the room creator
     const [isRoomCreator, setIsRoomCreator] = useState(false);
+    const [showClosedModal, setShowClosedModal] = useState(false);
 
     // Real-time room watcher — kicks users out when creator leaves
     const { isRoomValid, isChecking: isRoomChecking, creatorId } = useRoom(privateRoom);
@@ -43,11 +44,14 @@ export default function Home() {
     // Auto-kick: if room becomes invalid (creator left), clear local room state
     useEffect(() => {
         if (privateRoom && !isRoomChecking && !isRoomValid) {
-            alert('This room has been closed by the creator.');
-            clearRoom();
+            if (!isRoomCreator) {
+                setShowClosedModal(true);
+            } else {
+                clearRoom();
+            }
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isRoomValid, isRoomChecking, privateRoom]);
+    }, [isRoomValid, isRoomChecking, privateRoom, isRoomCreator]);
 
     const clearRoom = useCallback(() => {
         setPrivateRoom(null);
@@ -414,6 +418,28 @@ export default function Home() {
                 currentName={profile.name}
                 onSave={handleSaveName}
             />
+
+            {/* Room Closed Modal */}
+            {showClosedModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden animate-slide-up text-center p-8">
+                        <div className="w-16 h-16 mx-auto mb-4 bg-red-100 text-red-500 rounded-full flex items-center justify-center">
+                            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        </div>
+                        <h2 className="text-xl font-bold text-gray-900 mb-2">Room Closed</h2>
+                        <p className="text-gray-600 mb-6">The creator has ended this room session. You have been disconnected.</p>
+                        <button
+                            onClick={() => {
+                                setShowClosedModal(false);
+                                clearRoom();
+                            }}
+                            className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 rounded-xl transition-colors"
+                        >
+                            Return to Home
+                        </button>
+                    </div>
+                </div>
+            )}
         </main>
     );
 }

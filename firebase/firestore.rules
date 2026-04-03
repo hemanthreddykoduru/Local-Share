@@ -25,5 +25,10 @@ service cloud.firestore {
       allow update: if isValidText(request.resource.data.text);
       allow delete: if true;
     }
+    
+    // Rooms collection rules
+    match /rooms/{roomId} {
+      allow read, create, update, delete: if true;
+    }
   }
 }
