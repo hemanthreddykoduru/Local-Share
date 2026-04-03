@@ -33,8 +33,9 @@ export default function ClipboardFeed({
     const [showQR, setShowQR] = useState(false);
     const [showJoinModal, setShowJoinModal] = useState(false);
     const [joinCodeInput, setJoinCodeInput] = useState('');
+    const [pendingRoomCode, setPendingRoomCode] = useState<string | null>(null);
     
-    const displayRoomCode = activeRoom || '';
+    const displayRoomCode = activeRoom || pendingRoomCode || '';
     const hostUrl = typeof window !== 'undefined' 
         ? `${window.location.origin}/?room=${displayRoomCode}`
         : 'https://local-share.tech';
@@ -43,6 +44,7 @@ export default function ClipboardFeed({
         if (!activeRoom && onCreateRoom) {
             // Generate a random 6-digit code
             const newCode = Math.floor(100000 + Math.random() * 900000).toString();
+            setPendingRoomCode(newCode);
             onCreateRoom(newCode);
         }
         setShowQR(true);
