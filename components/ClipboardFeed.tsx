@@ -293,10 +293,12 @@ export default function ClipboardFeed({
                             
                             <input 
                                 type="text"
+                                inputMode="numeric"
+                                pattern="[0-9]*"
                                 maxLength={6}
                                 placeholder="6-Digit Code"
                                 value={joinCodeInput}
-                                onChange={(e) => setJoinCodeInput(e.target.value.toUpperCase())}
+                                onChange={(e) => setJoinCodeInput(e.target.value.replace(/\D/g, ''))}
                                 className="w-full text-center text-3xl font-black tracking-widest text-gray-800 bg-gray-50 border border-gray-200 rounded-xl px-4 py-4 mb-6 focus:ring-2 focus:ring-primary-500 focus:outline-none"
                             />
                             

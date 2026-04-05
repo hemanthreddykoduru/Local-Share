@@ -59,10 +59,12 @@ export default function LocationPermission({ locationState, onCreatePrivateRoom,
                     <div className="flex gap-2">
                         <input
                             type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                             placeholder="Enter 6-Digit Code"
                             maxLength={6}
                             value={roomInput}
-                            onChange={(e) => setRoomInput(e.target.value.toUpperCase())}
+                            onChange={(e) => setRoomInput(e.target.value.replace(/\D/g, ''))}
                             autoFocus
                             className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:outline-none placeholder-gray-400 text-center font-bold tracking-widest"
                         />
