@@ -3,28 +3,19 @@
  * Format: [Adjective][Animal] (e.g., "QuickFox", "BrightOwl")
  */
 
-const ADJECTIVES = [
-    'Quick', 'Bright', 'Swift', 'Gentle', 'Bold',
-    'Calm', 'Clever', 'Brave', 'Happy', 'Lucky',
-    'Wise', 'Quiet', 'Sunny', 'Friendly', 'Kind',
-    'Eager', 'Noble', 'Proud', 'Shiny', 'Zesty',
-    'Merry', 'Jolly', 'Keen', 'Lively', 'Neat',
-];
-
-const ANIMALS = [
-    'Fox', 'Owl', 'Bear', 'Wolf', 'Hawk',
-    'Lion', 'Tiger', 'Eagle', 'Panda', 'Otter',
-    'Falcon', 'Lynx', 'Raven', 'Swan', 'Moose',
-    'Koala', 'Dolphin', 'Penguin', 'Seal', 'Crane',
-    'Turtle', 'Rabbit', 'Deer', 'Peacock', 'Robin',
+const MARVEL_CHARACTERS = [
+    'Iron Man', 'Captain America', 'Thor', 'Hulk', 'Black Widow',
+    'Hawkeye', 'Black Panther', 'Scarlet Witch', 'Vision', 'Captain Marvel',
+    'Spider-Man', 'Ant-Man', 'Wasp', 'War Machine', 'Falcon',
+    'Winter Soldier', 'Loki', 'Valkyrie', 'Mantis', 'Okoye',
+    'Shuri', 'Nebula', 'Rocket Raccoon', 'Groot', 'Drax',
+    'Star-Lord', 'Gamora', 'Wong'
 ];
 
 /**
  * Generate a random anonymous alias
- * @returns Random alias string (e.g., "QuickFox")
+ * @returns Random alias string from Marvel characters
  */
 export function generateAlias(): string {
-    const adjective = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
-    const animal = ANIMALS[Math.floor(Math.random() * ANIMALS.length)];
-    return `${adjective}${animal}`;
+    return MARVEL_CHARACTERS[Math.floor(Math.random() * MARVEL_CHARACTERS.length)];
 }
