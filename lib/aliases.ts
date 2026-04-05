@@ -5,18 +5,24 @@
 
 const HERO_CHARACTERS = [
     // Marvel
-    'Iron Man', 'Captain America', 'Thor', 'Hulk', 'Black Widow',
-    'Hawkeye', 'Black Panther', 'Scarlet Witch', 'Vision', 'Captain Marvel',
-    'Spider-Man', 'Ant-Man', 'Wasp', 'War Machine', 'Falcon',
-    'Winter Soldier', 'Loki', 'Valkyrie', 'Mantis', 'Okoye',
-    'Shuri', 'Nebula', 'Rocket Raccoon', 'Groot', 'Drax',
-    'Star-Lord', 'Gamora', 'Wong',
+    'Iron Man (Tony Stark)', 'Captain America (Steve Rogers)', 'Thor (Thor Odinson)', 
+    'Hulk (Bruce Banner)', 'Black Widow (Natasha Romanoff)', 'Hawkeye (Clint Barton)', 
+    'Black Panther (T\'Challa)', 'Scarlet Witch (Wanda Maximoff)', 'Vision (Vision)', 
+    'Captain Marvel (Carol Danvers)', 'Spider-Man (Peter Parker)', 'Ant-Man (Scott Lang)', 
+    'Wasp (Hope van Dyne)', 'War Machine (James Rhodes)', 'Falcon (Sam Wilson)',
+    'Winter Soldier (Bucky Barnes)', 'Loki (Loki Laufeyson)', 'Valkyrie (Brunnhilde)', 
+    'Mantis (Mantis)', 'Okoye (Okoye)', 'Shuri (Shuri)', 'Nebula (Nebula)', 
+    'Rocket Raccoon (Rocket)', 'Groot (Groot)', 'Drax (Drax the Destroyer)',
+    'Star-Lord (Peter Quill)', 'Gamora (Gamora)', 'Wong (Wong)',
     
     // DC
-    'Superman', 'Batman', 'Wonder Woman', 'The Flash', 'Green Lantern',
-    'Aquaman', 'Cyborg', 'Martian Manhunter', 'Wonder Girl', 'Green Arrow',
-    'Black Canary', 'Zatanna', 'Shazam', 'Nightwing', 'Hawkman',
-    'Hawkgirl', 'Google', 'Plastic Man', 'Elongated Man', 'Red Tornado'
+    'Superman (Clark Kent)', 'Batman (Bruce Wayne)', 'Wonder Woman (Diana Prince)', 
+    'The Flash (Barry Allen)', 'Green Lantern (Hal Jordan)', 'Aquaman (Arthur Curry)', 
+    'Cyborg (Victor Stone)', 'Martian Manhunter (J\'onn J\'onzz)', 'Wonder Girl (Donna Troy)', 
+    'Green Arrow (Oliver Queen)', 'Black Canary (Dinah Lance)', 'Zatanna (Zatanna Zatara)', 
+    'Shazam (Billy Batson)', 'Nightwing (Dick Grayson)', 'Hawkman (Carter Hall)',
+    'Hawkgirl (Shiera Sanders Hall)', 'Google (DC Comics character)', 'Plastic Man (Patrick "Eel" O\'Brian)', 
+    'Elongated Man (Ralph Dibny)', 'Red Tornado (Ma Hunkel)'
 ];
 
 /**
