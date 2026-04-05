@@ -171,7 +171,7 @@ export default function ClipboardFeed({
             <div className="flex items-center justify-between mb-6">
                 <div>
                     <h2 className="text-lg font-bold text-gray-800">
-                        Nearby Messages ({allSnippets.length})
+                        {activeRoom ? 'Group Messages' : 'Nearby Messages'} ({allSnippets.length})
                     </h2>
                     {allSnippets.length > 0 && (
                         <p className="text-sm text-green-600 font-medium flex items-center gap-1.5 mt-1">
@@ -179,7 +179,7 @@ export default function ClipboardFeed({
                               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
                             </span>
-                            {uniqueUsersCount} active {uniqueUsersCount === 1 ? 'person' : 'people'} nearby
+                            {uniqueUsersCount} {uniqueUsersCount === 1 ? 'person' : 'people'} {activeRoom ? 'online' : 'nearby'}
                         </p>
                     )}
                 </div>

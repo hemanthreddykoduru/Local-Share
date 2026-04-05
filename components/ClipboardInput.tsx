@@ -83,12 +83,14 @@ export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess
         }
     };
 
+    const isRoom = geoCell.startsWith('room_');
+
     return (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="snippet-text" className="block text-sm font-semibold text-gray-700 mb-2">
-                        Share something nearby
+                        {isRoom ? 'Share something with the Room' : 'Share something nearby'}
                     </label>
                     <textarea
                         id="snippet-text"
@@ -161,7 +163,7 @@ export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess
                             Posting...
                         </span>
                     ) : (
-                        'Post to Nearby Clipboard'
+                        isRoom ? 'Post to Room' : 'Post to Nearby Clipboard'
                     )}
                 </button>
             </form>
