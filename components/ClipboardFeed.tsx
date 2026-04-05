@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useClipboard } from '@/hooks/useClipboard';
 import { useRealtime } from '@/hooks/useRealtime';
 import SnippetCard from './SnippetCard';
@@ -28,6 +28,11 @@ export default function ClipboardFeed({
 }: ClipboardFeedProps) {
     const { snippets, isLoading, error, refresh } = useClipboard(geoCell);
     const [localSnippets, setLocalSnippets] = useState<Snippet[]>([]);
+
+    // Clear realtime snippets if we change rooms/cells
+    useEffect(() => {
+        setLocalSnippets([]);
+    }, [geoCell]);
     
     // Modals State
     const [showQR, setShowQR] = useState(false);
