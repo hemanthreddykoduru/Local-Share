@@ -82,7 +82,7 @@ export default function ContactPage() {
                                     <div>
                                         <h3 className="font-semibold text-gray-800">Headquarters</h3>
                                         <p className="text-gray-600">Local Share Tech</p>
-                                        <p className="text-sm text-gray-500">San Francisco, CA (Remote First)</p>
+                                        <p className="text-sm text-gray-500">Bengaluru</p>
                                     </div>
                                 </div>
                             </div>
