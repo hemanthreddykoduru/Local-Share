@@ -316,26 +316,6 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Testimonials Section */}
-            <section className="bg-gray-100 py-12">
-                <div className="max-w-4xl mx-auto px-4">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">What Users Are Saying</h2>
-                    <div className="grid md:grid-cols-3 gap-6">
-                        <div className="bg-white p-6 rounded-xl shadow-sm">
-                            <p className="text-gray-600 italic mb-4">&quot;Perfect for sharing WiFi passwords with guests. No more spelling out complex passwords character by character!&quot;</p>
-                            <p className="text-sm font-semibold text-gray-800">— Home User</p>
-                        </div>
-                        <div className="bg-white p-6 rounded-xl shadow-sm">
-                            <p className="text-gray-600 italic mb-4">&quot;I use this in my classroom to share links instantly. Students just open the site and grab what they need.&quot;</p>
-                            <p className="text-sm font-semibold text-gray-800">— High School Teacher</p>
-                        </div>
-                        <div className="bg-white p-6 rounded-xl shadow-sm">
-                            <p className="text-gray-600 italic mb-4">&quot;Great for conferences! No app downloads, no account setup. Just works.&quot;</p>
-                            <p className="text-sm font-semibold text-gray-800">— Event Organizer</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* FAQ Preview Section */}
             <section className="max-w-4xl mx-auto px-4 py-12">
