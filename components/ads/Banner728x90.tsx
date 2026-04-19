@@ -27,7 +27,7 @@ export default function Banner728x90() {
 
             const script2 = document.createElement('script');
             script2.type = 'text/javascript';
-            script2.src = '//www.highperformanceformat.com/902fd7bb53e5c530ed5c74f8aac32749/invoke.js';
+            script2.src = 'https://www.highperformanceformat.com/902fd7bb53e5c530ed5c74f8aac32749/invoke.js';
             containerRef.current.appendChild(script2);
         }
     }, []);

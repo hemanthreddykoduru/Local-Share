@@ -27,7 +27,7 @@ export default function Banner300x250() {
 
             const script2 = document.createElement('script');
             script2.type = 'text/javascript';
-            script2.src = '//www.highperformanceformat.com/5f28dddeac0af206a191aa42e6e74557/invoke.js';
+            script2.src = 'https://www.highperformanceformat.com/5f28dddeac0af206a191aa42e6e74557/invoke.js';
             containerRef.current.appendChild(script2);
         }
     }, []);

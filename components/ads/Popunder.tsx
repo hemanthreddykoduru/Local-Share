@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
-export default function SocialBar() {
+export default function Popunder() {
     const isLoaded = useRef(false);
 
     useEffect(() => {
@@ -11,7 +11,7 @@ export default function SocialBar() {
 
         const script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = 'https://pl28633299.profitablecpmratenetwork.com/83/bb/92/83bb92b15ba14dc9d8d5247d64086800.js';
+        script.src = 'https://tightslybella.com/99/39/a8/9939a88a4b01fd4915f1a68ac3c68af3.js';
         script.async = true;
         document.body.appendChild(script);
 

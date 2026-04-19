@@ -2,14 +2,20 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import './globals.css';
 import SocialBar from '@/components/ads/SocialBar';
+import Popunder from '@/components/ads/Popunder';
+
+export const viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    themeColor: '#0ea5e9',
+};
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://local-share.tech'),
     title: 'Local Share - GPS Clipboard',
     description: 'Local Share tool: Instantly share text, links, and messages with people nearby. No login required. The easiest way to share locally for communities and events.',
     keywords: 'local share, share locally, location based chat, nearby text drop, anonymous local sharing, gps clipboard, community board, geo chat',
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    themeColor: '#0ea5e9',
     manifest: '/manifest.json',
     openGraph: {
         title: 'Local Share - GPS Clipboard',
@@ -69,6 +75,7 @@ export default function RootLayout({
                     }}
                 />
                 <SocialBar />
+                <Popunder />
             </body>
         </html>
     );

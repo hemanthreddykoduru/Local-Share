@@ -14,7 +14,7 @@ export default function NativeBanner() {
             const script = document.createElement('script');
             script.async = true;
             script.dataset.cfasync = 'false';
-            script.src = '//pl28633303.profitablecpmratenetwork.com/d5023381f48ff6861b638f9b0cb87e69/invoke.js';
+            script.src = 'https://pl28633303.profitablecpmratenetwork.com/d5023381f48ff6861b638f9b0cb87e69/invoke.js';
             
             containerRef.current.appendChild(script);
         }
