@@ -256,10 +256,18 @@ export default function Home() {
                                         <span>All messages auto-delete after 1 hour for privacy.</span>
                                     </li>
                                 </ul>
-                                <div className="mt-4 pt-4 border-t border-gray-100">
+                                <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3">
                                     <a href="/blog/privacy-first-design" className="text-xs font-medium text-primary-600 hover:text-primary-800 flex items-center gap-1 group">
                                         Read our Privacy Architecture
                                         <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                                    </a>
+                                    <a 
+                                        href="https://tightslybella.com/m8bybpc0?key=26747bf7af71ff67c33d96f2ea9f1210" 
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-xs font-bold text-white bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 px-3 py-2 rounded-lg text-center shadow-sm transition-all hover:shadow-md flex items-center justify-center gap-2"
+                                    >
+                                        ♥️ Support Local Share
                                     </a>
                                 </div>
                             </div>
