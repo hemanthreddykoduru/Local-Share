@@ -8,6 +8,7 @@ import AdUnit from '@/components/AdUnit';
 import AdsterraSlot from '@/components/AdsterraSlot';
 import AdsterraNative from '@/components/AdsterraNative';
 import AdBlockDetector from '@/components/AdBlockDetector';
+import Banner300x250 from '@/components/ads/Banner300x250';
 
 import ProfileModal from '@/components/ProfileModal';
 import { useState, useEffect, useCallback } from 'react';
@@ -269,6 +270,7 @@ export default function Home() {
                     {/* Main Interaction Area (Center) */}
                     <div className="flex-1 min-w-0 max-w-4xl">
                         {renderContent()}
+                        <Banner300x250 />
                     </div>
 
                     {/* Right Sidebar */}

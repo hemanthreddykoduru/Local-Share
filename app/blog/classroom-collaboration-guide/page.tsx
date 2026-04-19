@@ -4,6 +4,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import AuthorBio from '@/components/AuthorBio';
 import RelatedPosts from '@/components/RelatedPosts';
+import NativeBanner from '@/components/ads/NativeBanner';
 
 export const metadata: Metadata = {
     title: 'Classroom Collaboration Guide: Using Local Share for Education | Local Share Blog',
@@ -52,6 +53,9 @@ export default function ClassroomCollaborationGuidePage() {
                             Local Share offers a simpler approach: everyone in the room opens the same website, and instantly they can see whatever you&apos;ve posted. No QR codes, no email lists, no app downloads.
                         </p>
                     </section>
+
+                    <NativeBanner />
+
 
                     <section className="mb-8">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">Getting Started in Your Classroom</h2>

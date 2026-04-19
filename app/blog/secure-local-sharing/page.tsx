@@ -4,6 +4,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import AuthorBio from '@/components/AuthorBio';
 import RelatedPosts from '@/components/RelatedPosts';
+import NativeBanner from '@/components/ads/NativeBanner';
 
 export const metadata: Metadata = {
     title: 'Why Anonymous Local Sharing is Safer - GPS Clipboard',

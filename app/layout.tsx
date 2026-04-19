@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import './globals.css';
+import SocialBar from '@/components/ads/SocialBar';
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://local-share.tech'),
@@ -67,6 +68,7 @@ export default function RootLayout({
                         })
                     }}
                 />
+                <SocialBar />
             </body>
         </html>
     );

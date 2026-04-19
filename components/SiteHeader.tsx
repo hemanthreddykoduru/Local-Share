@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Banner728x90 from '@/components/ads/Banner728x90';
 
 export default function SiteHeader() {
     return (
@@ -41,6 +42,8 @@ export default function SiteHeader() {
                     </Link>
                 </nav>
             </div>
+            {/* Banner Ad */}
+            <Banner728x90 />
         </header>
     );
 }

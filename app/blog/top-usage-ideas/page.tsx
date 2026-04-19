@@ -4,6 +4,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import AuthorBio from '@/components/AuthorBio';
 import RelatedPosts from '@/components/RelatedPosts';
+import NativeBanner from '@/components/ads/NativeBanner';
 
 export const metadata: Metadata = {
     title: 'Top 5 Use Cases for Local Sharing - GPS Clipboard',
