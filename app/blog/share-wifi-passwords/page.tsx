@@ -4,8 +4,6 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import AuthorBio from '@/components/AuthorBio';
 import RelatedPosts from '@/components/RelatedPosts';
-import NativeBanner from '@/components/ads/NativeBanner';
-
 export const metadata: Metadata = {
     title: 'Share WiFi Passwords Instantly with Local Share | Local Share Blog',
     description: 'Learn how to share WiFi passwords with guests, visitors, and event attendees instantly using Local Share - no apps, no typing long passwords.',
@@ -54,9 +52,6 @@ export default function ShareWifiPasswordsPage() {
                             With Local Share, this becomes a 10-second process.
                         </p>
                     </section>
-
-                    <NativeBanner />
-
 
                     <section className="mb-8">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">The Simple Solution</h2>

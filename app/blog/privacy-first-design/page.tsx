@@ -4,8 +4,6 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import AuthorBio from '@/components/AuthorBio';
 import RelatedPosts from '@/components/RelatedPosts';
-import NativeBanner from '@/components/ads/NativeBanner';
-
 export const metadata: Metadata = {
     title: 'Privacy-First Design: How Local Share Protects Your Data | Local Share Blog',
     description: 'Deep dive into the privacy architecture of Local Share. Learn how we built a location-based tool that never stores your exact location and deletes all data automatically.',
@@ -51,9 +49,6 @@ export default function PrivacyFirstDesignPage() {
                             At Local Share, we asked a different question: <strong>Can we build a useful location-based tool without ever storing anyone&apos;s exact location?</strong> The answer is yes.
                         </p>
                     </section>
-
-                    <NativeBanner />
-
 
                     <section className="mb-8">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">The Geo-Cell Approach</h2>

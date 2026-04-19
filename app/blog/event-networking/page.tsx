@@ -4,8 +4,6 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import AuthorBio from '@/components/AuthorBio';
 import RelatedPosts from '@/components/RelatedPosts';
-import NativeBanner from '@/components/ads/NativeBanner';
-
 export const metadata: Metadata = {
     title: 'Event Networking Made Easy: Share Contact Info Locally | Local Share Blog',
     description: 'Learn how to exchange contact information at events, conferences, and meetups without fumbling with phones or business cards using Local Share.',
@@ -54,9 +52,6 @@ export default function EventNetworkingPage() {
                             What if there was a better way?
                         </p>
                     </section>
-
-                    <NativeBanner />
-
 
                     <section className="mb-8">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">The Local Share Approach</h2>

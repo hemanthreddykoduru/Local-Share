@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import './globals.css';
-import SocialBar from '@/components/ads/SocialBar';
-import Popunder from '@/components/ads/Popunder';
-
 export const viewport = {
     width: 'device-width',
     initialScale: 1,
@@ -74,8 +71,6 @@ export default function RootLayout({
                         })
                     }}
                 />
-                <SocialBar />
-                <Popunder />
             </body>
         </html>
     );

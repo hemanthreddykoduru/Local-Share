@@ -4,8 +4,6 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import AuthorBio from '@/components/AuthorBio';
 import RelatedPosts from '@/components/RelatedPosts';
-import NativeBanner from '@/components/ads/NativeBanner';
-
 export const metadata: Metadata = {
     title: 'How Geo-Cells Work - The Tech Behind GPS Clipboard',
     description: 'A deep dive into the coordinate grid system and geospatial hashing used to power our anonymous local sharing network.',

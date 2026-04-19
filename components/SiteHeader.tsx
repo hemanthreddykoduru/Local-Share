@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import Banner728x90 from '@/components/ads/Banner728x90';
-
 export default function SiteHeader() {
     return (
         <header className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
@@ -42,8 +40,6 @@ export default function SiteHeader() {
                     </Link>
                 </nav>
             </div>
-            {/* Banner Ad */}
-            <Banner728x90 />
         </header>
     );
 }
