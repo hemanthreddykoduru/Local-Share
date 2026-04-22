@@ -1,5 +1,8 @@
 # LOCAL-SHARE
 
+[![Live Website](https://img.shields.io/badge/Live%20Website-local--share.tech-0ea5e9?style=for-the-badge)](https://local-share.tech)
+[![Sponsor with Razorpay](https://img.shields.io/badge/Sponsor-Razorpay-02042B?style=for-the-badge&logo=razorpay)](https://local-share.tech)
+
 A GPS-based local community clipboard that enables anonymous text sharing between users in close physical proximity (~200 meters).
 
 ## Features
@@ -223,7 +226,11 @@ function coordinatesToGeoCell(lat: number, lon: number): string {
 
 MIT License - Feel free to use for any purpose
 
-## Support
+## Support & Sponsor
+
+If you find this project useful, consider supporting the development and server costs! Because GitHub Markdown does not allow Javascript payment scripts, you can support the project directly using the **Razorpay** button live on our website:
+
+👉 **[Go to local-share.tech to Sponsor](https://local-share.tech)**
 
 For issues or questions:
 1. Check Firebase Console logs
