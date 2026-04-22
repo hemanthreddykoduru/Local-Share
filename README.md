@@ -1,4 +1,4 @@
-# GPS Clipboard
+# LOCAL-SHARE
 
 A GPS-based local community clipboard that enables anonymous text sharing between users in close physical proximity (~200 meters).
 
