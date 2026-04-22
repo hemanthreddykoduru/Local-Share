@@ -11,6 +11,7 @@ A GPS-based local community clipboard that enables anonymous text sharing betwee
 - ⏰ **Auto-Expiring** - Messages disappear after 1 hour
 - 📱 **Mobile-First** - Responsive design, PWA-ready
 - 🛡️ **Secure** - XSS protection, content sanitization, rate limiting
+- 💖 **Community Supported** - Zero ads, powered by optional direct Razorpay donations
 
 ## How It Works
 
@@ -22,8 +23,9 @@ A GPS-based local community clipboard that enables anonymous text sharing betwee
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
+- **Frontend**: Next.js 16, React 19, TypeScript, Tailwind CSS
 - **Backend**: Firebase Firestore, Firebase Security Rules
+- **Monetization**: Razorpay Payment Button Integration
 - **Hosting**: Firebase Hosting (HTTPS)
 - **Real-Time**: Firestore onSnapshot listeners
 
@@ -38,7 +40,8 @@ A GPS-based local community clipboard that enables anonymous text sharing betwee
 ### 1. Clone and Install
 
 ```bash
-cd /path/to/CLIPBOARD
+git clone https://github.com/hemanthreddykoduru/Local-Share.git
+cd Local-Share
 npm install
 ```
 
