@@ -1,4 +1,5 @@
 import { initializeApp, getApps } from 'firebase/app';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 import {
     getFirestore,
     collection,
@@ -27,6 +28,15 @@ const firebaseConfig = {
 
 // Initialize Firebase (only once)
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+
+// Initialize App Check (Browser only)
+if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
+    initializeAppCheck(app, {
+        provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY),
+        isTokenAutoRefreshEnabled: true
+    });
+}
+
 export const db = getFirestore(app);
 
 /**
