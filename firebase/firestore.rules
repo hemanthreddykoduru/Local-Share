@@ -18,12 +18,15 @@ service cloud.firestore {
     
     // Snippets collection rules
     match /snippets/{snippetId} {
-      // TEMPORARY: Allow all reads and creates to debug permission issues
-      allow read, create: if true;
+      // Anyone can read active snippets
+      allow read: if true;
       
-      // Allow client to update the snippet text
-      allow update: if isValidText(request.resource.data.text);
-      allow delete: if true;
+      // Strict validation on creation
+      allow create: if isValidText(request.resource.data.text) && 
+                       isValidGeoCell(request.resource.data.geoCell);
+                       
+      // Critical Patch: Block updates and deletes to prevent tampering
+      allow update, delete: if false;
     }
     
     // Rooms collection rules
