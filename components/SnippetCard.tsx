@@ -10,6 +10,7 @@ import { sanitizeText } from '@/lib/sanitize';
 import { filterProfanity } from '@/lib/profanity';
 import { extractUrl } from '@/lib/utils';
 import LinkPreview from './LinkPreview';
+import { useGlobalTimer } from '@/hooks/useGlobalTimer';
 
 interface SnippetCardProps {
     snippet: Snippet;
@@ -36,11 +37,7 @@ export default function SnippetCard({ snippet, userId }: SnippetCardProps) {
     const [isSaving, setIsSaving] = useState(false);
     
     // Live ticking countdown
-    const [now, setNow] = useState(Date.now());
-    useEffect(() => {
-        const interval = setInterval(() => setNow(Date.now()), 1000);
-        return () => clearInterval(interval);
-    }, []);
+    const now = useGlobalTimer();
 
     const expiresAt = snippet.expires_at as Timestamp;
     const createdAt = snippet.created_at as Timestamp;
