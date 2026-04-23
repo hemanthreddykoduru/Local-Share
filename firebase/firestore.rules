@@ -31,7 +31,13 @@ service cloud.firestore {
     
     // Rooms collection rules
     match /rooms/{roomId} {
-      allow read, create, update, delete: if true;
+      // Prevent mass scraping (enumeration) of all private rooms
+      allow list: if false;
+      // Allow exact ID lookups
+      allow get: if true;
+      
+      // Allow creation and lifecycle management
+      allow create, update, delete: if true;
     }
   }
 }
