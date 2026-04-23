@@ -5,7 +5,7 @@ import { signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 
 interface Profile {
     name: string;
-    id: string; // Firebase anonymous uid
+    id: string; // Firebase anonymous uid — empty string means auth not ready
 }
 
 const NAME_KEY = 'gps_clipboard_name';
@@ -13,20 +13,36 @@ const NAME_KEY = 'gps_clipboard_name';
 /**
  * Hook to manage user profile.
  * Uses Firebase Anonymous Auth for a real, verifiable uid.
- * The display name is persisted in localStorage.
+ * Exposes authError so consumers can show a meaningful message
+ * when Anonymous Auth is not enabled in the Firebase Console.
  */
 export function useProfile() {
     const [profile, setProfile] = useState<Profile>({ name: '', id: '' });
+    const [authReady, setAuthReady] = useState(false);
+    const [authError, setAuthError] = useState<string | null>(null);
 
     useEffect(() => {
-        // Listen for auth state - sign in anonymously if no user yet
         const unsub = onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 try {
                     const cred = await signInAnonymously(auth);
                     user = cred.user;
-                } catch (e) {
-                    console.error('[useProfile] Anonymous sign-in failed:', e);
+                    setAuthError(null);
+                } catch (e: unknown) {
+                    // "auth/operation-not-allowed" means Anonymous Auth is not
+                    // enabled in the Firebase Console. Surface this clearly.
+                    const code = (e as { code?: string })?.code;
+                    if (code === 'auth/operation-not-allowed') {
+                        console.error(
+                            '[useProfile] Anonymous Auth is disabled.\n' +
+                            'Go to: Firebase Console → Authentication → Sign-in method → Anonymous → Enable'
+                        );
+                        setAuthError('Anonymous Auth not enabled in Firebase Console.');
+                    } else {
+                        console.error('[useProfile] Sign-in failed:', e);
+                        setAuthError('Authentication failed. Please refresh.');
+                    }
+                    setAuthReady(true);
                     return;
                 }
             }
@@ -42,6 +58,7 @@ export function useProfile() {
             }
 
             setProfile({ name, id: user.uid });
+            setAuthReady(true);
         });
 
         return () => unsub();
@@ -54,5 +71,5 @@ export function useProfile() {
         setProfile(prev => ({ ...prev, name }));
     };
 
-    return { profile, updateName };
+    return { profile, updateName, authReady, authError };
 }

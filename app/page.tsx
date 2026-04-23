@@ -19,7 +19,7 @@ export default function Home() {
     const locationState = useLocation();
     const [refreshKey, setRefreshKey] = useState(0);
     const [showProfileModal, setShowProfileModal] = useState(false);
-    const { profile, updateName } = useProfile();
+    const { profile, updateName, authReady, authError } = useProfile();
     const [mounted, setMounted] = useState(false);
     const [privateRoom, setPrivateRoom] = useState<string | null>(null);
     // Track whether the current user is the room creator
@@ -147,6 +147,8 @@ export default function Home() {
                     geoCell={effectiveGeoCell!}
                     alias={mounted ? profile.name : ''}
                     userId={profile.id}
+                    authReady={authReady}
+                    authError={authError}
                     onSubmitSuccess={handleSubmitSuccess}
                 />
 

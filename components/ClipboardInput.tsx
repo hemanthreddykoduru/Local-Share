@@ -11,12 +11,14 @@ interface ClipboardInputProps {
     geoCell: string;
     alias: string;
     userId: string;
+    authReady: boolean;
+    authError: string | null;
     onSubmitSuccess: () => void;
 }
 
 const MAX_LENGTH = 1000;
 
-export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess }: ClipboardInputProps) {
+export default function ClipboardInput({ geoCell, alias, userId, authReady, authError, onSubmitSuccess }: ClipboardInputProps) {
     const [text, setText] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -28,6 +30,12 @@ export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Step 6 (Prevent): Guard against posting before auth is ready
+        if (!userId) {
+            setError('Still initializing... please wait a moment and try again.');
+            return;
+        }
 
         if (!isValid) {
             setError('Please enter valid text (1-1000 characters)');
@@ -140,6 +148,20 @@ export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess
                     </div>
                 </div>
 
+                {/* Step 6 (Prevent): Surface auth configuration errors clearly */}
+                {authError && (
+                    <div className="mb-4 p-3 bg-amber-50 border border-amber-300 rounded-lg text-sm text-amber-800">
+                        <strong>⚠️ Setup required:</strong> {authError}<br />
+                        <span className="text-xs mt-1 block">Firebase Console → Authentication → Sign-in method → Anonymous → Enable</span>
+                    </div>
+                )}
+
+                {!authError && !authReady && (
+                    <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700">
+                        Initializing session...
+                    </div>
+                )}
+
                 {error && (
                     <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
                         {error}
@@ -148,8 +170,8 @@ export default function ClipboardInput({ geoCell, alias, userId, onSubmitSuccess
 
                 <button
                     type="submit"
-                    disabled={!isValid || isSubmitting}
-                    className={`w-full py-3.5 px-6 rounded-xl font-semibold text-base transition-all active:scale-[0.98] ${isValid && !isSubmitting
+                    disabled={!isValid || isSubmitting || !userId || !!authError}
+                    className={`w-full py-3.5 px-6 rounded-xl font-semibold text-base transition-all active:scale-[0.98] ${isValid && !isSubmitting && userId && !authError
                         ? 'bg-primary-600 hover:bg-primary-700 text-white shadow-sm'
                         : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                         }`}
