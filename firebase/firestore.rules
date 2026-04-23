@@ -11,9 +11,10 @@ service cloud.firestore {
     }
     
     // Helper function to validate geo-cell format
+    // Accepts both GPS cells (e.g. "2657_15519") and room cells (e.g. "room_123456")
     function isValidGeoCell(geoCell) {
       return geoCell is string && 
-             geoCell.matches('^-?[0-9]+_-?[0-9]+$');
+             (geoCell.matches('^-?[0-9]+_-?[0-9]+$') || geoCell.matches('^room_[0-9]{4,10}$'));
     }
     
     // Snippets collection rules
