@@ -23,7 +23,10 @@ service cloud.firestore {
       
       // Strict validation on creation
       allow create: if isValidText(request.resource.data.text) && 
-                       isValidGeoCell(request.resource.data.geoCell);
+                       isValidGeoCell(request.resource.data.geoCell) &&
+                       request.resource.data.expires_at is timestamp &&
+                       request.resource.data.expires_at > request.time &&
+                       request.resource.data.expires_at <= request.time + duration.value(86400, 's');
                        
       // Critical Patch: Block updates and deletes to prevent tampering
       allow update, delete: if false;
