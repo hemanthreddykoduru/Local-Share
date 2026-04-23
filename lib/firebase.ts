@@ -1,5 +1,6 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
+import { getAuth } from 'firebase/auth';
 import {
     getFirestore,
     collection,
@@ -38,6 +39,7 @@ if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY)
 }
 
 export const db = getFirestore(app);
+export const auth = getAuth(app);
 
 /**
  * Fetch snippets for a specific geo-cell

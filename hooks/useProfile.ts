@@ -1,55 +1,58 @@
 import { useState, useEffect } from 'react';
 import { generateAlias } from '@/lib/aliases';
+import { auth } from '@/lib/firebase';
+import { signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 
 interface Profile {
     name: string;
-    id: string;
+    id: string; // Firebase anonymous uid
 }
 
-const STORAGE_KEY = 'gps_clipboard_profile';
+const NAME_KEY = 'gps_clipboard_name';
 
 /**
- * Hook to manage user profile (custom name)
- * Stores name in localStorage for persistence
+ * Hook to manage user profile.
+ * Uses Firebase Anonymous Auth for a real, verifiable uid.
+ * The display name is persisted in localStorage.
  */
 export function useProfile() {
-    const [profile, setProfile] = useState<Profile>(() => {
-        // Initialize from localStorage or generate default
-        if (typeof window !== 'undefined') {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
+    const [profile, setProfile] = useState<Profile>({ name: '', id: '' });
+
+    useEffect(() => {
+        // Listen for auth state - sign in anonymously if no user yet
+        const unsub = onAuthStateChanged(auth, async (user) => {
+            if (!user) {
                 try {
-                    const parsed = JSON.parse(stored);
-                    // Backwards compatibility: ensure id exists
-                    if (!parsed.id) {
-                        parsed.id = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2) + Date.now().toString(36);
-                        localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
-                    }
-                    return parsed;
-                } catch {
-                    // Fall through to generate new profile
+                    const cred = await signInAnonymously(auth);
+                    user = cred.user;
+                } catch (e) {
+                    console.error('[useProfile] Anonymous sign-in failed:', e);
+                    return;
                 }
             }
-        }
-        return {
-            name: generateAlias(),
-            id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2) + Date.now().toString(36)
-        };
-    });
 
-    // Save to localStorage whenever profile changes
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
-        }
-    }, [profile]);
+            // Load saved display name or generate one
+            const savedName = typeof window !== 'undefined'
+                ? localStorage.getItem(NAME_KEY)
+                : null;
+
+            const name = savedName || generateAlias();
+            if (!savedName && typeof window !== 'undefined') {
+                localStorage.setItem(NAME_KEY, name);
+            }
+
+            setProfile({ name, id: user.uid });
+        });
+
+        return () => unsub();
+    }, []);
 
     const updateName = (name: string) => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(NAME_KEY, name);
+        }
         setProfile(prev => ({ ...prev, name }));
     };
 
-    return {
-        profile,
-        updateName,
-    };
+    return { profile, updateName };
 }

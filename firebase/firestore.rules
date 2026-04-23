@@ -21,15 +21,25 @@ service cloud.firestore {
       // Anyone can read active snippets
       allow read: if true;
       
-      // Strict validation on creation
-      allow create: if isValidText(request.resource.data.text) && 
+      // Strict validation on creation - must be signed in and own the doc
+      allow create: if request.auth != null &&
+                       request.auth.uid == request.resource.data.owner_id &&
+                       isValidText(request.resource.data.text) && 
                        isValidGeoCell(request.resource.data.geo_cell) &&
                        request.resource.data.expires_at is timestamp &&
                        request.resource.data.expires_at > request.time &&
                        request.resource.data.expires_at <= request.time + duration.value(86400, 's');
                        
-      // Critical Patch: Block updates and deletes to prevent tampering
-      allow update, delete: if false;
+      // Only the original owner can update (text only) or delete their own snippet
+      allow update: if request.auth != null &&
+                       request.auth.uid == resource.data.owner_id &&
+                       request.resource.data.owner_id == resource.data.owner_id &&
+                       request.resource.data.geo_cell == resource.data.geo_cell &&
+                       request.resource.data.expires_at == resource.data.expires_at &&
+                       isValidText(request.resource.data.text);
+                       
+      allow delete: if request.auth != null &&
+                       request.auth.uid == resource.data.owner_id;
     }
     
     // Rooms collection rules
