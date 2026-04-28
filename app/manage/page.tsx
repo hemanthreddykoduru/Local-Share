@@ -257,7 +257,7 @@ export default function ManageAccountPage() {
             setUploadModal(false);
             setNewUploadFile(null);
             setNewLinkName('');
-            setPublishedLink(`https://local-share.tech/v?id=${finalSlug}`);
+            setPublishedLink(`https://local-share.tech/v?id=${docRef.id}`);
             setSuccessModal(true);
         } catch (err: any) {
             alert('Upload failed: ' + err.message);
