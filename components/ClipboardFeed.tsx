@@ -5,6 +5,7 @@ import { useClipboard } from '@/hooks/useClipboard';
 import { useRealtime } from '@/hooks/useRealtime';
 import SnippetCard from './SnippetCard';
 
+import ClipboardFeedSkeleton from './ClipboardFeedSkeleton';
 import { Snippet } from '@/types';
 
 interface ClipboardFeedProps {
@@ -109,15 +110,7 @@ export default function ClipboardFeed({
 
     const renderSnippetsList = () => {
         if (isLoading) {
-            return (
-                <div className="text-center py-12">
-                    <div className="w-12 h-12 mx-auto mb-4 relative">
-                        <div className="absolute inset-0 border-4 border-primary-200 rounded-full"></div>
-                        <div className="absolute inset-0 border-4 border-primary-500 rounded-full border-t-transparent animate-spin"></div>
-                    </div>
-                    <p className="text-gray-600">Loading nearby messages...</p>
-                </div>
-            );
+            return <ClipboardFeedSkeleton />;
         }
 
         if (error) {

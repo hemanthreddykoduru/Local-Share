@@ -1,6 +1,12 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
-import { getAuth } from 'firebase/auth';
+import { 
+    getAuth, 
+    signInWithPopup, 
+    GoogleAuthProvider, 
+    GithubAuthProvider, 
+    OAuthProvider 
+} from 'firebase/auth';
 import {
     getFirestore,
     collection,
@@ -32,6 +38,11 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0
 
 // Initialize App Check (Browser only)
 if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
+    // Force debug mode in development to bypass reCAPTCHA on localhost
+    if (process.env.NODE_ENV === 'development') {
+        (window as any).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+    }
+
     initializeAppCheck(app, {
         provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY),
         isTokenAutoRefreshEnabled: true
@@ -194,4 +205,22 @@ export async function checkRoomExists(roomCode: string): Promise<{ creator_id: s
         console.error('Error checking room:', error);
         return null;
     }
+}
+// ─── Authentication ─────────────────────────────────────────────────────────
+
+
+
+export async function signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider);
+}
+
+export async function signInWithGithub() {
+    const provider = new GithubAuthProvider();
+    return signInWithPopup(auth, provider);
+}
+
+export async function signInWithMicrosoft() {
+    const provider = new OAuthProvider('microsoft.com');
+    return signInWithPopup(auth, provider);
 }

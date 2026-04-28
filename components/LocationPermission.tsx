@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { LocationState } from '@/types';
 
+import { Skeleton } from './Skeleton';
+
 interface LocationPermissionProps {
     locationState: LocationState;
     onCreatePrivateRoom?: (code: string) => void;
@@ -43,12 +45,12 @@ export default function LocationPermission({ locationState, onCreatePrivateRoom,
                     </svg>
                     Create a New Room
                 </button>
-
+ 
                 {/* Join Room toggle */}
                 {!showJoinInput ? (
                     <button
                         onClick={() => setShowJoinInput(true)}
-                        className="w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-lg transition-colors"
+                        className="w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-200 text-gray-700 font-semibold py-3 px-4 rounded-lg transition-colors"
                     >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
@@ -86,16 +88,15 @@ export default function LocationPermission({ locationState, onCreatePrivateRoom,
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 max-w-md w-full text-center animate-fade-in">
                 {isLoading ? (
                     <>
-                        <div className="w-16 h-16 mx-auto mb-6 relative">
-                            <div className="absolute inset-0 border-4 border-primary-200 rounded-full"></div>
-                            <div className="absolute inset-0 border-4 border-primary-500 rounded-full border-t-transparent animate-spin"></div>
+                        <Skeleton className="w-16 h-16 mx-auto mb-6 rounded-full" />
+                        <Skeleton className="w-3/4 h-8 mx-auto mb-3" />
+                        <Skeleton className="w-full h-4 mb-2" />
+                        <Skeleton className="w-2/3 h-4 mx-auto" />
+                        <div className="mt-8 border-t border-gray-100 pt-6">
+                            <Skeleton className="w-1/2 h-4 mb-4 mx-auto" />
+                            <Skeleton className="w-full h-12 mb-3 rounded-lg" />
+                            <Skeleton className="w-full h-12 rounded-lg" />
                         </div>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-3">
-                            Requesting Location Access
-                        </h2>
-                        <p className="text-gray-600">
-                            Please allow location access to connect with people nearby
-                        </p>
                     </>
                 ) : error ? (
                     <>

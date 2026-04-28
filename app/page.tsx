@@ -50,7 +50,7 @@ export default function Home() {
                 clearRoom();
             }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isRoomValid, isRoomChecking, privateRoom, isRoomCreator]);
 
     const clearRoom = useCallback(() => {
@@ -153,10 +153,10 @@ export default function Home() {
                 />
 
                 {/* Feed Section */}
-                <ClipboardFeed 
-                    key={refreshKey} 
-                    geoCell={effectiveGeoCell!} 
-                    userId={profile.id} 
+                <ClipboardFeed
+                    key={refreshKey}
+                    geoCell={effectiveGeoCell!}
+                    userId={profile.id}
                     activeRoom={privateRoom}
                     onCreateRoom={handleCreateRoom}
                     onJoinRoom={handleJoinRoom}
@@ -189,9 +189,12 @@ export default function Home() {
                             </div>
                         </div>
                         <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-                            <a href="/blog" className="hover:text-primary-600 transition-colors">Blog</a>
-                            <a href="/faq" className="hover:text-primary-600 transition-colors">FAQ</a>
-                            <a href="/about" className="hover:text-primary-600 transition-colors">About</a>
+                            <a href="/manage" className="hover:text-primary-600 transition-colors flex items-center gap-1.5">
+                                Share PDF
+                                <span className="text-[10px] font-bold bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-md leading-none uppercase tracking-tighter animate-pulse">
+                                    New
+                                </span>
+                            </a>
                         </nav>
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-3">
@@ -257,12 +260,25 @@ export default function Home() {
                                         <span>All messages auto-delete after 1 hour for privacy.</span>
                                     </li>
                                 </ul>
-                                <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3">
+                                <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3 relative">
                                     <a href="/blog/privacy-first-design" className="text-xs font-medium text-primary-600 hover:text-primary-800 flex items-center gap-1 group">
                                         Read our Privacy Architecture
                                         <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                                     </a>
-                                    <RazorpayButton />
+
+                                    <div className="relative pt-2">
+                                        {/* Hand-drawn Arrow & Call to action */}
+                                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 hidden xl:flex flex-col items-center pointer-events-none">
+                                            <svg width="80" height="80" viewBox="0 0 40 40" fill="none" className="text-purple-500 animate-bounce-subtle">
+                                                <path d="M20 35C20 35 20 20 20 5M20 5L15 10M20 5L25 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                <path d="M20 35C25 35 30 30 20 25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="2 2" className="opacity-50"/>
+                                            </svg>
+                                            <span className="text-purple-600 font-serif italic font-black text-lg -rotate-3 transform whitespace-nowrap -mt-4 drop-shadow-sm">
+                                                Keep us alive!
+                                            </span>
+                                        </div>
+                                        <RazorpayButton />
+                                    </div>
                                 </div>
                             </div>
 

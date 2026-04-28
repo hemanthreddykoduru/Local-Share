@@ -18,7 +18,7 @@
                     },
                     {
                         "key": "X-Frame-Options",
-                        "value": "DENY"
+                        "value": "SAMEORIGIN"
                     },
                     {
                         "key": "X-XSS-Protection",
@@ -30,7 +30,7 @@
                     },
                     {
                         "key": "Content-Security-Policy",
-                        "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.google.com https://*.googleapis.com https://*.gstatic.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google https://checkout.razorpay.com https://cdn.razorpay.com https://browser.sentry-cdn.com https://static.cloudflareinsights.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.google.com https://*.gstatic.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google https://*.razorpay.com https://browser.sentry-cdn.com; frame-src 'self' https://*.google.com https://*.googlesyndication.com https://*.doubleclick.net https://razorpay.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:;"
+                        "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.google.com https://*.googleapis.com https://*.gstatic.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google https://checkout.razorpay.com https://cdn.razorpay.com https://browser.sentry-cdn.com https://static.cloudflareinsights.com https://chat-local-83231.firebaseapp.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.google.com https://*.gstatic.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google https://*.razorpay.com https://browser.sentry-cdn.com https://chat-local-83231.firebaseapp.com https://csbtfccfouloxhqtiwuw.supabase.co; frame-src 'self' https://*.google.com https://*.googlesyndication.com https://*.doubleclick.net https://razorpay.com https://chat-local-83231.firebaseapp.com https://csbtfccfouloxhqtiwuw.supabase.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://csbtfccfouloxhqtiwuw.supabase.co;"
                     }
                 ]
             }
