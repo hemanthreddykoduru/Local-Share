@@ -26,6 +26,9 @@ export default function ManageAccountPage() {
     const [isUploading, setIsUploading] = useState(false);
     const [deleteModal, setDeleteModal] = useState<string | null>(null);
     const [archiveModal, setArchiveModal] = useState<string | null>(null);
+    const [successModal, setSuccessModal] = useState(false);
+    const [publishedLink, setPublishedLink] = useState('');
+    const [limitModal, setLimitModal] = useState(false);
 
     // Subscription & Plan limits
     const PLAN_LIMITS = {
@@ -212,7 +215,8 @@ export default function ManageAccountPage() {
 
         // Check plan limits
         if (projects.length >= PLAN_LIMITS[userPlan]) {
-            alert(`You have reached the limit for the ${userPlan} plan (${PLAN_LIMITS[userPlan]} PDFs). Please upgrade to upload more.`);
+            setLimitModal(true);
+            setUploadModal(false); // Close upload modal to show limit modal
             return;
         }
 
@@ -253,7 +257,8 @@ export default function ManageAccountPage() {
             setUploadModal(false);
             setNewUploadFile(null);
             setNewLinkName('');
-            alert('File published successfully!');
+            setPublishedLink(`https://local-share.tech/v?id=${finalSlug}`);
+            setSuccessModal(true);
         } catch (err: any) {
             alert('Upload failed: ' + err.message);
         } finally {
@@ -650,6 +655,77 @@ export default function ManageAccountPage() {
                             </button>
                             <button onClick={() => handleArchive(archiveModal)} className="flex-grow py-3 px-4 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow-lg shadow-amber-100 transition-all">
                                 Archive it
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* Success Modal */}
+            {successModal && (
+                <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm animate-fade-in">
+                    <div className="bg-white rounded-[40px] w-full max-w-md p-10 shadow-2xl animate-slide-up border border-gray-100 text-center">
+                        <div className="w-20 h-20 bg-green-50 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                            <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <h3 className="text-2xl font-black text-gray-900 mb-2">Published successfully!</h3>
+                        <p className="text-gray-500 mb-8 font-medium">Your PDF is now live and ready to be shared with the world.</p>
+                        
+                        <div className="bg-gray-50 border border-gray-100 rounded-2xl p-4 mb-8 flex items-center gap-3">
+                            <input 
+                                readOnly 
+                                value={publishedLink} 
+                                className="flex-grow bg-transparent text-sm font-mono text-gray-600 focus:outline-none truncate"
+                            />
+                            <button 
+                                onClick={() => {
+                                    navigator.clipboard.writeText(publishedLink);
+                                    // Maybe show a small toast or change icon
+                                }}
+                                className="p-2 text-primary-600 hover:bg-primary-50 rounded-xl transition-colors"
+                                title="Copy link"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                            </button>
+                        </div>
+
+                        <button 
+                            onClick={() => setSuccessModal(false)}
+                            className="w-full py-4 bg-gray-900 hover:bg-black text-white font-bold rounded-2xl shadow-xl transition-all"
+                        >
+                            Back to dashboard
+                        </button>
+                    </div>
+                </div>
+            )}
+            {/* Limit Reached Modal */}
+            {limitModal && (
+                <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm animate-fade-in">
+                    <div className="bg-white rounded-[40px] w-full max-w-md p-10 shadow-2xl animate-slide-up border border-gray-100 text-center">
+                        <div className="w-20 h-20 bg-purple-50 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                            <svg className="w-10 h-10 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        </div>
+                        <h3 className="text-2xl font-black text-gray-900 mb-2">Limit reached!</h3>
+                        <p className="text-gray-500 mb-8 leading-relaxed font-medium">
+                            You've used all <span className="text-gray-900 font-bold">{PLAN_LIMITS[userPlan]}</span> slots available on your <span className="text-purple-600 font-bold">{userPlan}</span> plan. Upgrade now to keep sharing!
+                        </p>
+                        
+                        <div className="flex flex-col gap-3">
+                            <Link 
+                                href="/pricing"
+                                className="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-2xl shadow-xl shadow-purple-100 transition-all flex items-center justify-center gap-2"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                                Upgrade your plan
+                            </Link>
+                            <button 
+                                onClick={() => setLimitModal(false)}
+                                className="w-full py-4 bg-gray-50 hover:bg-gray-100 text-gray-500 font-bold rounded-2xl transition-all"
+                            >
+                                Maybe later
                             </button>
                         </div>
                     </div>

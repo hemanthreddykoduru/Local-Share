@@ -12,6 +12,8 @@ export default function PricingPage() {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(false);
     const [userPlan, setUserPlan] = useState<'Free' | 'Pro' | 'Pro Plus'>('Free');
+    const [errorModal, setErrorModal] = useState<string | null>(null);
+    const [successModal, setSuccessModal] = useState<string | null>(null);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (u) => {
@@ -106,11 +108,11 @@ export default function PricingPage() {
                             created_at: new Date().toISOString(),
                         });
 
-                        alert(`Successfully upgraded to ${planName} plan!`);
-                        window.location.href = '/manage';
+                        setSuccessModal(planName);
+                        // We will redirect in the modal itself or on close
                     } catch (err) {
                         console.error('Error updating user plan:', err);
-                        alert('Payment was successful but we failed to update your plan. Please contact support.');
+                        setErrorModal('Payment was successful but we failed to update your plan. Please contact support.');
                     }
                 },
                 prefill: {
@@ -124,12 +126,12 @@ export default function PricingPage() {
 
             const rzp = new (window as any).Razorpay(options);
             rzp.on('payment.failed', function (response: any) {
-                alert('Payment failed: ' + response.error.description);
+                setErrorModal(response.error.description || "Your payment didn't go through as it was declined by the bank. Try another payment method or contact your bank.");
             });
             rzp.open();
         } catch (error: any) {
             console.error('Payment initialization failed:', error);
-            alert('Failed to initialize payment: ' + error.message);
+            setErrorModal(error.message || 'Failed to initialize payment');
         } finally {
             setLoading(false);
         }
@@ -281,6 +283,50 @@ export default function PricingPage() {
             </div>
 
             <SiteFooter />
+
+            {/* Error Modal */}
+            {errorModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm animate-fade-in">
+                    <div className="bg-white rounded-[32px] w-full max-w-md p-8 shadow-2xl animate-slide-up border border-gray-100 text-center">
+                        <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Payment failed</h3>
+                        <p className="text-gray-500 mb-8 leading-relaxed font-medium">{errorModal}</p>
+                        <button 
+                            onClick={() => setErrorModal(null)} 
+                            className="w-full py-4 bg-gray-900 hover:bg-black text-white font-bold rounded-2xl shadow-xl transition-all"
+                        >
+                            Try again
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Success Modal */}
+            {successModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm animate-fade-in">
+                    <div className="bg-white rounded-[32px] w-full max-w-md p-8 shadow-2xl animate-slide-up border border-gray-100 text-center">
+                        <div className="w-20 h-20 bg-green-50 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                            <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <h3 className="text-2xl font-black text-gray-900 mb-2">Payment successful!</h3>
+                        <p className="text-gray-500 mb-8 font-medium leading-relaxed">
+                            You've successfully upgraded to the <span className="text-primary-600 font-bold">{successModal}</span> plan. Your new storage limits are active!
+                        </p>
+                        <button 
+                            onClick={() => window.location.href = '/manage'} 
+                            className="w-full py-4 bg-[#1C64F2] hover:bg-blue-700 text-white font-bold rounded-2xl shadow-xl shadow-blue-100 transition-all"
+                        >
+                            Go to dashboard
+                        </button>
+                    </div>
+                </div>
+            )}
         </main>
     );
 }
