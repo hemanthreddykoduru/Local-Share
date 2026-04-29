@@ -15,6 +15,12 @@ export default function PricingPage() {
     const [errorModal, setErrorModal] = useState<string | null>(null);
     const [successModal, setSuccessModal] = useState<string | null>(null);
 
+    const planPriority: Record<string, number> = {
+        'Free': 0,
+        'Pro': 1,
+        'Pro Plus': 2
+    };
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (u) => {
             if (u && !u.isAnonymous) {
@@ -186,9 +192,13 @@ export default function PricingPage() {
                             </li>
                         </ul>
                         
-                        {userPlan === 'Free' && (
+                        {userPlan === 'Free' ? (
                             <div className="w-full py-3.5 px-4 bg-gray-50 border-2 border-gray-200 text-gray-500 font-bold rounded-xl text-center block">
                                 Current Plan
+                            </div>
+                        ) : (
+                            <div className="w-full py-3.5 px-4 bg-green-50 border border-green-200 text-green-600 font-bold rounded-xl text-center">
+                                Included in {userPlan}
                             </div>
                         )}
                     </div>
@@ -227,6 +237,10 @@ export default function PricingPage() {
                         {userPlan === 'Pro' ? (
                             <div className="w-full py-3.5 px-4 bg-blue-50 border-2 border-[#1C64F2] text-[#1C64F2] font-bold rounded-xl text-center block">
                                 Current Plan
+                            </div>
+                        ) : planPriority[userPlan] > planPriority['Pro'] ? (
+                            <div className="w-full py-3.5 px-4 bg-green-50 border border-green-200 text-green-600 font-bold rounded-xl text-center">
+                                Included in {userPlan}
                             </div>
                         ) : (
                             <button 
