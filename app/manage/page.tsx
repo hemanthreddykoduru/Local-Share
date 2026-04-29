@@ -35,7 +35,7 @@ export default function ManageAccountPage() {
     const PLAN_LIMITS = {
         'Free': 5,
         'Pro': 30,
-        'Pro Plus': 50
+        'Pro Plus': 100
     };
     const [userPlan, setUserPlan] = useState<'Free' | 'Pro' | 'Pro Plus'>('Free');
 

@@ -267,7 +267,7 @@ export default function PricingPage() {
                         <ul className="space-y-4 mb-8 flex-grow">
                             <li className="flex items-center gap-3 text-gray-700">
                                 <svg className="w-5 h-5 text-purple-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                                <span className="font-medium">Store up to <strong className="text-gray-900">50 PDFs</strong></span>
+                                <span className="font-medium">Store up to <strong className="text-gray-900">100 PDFs</strong></span>
                             </li>
                             <li className="flex items-center gap-3 text-gray-700">
                                 <svg className="w-5 h-5 text-purple-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
