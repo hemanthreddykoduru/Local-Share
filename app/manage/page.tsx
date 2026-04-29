@@ -377,7 +377,7 @@ export default function ManageAccountPage() {
                                                 {formatDate(project.created_at)}
                                             </div>
                                             <div className="col-span-2 text-sm text-gray-600">
-                                                0
+                                                {project.views || 0}
                                             </div>
                                             <div className="col-span-2 flex items-center justify-end gap-3 text-gray-500 relative">
                                                 <button className="flex items-center gap-1 text-sm font-medium hover:text-gray-900 transition-colors">
