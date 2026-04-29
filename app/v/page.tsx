@@ -15,10 +15,18 @@ function RedirectContent() {
   const [fileName, setFileName] = useState<string | null>(null);
   const [ownerId, setOwnerId] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [userPlan, setUserPlan] = useState<'Free' | 'Pro' | 'Pro Plus'>('Free');
+  const [views, setViews] = useState<number>(0);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
+      if (user) {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+          setUserPlan(userDoc.data().plan || 'Free');
+        }
+      }
     });
     return () => unsubscribe();
   }, []);
@@ -39,12 +47,14 @@ function RedirectContent() {
           setPdfUrl(data.url);
           setFileName(data.file_name || 'Document.pdf');
           setOwnerId(data.owner_id || null);
+          setViews(data.views || 0);
 
           // Increment view count
           const { updateDoc, increment } = await import('firebase/firestore');
           await updateDoc(docRef, {
             views: increment(1)
           });
+          setViews(prev => prev + 1);
         } else {
           setError('This link does not exist or has expired.');
         }
@@ -127,38 +137,67 @@ function RedirectContent() {
                    <p className="text-[11px] text-gray-400 leading-relaxed">Your website visitors will not see this section.</p>
                 </div>
 
-                <div className="flex items-center gap-2 mb-2">
-                   <span className="text-lg">🔑</span>
-                   <h2 className="text-lg font-bold text-white tracking-tight">Unlock potential</h2>
-                </div>
-                <p className="text-xs text-gray-500 font-medium mb-6">Do more with your project</p>
+                 <div className="flex items-center gap-2 mb-2">
+                    <span className="text-lg">{userPlan === 'Free' ? '🔑' : '📊'}</span>
+                    <h2 className="text-lg font-bold text-white tracking-tight">
+                        {userPlan === 'Free' ? 'Unlock potential' : 'Project Insights'}
+                    </h2>
+                 </div>
+                 <p className="text-xs text-gray-500 font-medium mb-6">
+                    {userPlan === 'Free' ? 'Do more with your project' : `Currently viewing stats for your ${userPlan} project`}
+                 </p>
 
-                <div className="space-y-3 mb-auto">
-                   {[
-                     { icon: '🌐', title: 'Custom domains', desc: 'Connect your own domain to look professional' },
-                     { icon: '📱', title: 'Shareable QR Code', desc: 'Generate a QR code for easy physical access' },
-                     { icon: '💬', title: 'Enable Comments', desc: 'Allow visitors to leave feedback' },
-                     { icon: '📊', title: 'Insights & Analytics', desc: 'See who and how many people visit' }
-                   ].map((item, i) => (
-                     <div key={i} className="group bg-white/5 border border-white/5 rounded-2xl p-4 hover:bg-white/10 transition-all cursor-pointer">
-                        <div className="flex items-start gap-3">
-                           <span className="text-lg">{item.icon}</span>
-                           <div>
-                              <h3 className="text-xs font-bold text-white mb-1">{item.title}</h3>
-                              <p className="text-[10px] text-gray-500 leading-normal">{item.desc}</p>
-                           </div>
+                 <div className="space-y-3 mb-auto">
+                    {userPlan !== 'Free' && (
+                        <div className="bg-primary-500/10 border border-primary-500/20 rounded-2xl p-6 mb-4">
+                            <p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">Total Views</p>
+                            <h4 className="text-4xl font-black text-white">{views}</h4>
                         </div>
-                     </div>
-                   ))}
-                </div>
+                    )}
 
-                <div className="pt-8 space-y-3">
-                   <button className="w-full bg-[#3B82F6] hover:bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest py-4 rounded-xl transition-all shadow-lg shadow-blue-500/10">
-                      Compare plans →
-                   </button>
-                   <button className="w-full text-gray-500 text-[10px] font-bold uppercase tracking-widest py-2 hover:text-white transition-colors">
-                      Dismiss
-                   </button>
+                    {[
+                      { icon: '🌐', title: 'Custom domains', desc: 'Connect your own domain to look professional', status: userPlan !== 'Free' ? 'Active' : null },
+                      { icon: '📱', title: 'Shareable QR Code', desc: 'Generate a QR code for easy physical access', status: 'Active' },
+                      { icon: '💬', title: 'Enable Comments', desc: 'Allow visitors to leave feedback', status: 'Coming Soon' },
+                    ].map((item, i) => (
+                      <div key={i} className="group bg-white/5 border border-white/5 rounded-2xl p-4 hover:bg-white/10 transition-all cursor-pointer">
+                         <div className="flex items-start justify-between gap-3">
+                            <div className="flex items-start gap-3">
+                                <span className="text-lg">{item.icon}</span>
+                                <div>
+                                    <h3 className="text-xs font-bold text-white mb-1">{item.title}</h3>
+                                    <p className="text-[10px] text-gray-500 leading-normal">{item.desc}</p>
+                                </div>
+                            </div>
+                            {item.status && (
+                                <span className={`text-[8px] font-black uppercase px-1.5 py-0.5 rounded-md ${item.status === 'Active' ? 'bg-green-500/10 text-green-500' : 'bg-gray-500/10 text-gray-500'}`}>
+                                    {item.status}
+                                </span>
+                            )}
+                         </div>
+                      </div>
+                    ))}
+                 </div>
+
+                 <div className="pt-8 space-y-3">
+                    {userPlan === 'Free' ? (
+                        <button 
+                            onClick={() => window.location.href = '/pricing'}
+                            className="w-full bg-[#3B82F6] hover:bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest py-4 rounded-xl transition-all shadow-lg shadow-blue-500/10"
+                        >
+                            Compare plans →
+                        </button>
+                    ) : (
+                        <button 
+                            onClick={() => window.location.href = '/manage'}
+                            className="w-full bg-white/5 hover:bg-white/10 text-white text-[11px] font-black uppercase tracking-widest py-4 rounded-xl transition-all border border-white/10"
+                        >
+                            Back to dashboard
+                        </button>
+                    )}
+                    <button className="w-full text-gray-500 text-[10px] font-bold uppercase tracking-widest py-2 hover:text-white transition-colors">
+                       Dismiss
+                    </button>
                 </div>
              </div>
            )}
