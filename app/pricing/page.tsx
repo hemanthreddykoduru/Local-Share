@@ -204,12 +204,7 @@ export default function PricingPage() {
                     </div>
 
                     {/* Pro Plan */}
-                    <div className="bg-white rounded-3xl p-8 border-2 border-[#1C64F2] shadow-xl relative flex flex-col transform md:-translate-y-4 animate-slide-up" style={{ animationDelay: '200ms' }}>
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                            <span className="bg-gradient-to-r from-blue-500 to-[#1C64F2] text-white text-xs font-bold uppercase tracking-wider py-1 px-4 rounded-full shadow-sm">
-                                Most Popular
-                            </span>
-                        </div>
+                    <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col animate-slide-up" style={{ animationDelay: '200ms' }}>
                         <div className="mb-8 mt-2">
                             <span className="text-sm font-bold text-[#1C64F2] uppercase tracking-wider bg-blue-50 px-3 py-1 rounded-full">Pro</span>
                             <div className="mt-4 flex items-baseline text-5xl font-black text-gray-900">
@@ -254,8 +249,13 @@ export default function PricingPage() {
                     </div>
 
                     {/* Pro Plus Plan */}
-                    <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col animate-fade-in" style={{ animationDelay: '300ms' }}>
-                        <div className="mb-8">
+                    <div className="bg-white rounded-3xl p-8 border-2 border-purple-600 shadow-xl relative flex flex-col transform md:-translate-y-4 animate-fade-in" style={{ animationDelay: '300ms' }}>
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                            <span className="bg-gradient-to-r from-purple-500 to-purple-600 text-white text-[10px] font-black uppercase tracking-widest py-1.5 px-5 rounded-full shadow-lg shadow-purple-200">
+                                Most Popular
+                            </span>
+                        </div>
+                        <div className="mb-8 mt-2">
                             <span className="text-sm font-bold text-purple-600 uppercase tracking-wider bg-purple-50 px-3 py-1 rounded-full">Pro Plus</span>
                             <div className="mt-4 flex items-baseline text-5xl font-black text-gray-900">
                                 ₹15
@@ -287,7 +287,7 @@ export default function PricingPage() {
                             <button 
                                 onClick={() => handlePayment('Pro Plus', 15)}
                                 disabled={loading}
-                                className="w-full py-3.5 px-4 bg-white border-2 border-purple-200 hover:border-purple-600 hover:text-purple-700 hover:bg-purple-50 text-purple-600 font-bold rounded-xl transition-all text-center disabled:bg-gray-50 disabled:text-gray-400 disabled:border-gray-200"
+                                className="w-full py-4 px-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-purple-100 text-center disabled:bg-purple-300"
                             >
                                 {loading ? 'Processing...' : 'Upgrade to Pro Plus'}
                             </button>
