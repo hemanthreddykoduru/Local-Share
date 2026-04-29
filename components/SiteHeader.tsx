@@ -148,19 +148,11 @@ export default function SiteHeader() {
                             )}
                         </div>
                     ) : (
-                        <button
-                            onClick={async () => {
-                                try {
-                                    const { signInWithGoogle } = await import('@/lib/firebase');
-                                    await signInWithGoogle();
-                                } catch (err: any) {
-                                    alert('Sign in failed: ' + err.message);
-                                }
-                            }}
-                            className="ml-2 text-sm font-semibold bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-xl transition-all shadow-sm"
-                        >
-                            Sign In
-                        </button>
+                        <Link href="/login">
+                            <button className="ml-2 text-sm font-semibold bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-xl transition-all shadow-sm">
+                                Sign In
+                            </button>
+                        </Link>
                     )}
                 </div>
             </div>
