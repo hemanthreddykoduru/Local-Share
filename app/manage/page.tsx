@@ -5,7 +5,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import { auth, db } from '@/lib/firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { collection, query, where, getDocs, onSnapshot, doc, getDoc } from 'firebase/firestore';
 import Link from 'next/link';
 
 export default function ManageAccountPage() {
@@ -44,9 +44,8 @@ export default function ManageAccountPage() {
             if (u && !u.isAnonymous) {
                 setUser(u);
                 
+                // Fetch User Plan
                 try {
-                    // Fetch user plan
-                    const { doc, getDoc } = await import('firebase/firestore');
                     const userDocRef = doc(db, 'users', u.uid);
                     const userDocSnap = await getDoc(userDocRef);
                     if (userDocSnap.exists()) {
@@ -55,12 +54,17 @@ export default function ManageAccountPage() {
                             setUserPlan(userData.plan as any);
                         }
                     }
+                } catch (err) {
+                    console.error("Error fetching plan:", err);
+                }
 
-                    const q = query(
-                        collection(db, 'pdf_links'),
-                        where('owner_id', '==', u.uid)
-                    );
-                    const querySnapshot = await getDocs(q);
+                // Real-time Projects Listener
+                const q = query(
+                    collection(db, 'pdf_links'),
+                    where('owner_id', '==', u.uid)
+                );
+
+                const unsubProjects = onSnapshot(q, (querySnapshot) => {
                     const userProjects: any[] = [];
                     querySnapshot.forEach((doc) => {
                         const data = doc.data();
@@ -69,7 +73,6 @@ export default function ManageAccountPage() {
                         }
                     });
                     
-                    // Sort locally since we might not have a composite index
                     userProjects.sort((a, b) => {
                         const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
                         const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
@@ -77,14 +80,18 @@ export default function ManageAccountPage() {
                     });
                     
                     setProjects(userProjects);
-                } catch (error) {
-                    console.error("Error fetching projects:", error);
-                }
+                    setIsLoading(false);
+                }, (error) => {
+                    console.error("Projects listener error:", error);
+                    setIsLoading(false);
+                });
+
+                return () => unsubProjects();
             } else {
                 setUser(null);
                 setProjects([]);
+                setIsLoading(false);
             }
-            setIsLoading(false);
         });
         return () => unsubscribe();
     }, []);
