@@ -29,6 +29,7 @@ export default function ManageAccountPage() {
     const [successModal, setSuccessModal] = useState(false);
     const [publishedLink, setPublishedLink] = useState('');
     const [limitModal, setLimitModal] = useState(false);
+    const [authModal, setAuthModal] = useState(false);
 
     // Subscription & Plan limits
     const PLAN_LIMITS = {
@@ -209,7 +210,7 @@ export default function ManageAccountPage() {
             return;
         }
         if (!user) {
-            alert('You must be signed in to publish files.');
+            setAuthModal(true);
             return;
         }
 
@@ -724,6 +725,44 @@ export default function ManageAccountPage() {
                             <button 
                                 onClick={() => setLimitModal(false)}
                                 className="w-full py-4 bg-gray-50 hover:bg-gray-100 text-gray-500 font-bold rounded-2xl transition-all"
+                            >
+                                Maybe later
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* Auth Required Modal */}
+            {authModal && (
+                <div className="fixed inset-0 z-[130] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm animate-fade-in">
+                    <div className="bg-white rounded-[40px] w-full max-w-md p-10 shadow-2xl animate-slide-up border border-gray-100 text-center">
+                        <div className="w-20 h-20 bg-blue-50 rounded-3xl flex items-center justify-center mx-auto mb-6 text-3xl">
+                            👋
+                        </div>
+                        <h3 className="text-2xl font-black text-gray-900 mb-2">Sign in required</h3>
+                        <p className="text-gray-500 mb-8 leading-relaxed font-medium">
+                            You need to be signed in to publish and manage your PDF projects. Join us to get started!
+                        </p>
+                        
+                        <div className="flex flex-col gap-3">
+                            <button 
+                                onClick={async () => {
+                                    try {
+                                        const { signInWithGoogle } = await import('@/lib/firebase');
+                                        await signInWithGoogle();
+                                        setAuthModal(false);
+                                    } catch (err: any) {
+                                        alert('Sign in failed: ' + err.message);
+                                    }
+                                }}
+                                className="w-full py-4 bg-white border-2 border-gray-100 hover:border-primary-500 hover:bg-primary-50 text-gray-900 font-bold rounded-2xl transition-all flex items-center justify-center gap-3 shadow-sm"
+                            >
+                                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5 h-5" alt="Google" />
+                                Sign in with Google
+                            </button>
+                            <button 
+                                onClick={() => setAuthModal(false)}
+                                className="w-full py-4 text-gray-500 font-bold rounded-2xl hover:bg-gray-50 transition-all"
                             >
                                 Maybe later
                             </button>
