@@ -8,6 +8,7 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 
 export default function SiteHeader() {
     const [user, setUser] = useState<User | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const pathname = usePathname();
     const hideNav = pathname?.startsWith('/manage') || pathname?.startsWith('/pricing');
@@ -19,6 +20,7 @@ export default function SiteHeader() {
             } else {
                 setUser(null);
             }
+            setIsLoading(false);
         });
         return () => unsubscribe();
     }, []);
@@ -67,7 +69,9 @@ export default function SiteHeader() {
                 )}
                 
                 <div className="flex items-center gap-1 ml-auto">
-                    {user ? (
+                    {isLoading ? (
+                        <div className="ml-4 w-24 h-9 bg-gray-50 rounded-xl animate-pulse" />
+                    ) : user ? (
                         <div className="ml-4 relative border-l border-gray-200 pl-4">
                             {/* Profile Trigger */}
                             <div 
@@ -129,22 +133,11 @@ export default function SiteHeader() {
                                                     } catch (err) {
                                                         console.error('Sign out error', err);
                                                     } finally {
-                                                        // Force clear any local storage or indexedDB to be absolutely sure
                                                         localStorage.clear();
                                                         sessionStorage.clear();
-                                                        if (window.indexedDB) {
-                                                            window.indexedDB.databases().then(dbs => {
-                                                                dbs.forEach(db => {
-                                                                    if (db.name?.includes('firebase')) {
-                                                                        window.indexedDB.deleteDatabase(db.name);
-                                                                    }
-                                                                });
-                                                            });
-                                                        }
-                                                        window.location.href = '/';
                                                     }
-                                                }} 
-                                                className="w-full text-left px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-colors flex items-center gap-2 mt-1"
+                                                }}
+                                                className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors flex items-center gap-2"
                                             >
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                                                 Sign out
