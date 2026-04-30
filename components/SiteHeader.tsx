@@ -135,6 +135,7 @@ export default function SiteHeader() {
                                                     } finally {
                                                         localStorage.clear();
                                                         sessionStorage.clear();
+                                                        window.location.href = '/';
                                                     }
                                                 }}
                                                 className="w-full text-left px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors flex items-center gap-2"
