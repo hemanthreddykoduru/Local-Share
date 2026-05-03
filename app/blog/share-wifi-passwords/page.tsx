@@ -128,38 +128,82 @@ export default function ShareWifiPasswordsPage() {
                     </section>
 
                     <section className="mb-12">
+                        <h2 className="text-3xl font-black text-gray-900 mb-6">Pro Tips for Seamless WiFi Sharing</h2>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            To make the most of Local Share for network credentials, consider these advanced strategies that professional hosts and event organizers use to ensure a 100% success rate:
+                        </p>
+                        <ul className="space-y-4 mb-8">
+                            <li className="flex items-start gap-3">
+                                <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">1</div>
+                                <p className="text-gray-600 leading-relaxed"><strong>Use QR Codes:</strong> Print a small QR code linking to <code>local-share.tech</code>. When guests scan it, they are instantly dropped into the correct cell where your password awaits.</p>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">2</div>
+                                <p className="text-gray-600 leading-relaxed"><strong>Separate Guest Networks:</strong> Always post credentials for your guest SSID. This provides an air-gap between your smart home devices and your visitors&apos; hardware.</p>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">3</div>
+                                <p className="text-gray-600 leading-relaxed"><strong>Pin Important Info:</strong> If you are on a Pro plan, use the &quot;Pin&quot; feature to ensure the WiFi password stays at the top of the feed even as other guests start chatting.</p>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section className="mb-12">
                         <h2 className="text-3xl font-black text-gray-900 mb-6">Technical Implementation: Behind the Scenes</h2>
                         <p className="text-gray-600 mb-6 leading-relaxed">
-                            For the technically curious, how does Local Share facilitate this transfer without traditional accounts? It begins with the Browser Geo-location API. When you grant permission, your browser provides approximate coordinates. We then apply a mathematical algorithm to &quot;round&quot; these coordinates into a 200-meter geo-cell identifier. 
+                            How does Local Share bridge the gap between physical space and digital data without requiring an account? The magic lies in the intersection of modern browser APIs and a specialized spatial indexing algorithm.
                         </p>
+                        
+                        <h3 className="text-xl font-bold text-gray-900 mb-4">The Browser Geolocation API</h3>
                         <p className="text-gray-600 mb-6 leading-relaxed">
-                            This identifier acts as a temporary, location-locked channel. When you drop a WiFi password, it is associated with this cell ID in our encrypted database. Any other visitor whose coordinates resolve to the same cell ID is automatically subscribed to that feed. The transfer happens over secure HTTPS, and the clipboard interaction is handled via the modern `navigator.clipboard` API, ensuring that the password never touches your device&apos;s persistent storage unless you explicitly choose to copy it.
+                            The foundation of our platform is the <code>navigator.geolocation.getCurrentPosition</code> method. When you first visit Local Share, your browser asks for permission to share your location. This isn&apos;t used to &quot;track&quot; you in the traditional sense; instead, it provides the high-precision latitude and longitude coordinates necessary to identify your immediate surroundings.
                         </p>
+
+                        <h3 className="text-xl font-bold text-gray-900 mb-4">The Geo-Cell Rounding Algorithm</h3>
                         <p className="text-gray-600 mb-6 leading-relaxed">
-                            This &quot;ephemeral storage&quot; model is fundamentally different from cloud-based password managers or shared spreadsheets. By decoupling the data from a user identity and coupling it instead to a physical space and a specific time-window, we achieve a form of security that is intuitively aligned with how we interact in the physical world.
+                            Raw GPS coordinates are too precise for community sharing—two people in the same room might have slightly different coordinates. To create a shared &quot;room,&quot; we apply a rounding algorithm that groups nearby users into a single &quot;Geo-Cell.&quot; We divide the latitude and longitude by **0.002** (roughly 200 meters) and apply a <code>Math.floor</code> operation.
+                        </p>
+
+                        <div className="bg-gray-900 rounded-2xl p-6 mb-8 overflow-hidden">
+                            <pre className="text-blue-400 text-sm"><code>{`// How we calculate your shared room ID
+const precision = 0.002;
+const latCell = Math.floor(latitude / precision);
+const lonCell = Math.floor(longitude / precision);
+
+const cellId = \`cell_\${latCell}_\${lonCell}\`;`}</code></pre>
+                        </div>
+
+                        <h3 className="text-xl font-bold text-gray-900 mb-4">One-Tap Copy with Clipboard API</h3>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            Once a password is found, the <code>navigator.clipboard.writeText()</code> API allows for a seamless hand-off. With a single tap, the complex password string is moved directly into your device&apos;s clipboard, bypassing the need for manual selection or memorization. This reduces the &quot;Time to Connection&quot; from minutes to mere seconds.
                         </p>
                     </section>
 
                     <section className="mb-12">
                         <h2 className="text-3xl font-black text-gray-900 mb-6">The Psychology of Local Trust</h2>
                         <p className="text-gray-600 mb-6 leading-relaxed">
-                            There is a profound psychological shift that occurs when we move from &quot;global&quot; internet interactions to &quot;local&quot; ones. On the global web, we are conditioned to be defensive—we expect bots, spam, and malicious actors from across the globe. However, in a local context—standing in a coffee shop or sitting in a living room—the &quot;social contract&quot; is much stronger.
+                            Sharing sensitive information like a network password often triggers a defensive reflex. However, Local Share leverages a powerful psychological concept: **Proximity-Based Validation**. 
                         </p>
+                        
                         <p className="text-gray-600 mb-6 leading-relaxed">
-                            Sharing a WiFi password via Local Share leverages this existing physical trust. You aren&apos;t sharing it with &quot;the internet&quot;; you are sharing it with the people you can see. This proximity-based validation provides a layer of security that digital certificates often fail to replicate. It is a возвращение (return) to the community-centric roots of information exchange, powered by modern web standards.
+                            In a global internet context, we are conditioned to fear &quot;the anonymous other&quot;—actors who could be anywhere in the world. But when you are in a coffee shop or a shared office, the &quot;social contract&quot; is visible. You can see who is in the room. This physical presence creates an implicit layer of accountability that digital encryption alone cannot provide.
                         </p>
+
+                        <div className="bg-blue-50 border-l-4 border-blue-400 p-6 my-8">
+                            <p className="text-blue-900 font-medium">
+                                &quot;Sharing with people you can see feels fundamentally different than sharing with the cloud. It is a return to human-scale networking.&quot;
+                            </p>
+                        </div>
+
                         <p className="text-gray-600 mb-6 leading-relaxed">
-                            When a guest sees your WiFi drop on Local Share, they recognize the network name and they recognize your presence as the host. This dual-factor authentication—digital proximity and physical presence—creates a seamless and secure experience that feels human rather than algorithmic.
+                            Furthermore, our **1-hour auto-expiry** policy significantly reduces sharing anxiety. Users are more willing to post temporary credentials when they know the data will vanish automatically. This &quot;ephemeral data&quot; model aligns with the transient nature of local interactions—once the guest leaves, the digital bridge is burned.
                         </p>
                     </section>
 
                     <section className="mb-12">
                         <h2 className="text-3xl font-black text-gray-900 mb-6">The Future of Proximity Data</h2>
                         <p className="text-gray-600 mb-6 leading-relaxed">
-                            WiFi sharing is just the beginning. As we move toward a world where our digital tools are more aware of our physical environment, the friction of &quot;data handshakes&quot; will continue to vanish. Local Share is leading this charge by prioritizing privacy-first proximity.
-                        </p>
-                        <p className="text-gray-600 mb-6 leading-relaxed">
-                            We believe that the data you need is often right in front of you—or at least, with the person sitting next to you. Our mission is to make that data accessible without the overhead of the modern, siloed internet.
+                            WiFi sharing is just the beginning of what we call &quot;Spatial Computing for the Web.&quot; By prioritizing privacy-first proximity, we are enabling a future where the data you need finds you based on where you are and who you are with.
                         </p>
                     </section>
 
