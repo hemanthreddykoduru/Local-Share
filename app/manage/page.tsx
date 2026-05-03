@@ -465,6 +465,7 @@ export default function ManageAccountPage() {
                                                         </div>
                                                     </>
                                                 )}
+                                                </div>
                                             </div>
                                         </div>
                                     ))
