@@ -1,7 +1,11 @@
-'use client';
-
+import { Metadata } from 'next';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+
+export const metadata: Metadata = {
+    title: 'Compare Local Share - The Fastest Way to Drop Data',
+    description: 'Compare Local Share vs AirDrop vs WhatsApp. See why our privacy-first, zero-install proximity sharing is the best choice for temporary local networking.',
+};
 
 export default function ComparePage() {
     const comparisons = [

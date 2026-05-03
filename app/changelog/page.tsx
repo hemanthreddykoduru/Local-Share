@@ -1,7 +1,11 @@
-'use client';
-
+import { Metadata } from 'next';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+
+export const metadata: Metadata = {
+    title: 'Changelog - Local Share',
+    description: 'Track the latest updates, new features, and security improvements for Local Share. See how we are evolving the local sharing experience.',
+};
 
 export default function ChangelogPage() {
     const updates = [
