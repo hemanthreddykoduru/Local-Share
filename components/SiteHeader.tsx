@@ -159,11 +159,13 @@ export default function SiteHeader() {
                             )}
                         </div>
                     ) : (
-                        <Link href="/login">
-                            <button className="text-sm font-black bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-xl transition-all shadow-lg shadow-primary-100 hover:scale-105 active:scale-95">
-                                Sign In
-                            </button>
-                        </Link>
+                        pathname !== '/' && !pathname?.startsWith('/manage') && !pathname?.startsWith('/pricing') && (
+                            <Link href="/login">
+                                <button className="text-sm font-black bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-xl transition-all shadow-lg shadow-primary-100 hover:scale-105 active:scale-95">
+                                    Sign In
+                                </button>
+                            </Link>
+                        )
                     )}
                 </div>
             </div>
@@ -172,6 +174,38 @@ export default function SiteHeader() {
             {isMobileMenuOpen && (
                 <div className="lg:hidden bg-white border-t border-gray-100 animate-slide-up shadow-xl relative z-40">
                     <nav className="flex flex-col p-4 space-y-2">
+                        {user && (
+                            <div className="px-5 py-6 mb-4 bg-gray-50 rounded-[32px] border border-gray-100">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <img 
+                                        src={user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email || 'User')}&background=3B82F6&color=fff`} 
+                                        alt="Profile" 
+                                        className="w-14 h-14 rounded-2xl border-2 border-white shadow-md" 
+                                    />
+                                    <div className="min-w-0">
+                                        <p className="text-lg font-black text-gray-900 truncate">{user.displayName || 'Account'}</p>
+                                        <p className="text-xs font-medium text-gray-500 truncate">{user.email}</p>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <Link href="/manage" onClick={() => setIsMobileMenuOpen(false)} className="bg-white py-3 px-4 rounded-xl text-xs font-bold text-gray-700 border border-gray-200 text-center shadow-sm">
+                                        Dashboard
+                                    </Link>
+                                    <button 
+                                        onClick={async () => {
+                                            setIsMobileMenuOpen(false);
+                                            const { signOut } = await import('firebase/auth');
+                                            await signOut(auth);
+                                            window.location.href = '/';
+                                        }}
+                                        className="bg-red-50 py-3 px-4 rounded-xl text-xs font-bold text-red-600 border border-red-100 text-center"
+                                    >
+                                        Sign Out
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
                         {[
                             { href: '/features', label: 'Features' },
                             { href: '/how-it-works', label: 'Technical Deep-Dive' },

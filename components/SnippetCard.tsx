@@ -98,7 +98,7 @@ export default function SnippetCard({ snippet, userId }: SnippetCardProps) {
                         <p className="text-xs text-gray-400">{getTimeAgo(createdAt, now)}</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-1.5 flex-shrink-0">
+                <div className="flex items-center gap-2 flex-shrink-0">
                     {isOwner && !isEditing && (
                         <>
                             <button
