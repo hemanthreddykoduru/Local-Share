@@ -167,6 +167,42 @@ export default function SiteHeader() {
                     )}
                 </div>
             </div>
+
+            {/* Mobile Menu Overlay */}
+            {isMobileMenuOpen && (
+                <div className="lg:hidden bg-white border-t border-gray-100 animate-slide-up shadow-xl relative z-40">
+                    <nav className="flex flex-col p-4 space-y-2">
+                        {[
+                            { href: '/features', label: 'Features' },
+                            { href: '/how-it-works', label: 'Technical Deep-Dive' },
+                            { href: '/security', label: 'Security Protocols' },
+                            { href: '/mission', label: 'Our Mission' },
+                            { href: '/blog', label: 'Latest Blog' },
+                        ].map(({ href, label }) => (
+                            <Link
+                                key={href}
+                                href={href}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className={`text-[15px] font-bold px-5 py-4 rounded-2xl transition-all flex items-center justify-between ${pathname === href ? 'bg-primary-50 text-primary-600' : 'text-gray-600 hover:bg-gray-50'}`}
+                            >
+                                {label}
+                                <svg className="w-4 h-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                            </Link>
+                        ))}
+                        <Link
+                            href="/manage"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="text-[15px] font-bold px-5 py-4 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-between border border-amber-100"
+                        >
+                            <span className="flex items-center gap-2">
+                                Share PDF 
+                                <span className="text-[10px] bg-amber-200 px-2 py-0.5 rounded-full uppercase">New</span>
+                            </span>
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                        </Link>
+                    </nav>
+                </div>
+            )}
         </header>
     );
 }
