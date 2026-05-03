@@ -96,7 +96,7 @@ export default function TopUsageIdeas() {
                             Local Share is part of a movement toward "Privacy-First Proximity." By focusing on the 200m radius around a user, we can create interactions that feel natural and human, without the surveillance overhead of traditional big-tech platforms. As we continue to expand our features, our core mission remains the same: making the physical space around you as digitally useful as possible.
                         </p>
                     </div>
-                </div>    </div>
+                </div>
 
                 <div className="mt-16 pt-8 border-t border-gray-200">
                     <h3 className="text-lg font-bold text-gray-900 mb-4">Read Next</h3>
