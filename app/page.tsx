@@ -168,7 +168,7 @@ export default function Home() {
                              <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center text-primary-700 font-bold text-xs uppercase shadow-sm group-hover:scale-105 transition-transform">
                                 {mounted ? profile.name.charAt(0) : '?'}
                              </div>
-                             <span className="text-sm font-bold text-gray-700 hidden sm:inline-block">
+                             <span className="text-sm font-bold text-black hidden sm:inline-block">
                                 {mounted ? profile.name : ''}
                              </span>
                         </button>

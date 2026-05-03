@@ -85,7 +85,7 @@ export default function SiteHeader() {
                                     alt="Profile" 
                                     className="w-8 h-8 rounded-full border border-gray-200 shadow-sm" 
                                 />
-                                <span className="text-sm font-bold text-gray-700 hidden sm:inline-block">
+                                <span className="text-sm font-bold text-black hidden sm:inline-block">
                                     {user.displayName || 'Account'}
                                 </span>
                                 <svg className={`w-4 h-4 text-gray-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
