@@ -37,7 +37,9 @@ export default function SiteHeader() {
                         </svg>
                     </div>
                     <Link href="/" className="text-xl font-black tracking-tight text-gray-900 hover:text-primary-600 transition-colors">
-                        Local Share
+                        Local Share {pathname?.startsWith('/manage') && (
+                            <> - <span className="text-primary-600">PDF</span></>
+                        )}
                     </Link>
                 </div>
 
