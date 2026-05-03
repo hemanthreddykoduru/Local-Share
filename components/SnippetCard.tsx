@@ -3,6 +3,7 @@
 import { Snippet } from '@/types';
 import CopyButton from './CopyButton';
 import { Timestamp } from 'firebase/firestore';
+import ConfirmModal from './ConfirmModal';
 
 import { useState, useEffect } from 'react';
 import { deleteSnippet, updateSnippet } from '@/lib/firebase';
@@ -36,6 +37,8 @@ export default function SnippetCard({ snippet, userId }: SnippetCardProps) {
     const [editValue, setEditValue] = useState(snippet.text);
     const [isSaving, setIsSaving] = useState(false);
     
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    
     // Live ticking countdown
     const now = useGlobalTimer();
 
@@ -53,8 +56,6 @@ export default function SnippetCard({ snippet, userId }: SnippetCardProps) {
     const isOwner = snippet.owner_id === userId;
 
     const handleDelete = async () => {
-        if (!confirm('Start removing this message?')) return;
-
         setIsDeleting(true);
         const success = await deleteSnippet(snippet.id);
         if (success) {
@@ -110,7 +111,7 @@ export default function SnippetCard({ snippet, userId }: SnippetCardProps) {
                                 Edit
                             </button>
                             <button
-                                onClick={handleDelete}
+                                onClick={() => setShowConfirmModal(true)}
                                 disabled={isDeleting}
                                 className={`flex items-center gap-1 px-3 py-2 rounded-xl font-medium text-xs transition-all border active:scale-95 ${isDeleting
                                     ? 'bg-gray-100 text-gray-400 border-gray-100 cursor-not-allowed'
@@ -172,6 +173,17 @@ export default function SnippetCard({ snippet, userId }: SnippetCardProps) {
                     {displayMinutes}m {displaySeconds}s left
                 </span>
             </div>
+
+            <ConfirmModal 
+                isOpen={showConfirmModal}
+                onClose={() => setShowConfirmModal(false)}
+                onConfirm={handleDelete}
+                title="Delete Message?"
+                message="This will permanently remove your message from the local feed. This action cannot be undone."
+                confirmText="Delete"
+                cancelText="Keep it"
+                type="danger"
+            />
         </div>
     );
 }
