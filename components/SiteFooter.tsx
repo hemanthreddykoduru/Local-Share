@@ -29,6 +29,8 @@ export default function SiteFooter() {
                             <div className="flex flex-col gap-2 text-sm">
                                 <Link href="/" className="hover:text-white transition-colors">Home</Link>
                                 <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
+                                <Link href="/use-cases" className="hover:text-white transition-colors">Use Cases</Link>
+                                <Link href="/compare" className="hover:text-white transition-colors">Compare</Link>
                                 <Link href="/faq" className="hover:text-white transition-colors">FAQ</Link>
                             </div>
                         </div>
@@ -36,6 +38,7 @@ export default function SiteFooter() {
                             <p className="text-white font-semibold mb-3 text-sm">Company</p>
                             <div className="flex flex-col gap-2 text-sm">
                                 <Link href="/about" className="hover:text-white transition-colors">About</Link>
+                                <Link href="/changelog" className="hover:text-white transition-colors">Changelog</Link>
                                 <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
                             </div>
                         </div>
