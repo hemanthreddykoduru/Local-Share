@@ -198,9 +198,47 @@ export default function Home() {
                         </a>
                     </div>
                 </div>
+            </section>            {/* App Section - NOW AT THE TOP */}
+            <section id="app" className="py-20 px-6 bg-white scroll-mt-20 border-b border-gray-50">
+                <div className="max-w-7xl mx-auto animate-reveal">
+                    <div className="text-center max-w-2xl mx-auto mb-16">
+                        <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-6 tracking-tighter">
+                            {mounted ? (
+                                <Typewriter text="Enter the Local Feed." delay={150} />
+                            ) : (
+                                "Enter the Local Feed."
+                            )}
+                        </h2>
+                        <p className="text-lg text-gray-500 font-medium leading-relaxed">
+                            Grant location permission to join your 200m Geo-Cell, or create a private room for remote collaboration.
+                        </p>
+                    </div>
+                    <div className="flex flex-col lg:flex-row gap-8 justify-center">
+                        <aside className="w-full lg:w-[320px] space-y-6">
+                            <div className="bg-gray-50 rounded-3xl p-8 border border-gray-200 shadow-sm">
+                                <div className={`flex items-center gap-3 px-4 py-2 rounded-2xl mb-6 ${privateRoom ? 'bg-purple-50 text-purple-700' : locationState.permissionGranted ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                                    <div className={`w-2.5 h-2.5 rounded-full ${privateRoom ? 'bg-purple-500' : locationState.permissionGranted ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}></div>
+                                    <span className="text-xs font-black uppercase tracking-widest">
+                                        {privateRoom ? `Room ${privateRoom}` : locationState.permissionGranted ? 'Live Connection' : 'Disconnected'}
+                                    </span>
+                                </div>
+                                <h4 className="text-lg font-bold text-gray-900 mb-4">Support the Project</h4>
+                                <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+                                    Local Share is an independent, founder-led project. Your donations help keep our location-aware servers running.
+                                </p>
+                                <div className="pt-4 border-t border-gray-100">
+                                    <RazorpayButton />
+                                </div>
+                            </div>
+                        </aside>
+                        <div className="flex-1 max-w-4xl min-w-0">
+                            {renderContent()}
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            {/* Feature Grid - Expanded for SEO/Value */}
+            {/* Feature Grid - NOW BELOW THE APP */}
             <section className="py-24 px-6 bg-white border-y border-gray-50">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center max-w-3xl mx-auto mb-20 animate-slide-up">
@@ -216,10 +254,7 @@ export default function Home() {
                             </div>
                             <h3 className="text-2xl font-bold text-gray-900">GPS Geo-Cell Technology</h3>
                             <p className="text-gray-500 leading-relaxed font-medium">
-                                Traditional location sharing involves tracking your precise movement across a map. Our proprietary **Geo-Cell** technology is different. We divide the world into a massive grid of 200-meter "cells." When you open Local Share, you aren&apos;t "tracked"; you are simply associated with your current cell. 
-                            </p>
-                            <p className="text-gray-500 leading-relaxed font-medium">
-                                This creates a virtual, location-locked "room" where everyone in the same building or park can drop data instantly. It is the digital equivalent of a physical whiteboard—visible only to those who are actually there. No accounts, no persistent tracking, and no global footprint.
+                                Traditional location sharing involves tracking your precise movement across a map. Our proprietary **Geo-Cell** technology is different. We divide the world into a massive grid of 200-meter &quot;cells.&quot; When you open Local Share, you aren&apos;t &quot;tracked&quot;; you are simply associated with your current cell. 
                             </p>
                         </div>
                         <div className="group space-y-6">
@@ -228,10 +263,7 @@ export default function Home() {
                             </div>
                             <h3 className="text-2xl font-bold text-gray-900">Zero-Trace Privacy Architecture</h3>
                             <p className="text-gray-500 leading-relaxed font-medium">
-                                We believe that temporary data should stay temporary. In an era where every click is logged and every message is archived, Local Share offers a "Digital Memory" that fades. Every drop on our platform is governed by a strict **60-minute TTL (Time-To-Live)**.
-                            </p>
-                            <p className="text-gray-500 leading-relaxed font-medium">
-                                After one hour, your text or link is purged from our encrypted database forever. This "Zero-Trace" philosophy makes Local Share the safest way to share guest WiFi passwords, temporary links, or meeting notes without worrying about the data living indefinitely in a cloud silo.
+                                We believe that temporary data should stay temporary. In an era where every click is logged and every message is archived, Local Share offers a &quot;Digital Memory&quot; that fades. Every drop is governed by a strict **60-minute TTL**.
                             </p>
                         </div>
                         <div className="group space-y-6">
@@ -240,10 +272,7 @@ export default function Home() {
                             </div>
                             <h3 className="text-2xl font-bold text-gray-900">Frictionless SaaS Integration</h3>
                             <p className="text-gray-500 leading-relaxed font-medium">
-                                While our root utility is anonymous sharing, we have expanded into professional document management. Our PDF sharing platform allows businesses to upload marketing materials or technical specs and generate a "Local Link." 
-                            </p>
-                            <p className="text-gray-500 leading-relaxed font-medium">
-                                Imagine a conference where a speaker says, "Open Local Share to get the slide deck." Within 5 seconds, hundreds of attendees have the PDF on their phones without a single app download. This is the power of proximity-based SaaS: delivering the right document, to the right person, at the right location, at the right time.
+                                Our PDF sharing platform allows businesses to upload marketing materials or technical specs and generate a &quot;Local Link&quot; instantly without a single app download.
                             </p>
                         </div>
                     </div>
@@ -262,7 +291,7 @@ export default function Home() {
                                 How we engineered <span className="text-primary-600">Digital Proximity.</span>
                             </h2>
                             <p className="text-lg text-gray-600 leading-relaxed font-medium">
-                                Building a location-based tool that respects privacy is a major engineering challenge. Most apps solve this by asking for "Always Allow" location permissions and streaming your GPS data to a server. We rejected this model.
+                                Building a location-based tool that respects privacy is a major engineering challenge. We use a mathematical rounding algorithm to convert your latitude and longitude into a discrete cell ID.
                             </p>
                             <div className="space-y-6">
                                 <div className="flex gap-4">
@@ -271,7 +300,7 @@ export default function Home() {
                                     </div>
                                     <div>
                                         <h4 className="text-lg font-bold text-gray-900 mb-1">Spatial Indexing</h4>
-                                        <p className="text-gray-500 text-sm leading-relaxed">We use a mathematical rounding algorithm to convert your latitude and longitude into a discrete cell ID. Your raw coordinates never leave your browser; only the "Cell Hash" is sent to our infrastructure.</p>
+                                        <p className="text-gray-500 text-sm leading-relaxed">Your raw coordinates never leave your browser; only the &quot;Cell Hash&quot; is sent to our infrastructure.</p>
                                     </div>
                                 </div>
                                 <div className="flex gap-4">
@@ -280,16 +309,7 @@ export default function Home() {
                                     </div>
                                     <div>
                                         <h4 className="text-lg font-bold text-gray-900 mb-1">Peer Discovery</h4>
-                                        <p className="text-gray-500 text-sm leading-relaxed">Once in a cell, our real-time database establishes a listener for that specific hash. This allows for sub-100ms latency between someone posting a link and you seeing it on your screen.</p>
-                                    </div>
-                                </div>
-                                <div className="flex gap-4">
-                                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm flex-shrink-0">
-                                        <span className="text-primary-600 font-bold">03</span>
-                                    </div>
-                                    <div>
-                                        <h4 className="text-lg font-bold text-gray-900 mb-1">Stateless Sessions</h4>
-                                        <p className="text-gray-600 text-sm leading-relaxed">Because we don&apos;t use cookies to track identity, every visit is essentially a "clean slate." Your privacy is protected by the very design of the platform, not just a policy written in a PDF.</p>
+                                        <p className="text-gray-500 text-sm leading-relaxed">Once in a cell, our real-time database establishes a listener for that specific hash for sub-100ms latency.</p>
                                     </div>
                                 </div>
                             </div>
@@ -297,122 +317,52 @@ export default function Home() {
                         <div className="relative">
                             <div className="bg-gradient-to-br from-primary-600 to-primary-900 rounded-[40px] p-12 text-white shadow-2xl relative z-10">
                                 <h3 className="text-2xl font-bold mb-6 italic">&quot;Proximity is the ultimate filter.&quot;</h3>
-                                <p className="text-primary-100 leading-relaxed mb-8">
-                                    The global internet is noisy because anyone can reach you. By filtering the world through physical space, we rediscover the relevance of the people and information immediately around us.
-                                </p>
                                 <div className="bg-primary-800/50 rounded-2xl p-6 border border-primary-500/30">
-                                    <code className="text-xs text-primary-200 block mb-2">// Geo-Cell Calculation</code>
                                     <code className="text-sm text-white block">CellID = floor(lat / 0.002) + &quot;_&quot; + floor(lon / 0.002)</code>
                                 </div>
                             </div>
-                            <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary-100 rounded-full blur-3xl opacity-50"></div>
-                            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* App Section */}
-            <section id="app" className="py-24 px-6 bg-white scroll-mt-20 border-b border-gray-50">
-                <div className="max-w-7xl mx-auto animate-fade-in">
-                    <div className="text-center max-w-2xl mx-auto mb-16">
-                        <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-6">
-                            {mounted ? (
-                                <Typewriter text="Enter the Local Feed." delay={150} />
-                            ) : (
-                                "Enter the Local Feed."
-                            )}
-                        </h2>
-                        <p className="text-gray-500 font-medium leading-relaxed">
-                            Grant location permission to join your 200m Geo-Cell, or create a private room for remote collaboration.
-                        </p>
-                    </div>
-                    <div className="flex flex-col lg:flex-row gap-8 justify-center">
-                        <aside className="w-full lg:w-[320px] space-y-6">
-                            <div className="bg-gray-50 rounded-3xl p-8 border border-gray-200 shadow-sm">
-                                <div className={`flex items-center gap-3 px-4 py-2 rounded-2xl mb-6 ${privateRoom ? 'bg-purple-50 text-purple-700' : locationState.permissionGranted ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
-                                    <div className={`w-2.5 h-2.5 rounded-full ${privateRoom ? 'bg-purple-500' : locationState.permissionGranted ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}></div>
-                                    <span className="text-xs font-black uppercase tracking-widest">
-                                        {privateRoom ? `Room ${privateRoom}` : locationState.permissionGranted ? 'Live Connection' : 'Disconnected'}
-                                    </span>
-                                </div>
-                                <h4 className="text-lg font-bold text-gray-900 mb-4">Support the Project</h4>
-                                <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-                                    Local Share is an independent, founder-led project. Your donations help keep our location-aware servers running and ensure we never have to sell user data.
-                                </p>
-                                <div className="pt-4 border-t border-gray-100">
-                                    <RazorpayButton />
-                                </div>
-                            </div>
-                        </aside>
-                        <div className="flex-1 max-w-4xl min-w-0">
-                            {renderContent()}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* NEW SECTION: The Social Contract of Proximity */}
-            <section className="py-24 px-6 bg-white overflow-hidden">
-                <div className="max-w-5xl mx-auto text-center animate-slide-up">
-                    <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-12 tracking-tight">The Social Contract of <span className="text-primary-600">Nearby Sharing.</span></h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
-                        <div className="bg-gray-50 p-10 rounded-[40px] border border-gray-100">
-                            <h4 className="text-2xl font-bold text-gray-900 mb-4">Why proximity feels safer.</h4>
-                            <p className="text-gray-600 leading-relaxed mb-6 font-medium">
-                                On the global internet, you are sharing with billions of anonymous actors. The risk of phishing or malicious interception is high because the scale is infinite. But in a local room, the "Social Contract" is physical.
-                            </p>
-                            <p className="text-gray-600 leading-relaxed font-medium">
-                                When you drop a guest WiFi password at a coffee shop, you can physically see the 10-15 people who have access to that feed. This human-scale networking reduces the psychological barrier to sharing and creates an environment of implicit trust.
-                            </p>
-                        </div>
-                        <div className="bg-primary-50 p-10 rounded-[40px] border border-primary-100">
-                            <h4 className="text-2xl font-bold text-primary-900 mb-4">Ephemeral by Design.</h4>
-                            <p className="text-primary-800 leading-relaxed mb-6 font-medium">
-                                Most platforms want to keep your data forever because data is their currency. We built Local Share with the opposite goal: to delete your data as soon as its utility is gone. 
-                            </p>
-                            <p className="text-primary-800 leading-relaxed font-medium">
-                                This "Ephemeral Architecture" is our promise to you. By setting a hard 60-minute expiry on every drop, we ensure that even if someone were to join your Geo-Cell tomorrow, they wouldn&apos;t find a single trace of what was shared today.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Founder Section - Expanded for EEAT */}
-            <section className="py-24 px-6 bg-gray-50 overflow-hidden relative">
+            {/* Founder Section */}
+            <section className="py-24 px-6 bg-white overflow-hidden relative border-y border-gray-50">
                 <div className="max-w-5xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-                        <div className="relative">
+                        <div className="relative animate-reveal">
                             <div className="w-full aspect-square bg-gradient-to-br from-primary-500 to-primary-900 rounded-[60px] flex items-center justify-center rotate-3 shadow-2xl relative z-10 overflow-hidden">
-                                <span className="text-black text-7xl md:text-8xl font-black opacity-20 text-center select-none uppercase tracking-tighter">
-                                    Hemanth
-                                </span>
+                                <span className="text-black text-6xl font-black opacity-20 text-center select-none uppercase tracking-tighter">Hemanth</span>
                             </div>
-                            <div className="absolute inset-0 bg-primary-200 rounded-[60px] -rotate-3 -translate-x-4"></div>
                         </div>
-                        <div className="space-y-8">
-                            <div className="inline-flex items-center gap-2 text-primary-600 font-bold uppercase tracking-widest text-xs">
-                                Founder Story & Vision
-                            </div>
+                        <div className="space-y-8 animate-slide-up">
                             <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-tight italic">
                                 &quot;I tested the first prototype at <span className="text-primary-600">GITAM Campus.</span>&quot;
                             </h2>
                             <p className="text-lg text-gray-600 font-medium leading-relaxed">
-                                I built Local Share during my time as a Software Engineering student at GITAM Bengaluru. I noticed a constant friction point: every time we formed a study group or held a workshop, we spent the first 10 minutes just trying to share a URL or a PDF.
+                                I built Local Share during my time at GITAM Bengaluru. I noticed we were exchanging phone numbers just to send a single link. It felt invasive. Local Share was born from that campus frustration.
                             </p>
-                            <p className="text-lg text-gray-600 font-medium leading-relaxed">
-                                We were exchanging phone numbers just to send a single link. It felt invasive and inefficient. Local Share was born from that campus frustration. Today, it serves thousands of users worldwide, proving that the most powerful connections are often the ones sitting right in front of us.
-                            </p>
-                            <div className="pt-4 flex items-center gap-4">
-                                <div>
-                                    <h4 className="text-xl font-bold text-gray-900">Hemanth Reddy</h4>
-                                    <p className="text-gray-500 font-medium">Founder & Software Engineer</p>
-                                </div>
-                                <div className="h-10 w-px bg-gray-300"></div>
-                                <a href="/about" className="text-primary-600 font-bold hover:underline">Full Bio →</a>
-                            </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Discover More Section */}
+            <section className="py-24 px-6 bg-gray-50">
+                <div className="max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-slide-up">
+                        <a href="/features" className="group bg-white p-10 rounded-[40px] border border-gray-100 hover:border-primary-200 transition-all shadow-sm">
+                            <h3 className="text-xl font-bold text-gray-900 mb-2">Detailed Features</h3>
+                            <span className="text-primary-600 font-bold flex items-center gap-1">Read More →</span>
+                        </a>
+                        <a href="/how-it-works" className="group bg-white p-10 rounded-[40px] border border-gray-100 hover:border-blue-200 transition-all shadow-sm">
+                            <h3 className="text-xl font-bold text-gray-900 mb-2">Technical Whitepaper</h3>
+                            <span className="text-blue-600 font-bold flex items-center gap-1">Read More →</span>
+                        </a>
+                        <a href="/mission" className="group bg-white p-10 rounded-[40px] border border-gray-100 hover:border-purple-200 transition-all shadow-sm">
+                            <h3 className="text-xl font-bold text-gray-900 mb-2">Our Mission</h3>
+                            <span className="text-purple-600 font-bold flex items-center gap-1">Read More →</span>
+                        </a>
                     </div>
                 </div>
             </section>

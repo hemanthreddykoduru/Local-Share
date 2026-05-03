@@ -48,9 +48,10 @@ export default function SiteHeader() {
                 {!hideNav && (
                     <nav className="hidden lg:flex items-center gap-1 ml-auto">
                         {[
-                            { href: '/how-it-works', label: 'How It Works' },
-                            { href: '/compare', label: 'Compare' },
+                            { href: '/features', label: 'Features' },
+                            { href: '/how-it-works', label: 'Technical' },
                             { href: '/security', label: 'Security' },
+                            { href: '/mission', label: 'Mission' },
                             { href: '/blog', label: 'Blog' },
                             { href: '/manage', label: 'Share PDF', isNew: true },
                         ].map(({ href, label, isNew }) => (
