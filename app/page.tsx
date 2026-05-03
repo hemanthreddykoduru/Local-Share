@@ -268,8 +268,10 @@ export default function Home() {
                 <div className="max-w-5xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                         <div className="relative">
-                            <div className="w-full aspect-square bg-gradient-to-br from-primary-500 to-primary-900 rounded-[60px] flex items-center justify-center rotate-3 shadow-2xl relative z-10">
-                                <span className="text-white text-9xl font-black opacity-10 text-center">HEMANTH</span>
+                            <div className="w-full aspect-square bg-gradient-to-br from-primary-500 to-primary-900 rounded-[60px] flex items-center justify-center rotate-3 shadow-2xl relative z-10 overflow-hidden">
+                                <span className="text-white text-7xl md:text-8xl font-black opacity-10 text-center select-none uppercase tracking-tighter">
+                                    Hemanth
+                                </span>
                             </div>
                             <div className="absolute inset-0 bg-primary-100 rounded-[60px] -rotate-3 -translate-x-4"></div>
                         </div>
