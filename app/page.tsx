@@ -247,9 +247,9 @@ export default function Home() {
                                         {privateRoom ? `Room ${privateRoom}` : locationState.permissionGranted ? 'Live Connection' : 'Disconnected'}
                                     </span>
                                 </div>
-                                <h4 className="text-lg font-bold text-gray-900 mb-4">How it works</h4>
+                                <h4 className="text-lg font-bold text-gray-900 mb-4">Support the Project</h4>
                                 <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-                                    Local Share creates a virtual 200-meter clipboard around your current location. No apps or accounts needed.
+                                    Local Share is a free, privacy-first project. Your support helps cover our infrastructure and map-aware server costs.
                                 </p>
                                 <div className="pt-4 border-t border-gray-100">
                                     <RazorpayButton />

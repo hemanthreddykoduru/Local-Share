@@ -7,28 +7,24 @@ import Link from 'next/link';
 export default function UseCasesPage() {
     const cases = [
         {
-            title: 'College Classrooms',
-            description: 'The most popular use for Local Share. Students use GPS-based cells to share study links, PDF notes, and group project resources without needing to exchange phone numbers or join WhatsApp groups.',
-            icon: '🎓',
-            benefits: ['Instant sharing with everyone in the room', 'No spam from permanent group chats', 'Notes auto-expire to keep the space clean']
+            title: 'College Classrooms & University Study Groups',
+            description: 'Local Share has become an essential tool in academic environments where students need to collaborate in real-time. In a typical lecture hall, exchanging phone numbers or creating permanent group chats just to share a single PDF or a research link is cumbersome and intrusive. Local Share solves this by allowing students to drop resources into a 200m geo-cell that everyone in the room can access instantly. This is particularly useful for spontaneous study groups or sharing digital handouts without the friction of email or social media. Because all drops auto-expire after one hour, the local clipboard stays clean and relevant for the next class period, ensuring a clutter-free experience for everyone on campus.',
+            icon: '🎓'
         },
         {
-            title: 'Professional Events & Networking',
-            description: 'Network at conferences by dropping your LinkedIn profile or presentation slides into the local cell. Attendees within 200m can grab your info instantly as you speak.',
-            icon: '🤝',
-            benefits: ['No app downloads required for attendees', 'Works in crowded halls where Wi-Fi is spotty', 'Track how many people viewed your slides']
+            title: 'Professional Events, Conferences & Networking',
+            description: 'At large-scale professional events, networking often happens in short, high-energy bursts where speed is critical. Instead of fumbling with business cards or manual LinkedIn searches, speakers and attendees can use Local Share to broadcast their contact info or presentation slides to everyone physically nearby. This "one-to-many" sharing capability works perfectly in crowded exhibition halls where cellular data might be congested or Wi-Fi is unreliable. By simply opening their browser, attendees can grab the speaker’s resources without needing to download a specialized event app. It’s a low-friction way to bridge the gap between a physical conversation and a digital connection that lasts long after the conference ends.',
+            icon: '🤝'
         },
         {
-            title: 'Office Collaboration',
-            description: 'Quickly drop a URL or a PDF to the colleague sitting across from you. Avoid the friction of email or the clutter of Slack for one-off snippets.',
-            icon: '🏢',
-            benefits: ['Privacy-first sharing', 'Zero-click connection', 'Great for temporary file transfers']
+            title: 'Agile Office Collaboration & Temporary Teams',
+            description: 'Modern offices frequently utilize agile workspaces where teams are constantly shifting between desks and meeting rooms. Local Share provides a "zero-click" bridge for these temporary collaboration moments, allowing coworkers to swap URLs, snippets of code, or design mockups without polluting their Slack channels or email inboxes. It is the perfect solution for one-off file transfers between colleagues who might not be in the same department or project group. The privacy-first architecture ensures that sensitive snippets don’t live forever on a corporate server, as they are automatically purged within an hour. This makes it an ideal tool for secure, ephemeral sharing in fast-paced corporate environments.',
+            icon: '🏢'
         },
         {
-            title: 'Retail & Local Commerce',
-            description: 'Local shops use Private Rooms with a 6-digit code to share digital menus, catalogs, or price lists with customers without requiring a physical QR code scanner at every table.',
-            icon: '🛍️',
-            benefits: ['Easy 6-digit access codes', 'Dynamic content updates', 'No physical materials needed']
+            title: 'Retail, Local Commerce & Digital Menus',
+            description: 'Local businesses and restaurants are increasingly turning to Local Share to provide a contactless, digital experience for their customers. Instead of requiring physical QR code stickers on every table—which can be difficult to update—a shopkeeper can simply set up a Private Room with a 6-digit access code. Customers can enter this code to instantly view digital menus, daily specials, or loyalty program details. This system is incredibly flexible, allowing owners to update their shared content in real-time without reprinting physical materials. It provides a modern, tech-forward interaction that respects customer privacy, as no personal data or app installations are required to access the local store information.',
+            icon: '🛍️'
         }
     ];
 
@@ -52,14 +48,6 @@ export default function UseCasesPage() {
                             <p className="text-gray-600 mb-8 leading-relaxed font-medium">
                                 {useCase.description}
                             </p>
-                            <div className="space-y-3">
-                                {useCase.benefits.map((benefit, i) => (
-                                    <div key={i} className="flex items-start gap-3 text-sm text-gray-500">
-                                        <span className="text-green-500 mt-1">✓</span>
-                                        {benefit}
-                                    </div>
-                                ))}
-                            </div>
                         </div>
                     ))}
                 </div>
