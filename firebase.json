@@ -34,6 +34,24 @@
                     }
                 ]
             }
+        ],
+        "rewrites": [
+            {
+                "source": "/security",
+                "destination": "/security/index.html"
+            },
+            {
+                "source": "/compare",
+                "destination": "/compare/index.html"
+            },
+            {
+                "source": "/changelog",
+                "destination": "/changelog/index.html"
+            },
+            {
+                "source": "/blog/share-wifi-passwords",
+                "destination": "/blog/share-wifi-passwords/index.html"
+            }
         ]
     },
     "firestore": {

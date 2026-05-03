@@ -48,17 +48,16 @@ export default function SiteHeader() {
                 {!hideNav && (
                     <nav className="hidden lg:flex items-center gap-1 ml-auto">
                         {[
+                            { href: '/how-it-works', label: 'How It Works' },
+                            { href: '/compare', label: 'Compare' },
+                            { href: '/security', label: 'Security' },
                             { href: '/blog', label: 'Blog' },
-                            { href: '/faq', label: 'FAQ' },
-                            { href: '/pricing', label: 'Pricing' },
-                            { href: '/about', label: 'About' },
                             { href: '/manage', label: 'Share PDF', isNew: true },
-                            { href: '/contact', label: 'Contact' },
                         ].map(({ href, label, isNew }) => (
                             <Link
                                 key={href}
                                 href={href}
-                                className={`relative text-[13px] font-bold px-3 py-2 rounded-lg transition-all flex items-center gap-1.5 ${label === 'Share PDF' ? 'text-primary-600 bg-primary-50/50' : 'text-gray-500 hover:text-primary-600 hover:bg-primary-50'}`}
+                                className={`relative text-[13px] font-bold px-4 py-2.5 rounded-xl transition-all flex items-center gap-1.5 ${label === 'Share PDF' ? 'text-primary-600 bg-primary-50/80' : 'text-gray-500 hover:text-primary-600 hover:bg-gray-50'}`}
                             >
                                 {label}
                                 {isNew && (

@@ -76,43 +76,71 @@ export default function ChangelogPage() {
             <SiteHeader />
             
             <div className="flex-grow max-w-3xl mx-auto px-6 py-20">
-                <div className="mb-16 text-center">
-                    <h1 className="text-4xl font-black text-gray-900 mb-4 tracking-tight">Changelog</h1>
-                    <p className="text-gray-500 font-medium text-lg leading-relaxed">
-                        Follow our journey as we build the world's most seamless local sharing experience.
-                    </p>
+                <div className="mb-20">
+                    <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 tracking-tight">Product Updates & <span className="text-primary-600">Engineering.</span></h1>
+                    <div className="prose prose-gray prose-lg">
+                        <p className="text-gray-600 font-medium leading-relaxed">
+                            Welcome to the Local Share development log. This page serves as more than just a list of features; it is a technical record of our commitment to evolving the <strong>Spatial Web</strong>. At Local Share, we believe that the next generation of internet utilities must be built on three pillars: absolute privacy, physical proximity, and zero-friction accessibility.
+                        </p>
+                        <p className="text-gray-600 font-medium leading-relaxed">
+                            Our engineering philosophy focuses on moving computation and data storage as close to the user as possible. By leveraging Geo-location APIs and ephemeral databases, we are building a tool that respects the &quot;human scale&quot; of communication. Every update listed below represents a step toward a world where your digital tools are as aware of your surroundings as you are.
+                        </p>
+                    </div>
                 </div>
 
-                <div className="space-y-12">
+                <div className="space-y-20">
                     {updates.map((update, index) => (
-                        <div key={index} className="relative pl-8 border-l-2 border-gray-100 pb-12 last:pb-0">
+                        <div key={index} className="relative pl-10 border-l-2 border-gray-100 pb-2">
                             {/* Dot */}
-                            <div className="absolute -left-[9px] top-0 w-4 h-4 bg-primary-500 rounded-full border-4 border-white shadow-sm"></div>
+                            <div className="absolute -left-[9px] top-0 w-4 h-4 bg-primary-500 rounded-full border-4 border-white shadow-md"></div>
                             
-                            <div className="mb-2 flex items-center gap-3">
+                            <div className="mb-4 flex items-center gap-3">
                                 <span className="text-sm font-bold text-gray-400">{update.date}</span>
-                                <span className="text-[10px] font-black uppercase tracking-widest bg-primary-50 text-primary-600 px-2 py-0.5 rounded">
+                                <span className="text-[10px] font-black uppercase tracking-widest bg-primary-50 text-primary-600 px-3 py-1 rounded-full">
                                     {update.version}
                                 </span>
                             </div>
                             
-                            <h2 className="text-2xl font-bold text-gray-900 mb-3">{update.title}</h2>
-                            <p className="text-gray-600 mb-6 leading-relaxed font-medium">
-                                {update.description}
-                            </p>
-                            
-                            <ul className="space-y-3">
-                                {update.changes.map((change, i) => (
-                                    <li key={i} className="flex items-start gap-3 text-sm text-gray-500">
-                                        <span className="text-primary-400 mt-1">
-                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
-                                        </span>
-                                        {change}
-                                    </li>
-                                ))}
-                            </ul>
+                            <h2 className="text-2xl font-black text-gray-900 mb-4">{update.title}</h2>
+                            <div className="space-y-6">
+                                <p className="text-gray-600 leading-relaxed font-medium">
+                                    {update.description}
+                                </p>
+                                
+                                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+                                    <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Key Improvements</h4>
+                                    <ul className="space-y-4">
+                                        {update.changes.map((change, i) => (
+                                            <li key={i} className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed font-medium">
+                                                <span className="text-primary-500 mt-1 flex-shrink-0">
+                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                                                </span>
+                                                {change}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     ))}
+                </div>
+
+                {/* Future Roadmap */}
+                <div className="mt-32 pt-20 border-t border-gray-100">
+                    <div className="inline-flex items-center gap-2 bg-amber-50 text-amber-700 text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
+                        Looking Ahead
+                    </div>
+                    <h2 className="text-3xl font-black text-gray-900 mb-6 tracking-tight">The <span className="text-primary-600">Roadmap</span> for 2026.</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+                            <h4 className="font-bold text-gray-900 mb-2">PWA Optimization</h4>
+                            <p className="text-sm text-gray-500 leading-relaxed">Implementing advanced service worker caching to ensure Local Share remains functional even in low-connectivity environments like conference basements.</p>
+                        </div>
+                        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+                            <h4 className="font-bold text-gray-900 mb-2">Edge Computing</h4>
+                            <p className="text-sm text-gray-500 leading-relaxed">Migrating our Geo-cell logic to Edge Functions to reduce global latency and improve the &quot;instant-on&quot; feeling of the local feed.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

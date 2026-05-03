@@ -102,78 +102,135 @@ export default function HowItWorksPage() {
                 </div>
             </section>
 
-            {/* Technical Details */}
-            <section className="bg-white py-14">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">Under the Hood</h2>
-                    <div className="grid md:grid-cols-3 gap-6">
-                        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                            <div className="text-3xl mb-3">🔒</div>
-                            <h3 className="font-bold text-gray-800 mb-2">Privacy by Design</h3>
-                            <p className="text-sm text-gray-600">
-                                Your exact GPS coordinates are never sent to our servers. We compute a geo-cell ID on your device — a grid reference that cannot be reverse-engineered to find your precise location.
+            {/* NEW SECTION: Technical Whitepaper */}
+            <section className="bg-white py-24 border-t border-gray-100">
+                <div className="max-w-4xl mx-auto px-6">
+                    <div className="inline-flex items-center gap-2 bg-primary-100 text-primary-700 text-xs font-black uppercase tracking-widest px-4 py-2 rounded-lg mb-8">
+                        Technical Whitepaper
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-12 tracking-tight">The Engineering of <span className="text-primary-600">Spatial Privacy.</span></h2>
+                    
+                    <div className="prose prose-gray prose-lg max-w-none space-y-12">
+                        <div className="space-y-6">
+                            <h3 className="text-2xl font-bold text-gray-900">1. Spatial Quantization (Geo-Cells)</h3>
+                            <p className="text-gray-600 leading-relaxed font-medium">
+                                The core innovation of Local Share is our approach to spatial quantization. Instead of treating the earth as a continuous map of precise coordinates, we treat it as a discrete grid of &quot;Geo-Cells.&quot; This process is mathematically known as spatial indexing.
+                            </p>
+                            <div className="bg-gray-50 p-8 rounded-3xl border border-gray-100 font-mono text-sm space-y-4">
+                                <p className="text-primary-600 font-bold">// The Geo-Cell Calculation Logic</p>
+                                <p className="text-gray-800">
+                                    Precision = 0.002; // Roughly 200 meters<br />
+                                    Latitude_Cell = Math.floor(User_Latitude / Precision);<br />
+                                    Longitude_Cell = Math.floor(User_Longitude / Precision);<br />
+                                    Cell_ID = &quot;cell_&quot; + Latitude_Cell + &quot;_&quot; + Longitude_Cell;
+                                </p>
+                            </div>
+                            <p className="text-gray-600 leading-relaxed font-medium">
+                                By dividing the world into 200-meter increments, we ensure that two users in the same coffee shop, classroom, or office building will generate the exact same <code>Cell_ID</code>. Crucially, because this rounding happens **locally** in the browser, our servers never receive the user&apos;s high-precision GPS coordinates. We only receive the &quot;Quantized ID,&quot; making it impossible to pinpoint an individual&apos;s exact location.
                             </p>
                         </div>
-                        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                            <div className="text-3xl mb-3">⚡</div>
-                            <h3 className="font-bold text-gray-800 mb-2">Real-Time Updates</h3>
-                            <p className="text-sm text-gray-600">
-                                Messages appear instantly using real-time sync. You don&apos;t need to refresh the page — new posts from nearby users show up automatically as they are submitted.
+
+                        <div className="space-y-6">
+                            <h3 className="text-2xl font-bold text-gray-900">2. Ephemeral Data Lifecycle</h3>
+                            <p className="text-gray-600 leading-relaxed font-medium">
+                                Data persistence is the enemy of privacy. In a traditional social network, your &quot;digital footprint&quot; grows indefinitely. Local Share employs a strict **Ephemeral Data Protocol** to ensure that information is only available when it is relevant.
+                            </p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="bg-gray-50 p-8 rounded-3xl border border-gray-100">
+                                    <h4 className="font-bold text-gray-900 mb-2">60-Minute TTL</h4>
+                                    <p className="text-sm text-gray-500 leading-relaxed">Every document, text snippet, and link posted to a Geo-Cell is governed by a Time-To-Live (TTL) of 3,600 seconds. Our backend employs automated cleanup workers that purge expired records every minute.</p>
+                                </div>
+                                <div className="bg-gray-50 p-8 rounded-3xl border border-gray-100">
+                                    <h4 className="font-bold text-gray-900 mb-2">Stateless Sessions</h4>
+                                    <p className="text-sm text-gray-500 leading-relaxed">We do not use persistent cookies or tracking IDs. Every session is unique to the device and the current Geo-Cell. When you leave the area or close the browser, your association with the cell is terminated.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="space-y-6">
+                            <h3 className="text-2xl font-bold text-gray-900">3. Real-Time Peer Discovery</h3>
+                            <p className="text-gray-600 leading-relaxed font-medium">
+                                To achieve an &quot;instant&quot; sharing feeling, we utilize a real-time event-driven architecture. When a user enters a Geo-Cell, their browser establishes a secure WebSocket listener for that specific <code>Cell_ID</code>.
+                            </p>
+                            <p className="text-gray-600 leading-relaxed font-medium">
+                                This &quot;Pub/Sub&quot; (Publisher/Subscriber) model means that data transfers are pushed to users rather than pulled. When you &quot;drop&quot; a link, it is published to the cell channel, and all active listeners in that cell receive the update within milliseconds. This architecture bypasses the need for traditional &quot;request/response&quot; cycles, making Local Share feel like a physical extension of the room you are in.
                             </p>
                         </div>
-                        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                            <div className="text-3xl mb-3">🌐</div>
-                            <h3 className="font-bold text-gray-800 mb-2">Works Everywhere</h3>
-                            <p className="text-sm text-gray-600">
-                                Local Share is a Progressive Web App that works on any modern browser — Chrome, Safari, Firefox — on any device. No app store, no install, no updates to manage.
+
+                        <div className="space-y-6">
+                            <h3 className="text-2xl font-bold text-gray-900">4. Compliance & Anonymity</h3>
+                            <p className="text-gray-600 leading-relaxed font-medium">
+                                Local Share is built on the principle of **Anonymous by Design.** Unlike tools that &quot;anonymize&quot; data after collection, we simply do not collect identifying data in the first place.
                             </p>
+                            <ul className="space-y-4">
+                                <li className="flex gap-4">
+                                    <div className="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                                    </div>
+                                    <p className="text-gray-600 text-sm font-medium">No Email or Phone Number required for use.</p>
+                                </li>
+                                <li className="flex gap-4">
+                                    <div className="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                                    </div>
+                                    <p className="text-gray-600 text-sm font-medium">No storage of IP addresses in association with Geo-Cells.</p>
+                                </li>
+                                <li className="flex gap-4">
+                                    <div className="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                                    </div>
+                                    <p className="text-gray-600 text-sm font-medium">Full compliance with ephemeral data standards for local networking.</p>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* FAQ */}
-            <section className="max-w-5xl mx-auto px-4 sm:px-6 py-14">
-                <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">Frequently Asked Questions</h2>
-                <div className="space-y-4">
-                    {[
-                        {
-                            q: 'Do I need to create an account?',
-                            a: 'No. Local Share is completely anonymous. Just choose a display name when you first post — no email, no password, no sign-up.',
-                        },
-                        {
-                            q: 'How accurate is the 200m range?',
-                            a: 'The range depends on your device\'s GPS accuracy. In open outdoor areas, geo-cells are very precise. Indoors, accuracy may vary slightly due to GPS signal strength, but the matching is always within a reasonable local range.',
-                        },
-                        {
-                            q: 'What happens to my messages after 1 hour?',
-                            a: 'All messages are permanently and automatically deleted from our servers after 1 hour. There is no archive, no history, and no way to retrieve expired messages.',
-                        },
-                        {
-                            q: 'Can strangers outside my area see my messages?',
-                            a: 'No. Only people whose device is currently located within your geo-cell can see your messages. Someone 500 meters away would be in a completely different cell and cannot see your feed.',
-                        },
-                        {
-                            q: 'Is Local Share free to use?',
-                            a: 'Yes, Local Share is completely free. There are no paid tiers, no subscriptions, and no hidden fees.',
-                        },
-                    ].map((faq, i) => (
-                        <div key={i} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                            <h3 className="font-bold text-gray-800 mb-2">{faq.q}</h3>
-                            <p className="text-gray-600 text-sm leading-relaxed">{faq.a}</p>
-                        </div>
-                    ))}
+            <section className="bg-gray-50 py-24">
+                <div className="max-w-5xl mx-auto px-6">
+                    <h2 className="text-3xl font-black text-gray-900 mb-12 text-center">Frequently Asked Questions</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {[
+                            {
+                                q: 'Do I need to create an account?',
+                                a: 'No. Local Share is completely anonymous. Just choose a display name when you first post — no email, no password, no sign-up.',
+                            },
+                            {
+                                q: 'How accurate is the 200m range?',
+                                a: 'The range depends on your device\'s GPS accuracy. In open outdoor areas, geo-cells are very precise. Indoors, accuracy may vary slightly due to GPS signal strength, but the matching is always within a reasonable local range.',
+                            },
+                            {
+                                q: 'What happens to my messages after 1 hour?',
+                                a: 'All messages are permanently and automatically deleted from our servers after 1 hour. There is no archive, no history, and no way to retrieve expired messages.',
+                            },
+                            {
+                                q: 'Can strangers outside my area see my messages?',
+                                a: 'No. Only people whose device is currently located within your geo-cell can see your messages. Someone 500 meters away would be in a completely different cell and cannot see your feed.',
+                            },
+                            {
+                                q: 'Is Local Share free to use?',
+                                a: 'Yes, Local Share is completely free. There are no paid tiers, no subscriptions, and no hidden fees.',
+                            },
+                        ].map((faq, i) => (
+                            <div key={i} className="bg-white rounded-[32px] border border-gray-100 p-8 shadow-sm">
+                                <h3 className="font-bold text-gray-900 mb-3">{faq.q}</h3>
+                                <p className="text-gray-500 text-sm leading-relaxed font-medium">{faq.a}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </section>
 
             {/* CTA */}
-            <section className="bg-gray-50 py-16">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Ready to try it yourself?</h2>
-                    <p className="text-gray-600 mb-6">No sign-up needed. Just open Local Share and start posting to your local area.</p>
+            <section className="bg-white py-24 border-t border-gray-50">
+                <div className="max-w-5xl mx-auto px-6 text-center">
+                    <h2 className="text-4xl font-black text-gray-900 mb-6">Ready to try the future of local sharing?</h2>
+                    <p className="text-gray-500 mb-10 text-lg font-medium">No sign-up needed. Just open Local Share and start posting to your local area.</p>
                     <a
                         href="/"
-                        className="inline-block bg-primary-600 text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-primary-700 transition-all shadow-sm hover:shadow-md"
+                        className="inline-flex items-center justify-center bg-primary-600 text-white px-10 py-5 rounded-[24px] font-bold text-lg hover:bg-primary-700 transition-all shadow-xl shadow-primary-200"
                     >
                         Open Local Share
                     </a>

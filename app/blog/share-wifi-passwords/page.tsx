@@ -1,6 +1,4 @@
 import { Metadata } from 'next';
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 import AdUnit from '@/components/AdUnit';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';

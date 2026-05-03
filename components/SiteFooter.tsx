@@ -31,6 +31,7 @@ export default function SiteFooter() {
                                 <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
                                 <Link href="/use-cases" className="hover:text-white transition-colors">Use Cases</Link>
                                 <Link href="/compare" className="hover:text-white transition-colors">Compare</Link>
+                                <Link href="/how-it-works" className="hover:text-white transition-colors">Technical Whitepaper</Link>
                                 <Link href="/faq" className="hover:text-white transition-colors">FAQ</Link>
                             </div>
                         </div>
@@ -43,10 +44,11 @@ export default function SiteFooter() {
                             </div>
                         </div>
                         <div>
-                            <p className="text-white font-semibold mb-3 text-sm">Legal</p>
+                            <p className="text-white font-semibold mb-3 text-sm">Legal & Security</p>
                             <div className="flex flex-col gap-2 text-sm">
-                                <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-                                <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+                                <Link href="/security" className="hover:text-white transition-colors">Security Whitepaper</Link>
+                                <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                                <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
                             </div>
                         </div>
                     </div>
