@@ -164,10 +164,13 @@ export default function Home() {
                             <a href="/blog" className="hover:text-primary-600 transition-colors">Blog</a>
                             <a href="/manage" className="px-4 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-all shadow-md shadow-primary-100">Share PDF</a>
                         </nav>
-                        <button onClick={() => setShowProfileModal(true)} className="flex items-center gap-2 p-1.5 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-100">
-                             <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center text-primary-700 font-bold text-xs uppercase">
+                        <button onClick={() => setShowProfileModal(true)} className="flex items-center gap-2 p-1 px-2.5 hover:bg-gray-50 rounded-xl transition-colors border border-transparent hover:border-gray-100 group">
+                             <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center text-primary-700 font-bold text-xs uppercase shadow-sm group-hover:scale-105 transition-transform">
                                 {mounted ? profile.name.charAt(0) : '?'}
                              </div>
+                             <span className="text-sm font-bold text-gray-700 hidden sm:inline-block">
+                                {mounted ? profile.name : ''}
+                             </span>
                         </button>
                     </div>
                 </div>
