@@ -37,94 +37,102 @@ export default function ShareWifiPasswordsPage() {
                 </div>
                 <div className="prose prose-lg max-w-none">
 
-                    <section className="mb-8">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">The WiFi Password Problem</h2>
-                        <p className="text-gray-600 mb-4">
-                            We&apos;ve all been there. A guest asks for the WiFi password, and you have to:
+                    <section className="mb-12">
+                        <h2 className="text-3xl font-black text-gray-900 mb-6">The WiFi Password Friction Point</h2>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            We&apos;ve all been there. A guest arrives, asks for the WiFi password, and the ritual begins. You hunt for that scrap of paper in the kitchen drawer, or you struggle to read the microscopic, character-dense label on the back of the router. Then comes the verbal spelling: &quot;Is that a capital O or a zero? Is it a lowercase L or a one?&quot;
                         </p>
-                        <ul className="list-disc pl-6 text-gray-600 mb-4 space-y-2">
-                            <li>Find where you wrote it down</li>
-                            <li>Spell out &quot;xK9#mPq2$nL&quot; character by character</li>
-                            <li>Watch them type it wrong three times</li>
-                            <li>Finally connect after 5 minutes of frustration</li>
-                        </ul>
-                        <p className="text-gray-600">
-                            With Local Share, this becomes a 10-second process.
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            Watch them type it in, fail, and try again. And again. It&apos;s a minor friction point, but it happens thousands of times a day in homes, coffee shops, and offices. This is precisely the kind of &quot;hyper-local&quot; data transfer that Local Share was built to solve. By leveraging your physical proximity, we can bridge that digital gap instantly.
                         </p>
-                    </section>
-
-                    <section className="mb-8">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">The Simple Solution</h2>
-
-                        <div className="bg-blue-50 p-6 rounded-xl mb-4 border border-blue-200">
-                            <h3 className="font-bold text-blue-900 mb-3">How It Works</h3>
-                            <ol className="list-decimal pl-4 space-y-2 text-blue-800">
-                                <li><strong>You:</strong> Open Local Share and post: &quot;WiFi: MyNetwork / Password: xK9#mPq2$nL&quot;</li>
-                                <li><strong>Guest:</strong> Opens Local Share on their phone</li>
-                                <li><strong>Guest:</strong> Sees your message, long-presses to copy the password</li>
-                                <li><strong>Guest:</strong> Pastes into WiFi settings. Done!</li>
-                            </ol>
-                        </div>
-
-                        <p className="text-gray-600">
-                            No verbal spelling. No typos. No frustration. The password auto-deletes after 1 hour for security.
-                        </p>
-                    </section>
-
-                    <section className="mb-8">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">Perfect For...</h2>
-
-                        <div className="grid md:grid-cols-2 gap-4">
-                            <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                                <h3 className="font-bold text-gray-800 mb-2">🏠 Homes</h3>
-                                <p className="text-gray-600 text-sm">
-                                    When friends visit, just post the password once. Everyone can grab it.
-                                </p>
-                            </div>
-
-                            <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                                <h3 className="font-bold text-gray-800 mb-2">☕ Cafés & Restaurants</h3>
-                                <p className="text-gray-600 text-sm">
-                                    Staff posts the daily password. Customers check the local feed instead of asking.
-                                </p>
-                            </div>
-
-                            <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                                <h3 className="font-bold text-gray-800 mb-2">🎤 Events & Conferences</h3>
-                                <p className="text-gray-600 text-sm">
-                                    Organizers post event WiFi. Hundreds of attendees connect without bottlenecks.
-                                </p>
-                            </div>
-
-                            <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                                <h3 className="font-bold text-gray-800 mb-2">🏢 Co-Working Spaces</h3>
-                                <p className="text-gray-600 text-sm">
-                                    New members get instant access. No need to track down staff.
-                                </p>
-                            </div>
+                        <div className="bg-amber-50 border-l-4 border-amber-400 p-6 my-8">
+                            <p className="text-amber-900 font-medium italic">
+                                &quot;In a digital age, we shouldn&apos;t have to exchange phone numbers or shout character-strings across a room just to get a guest on the network.&quot;
+                            </p>
                         </div>
                     </section>
 
-                    <section className="mb-8">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">Security Considerations</h2>
-                        <p className="text-gray-600 mb-4">
-                            You might wonder: is it safe to post WiFi passwords publicly?
+                    <section className="mb-12">
+                        <h2 className="text-3xl font-black text-gray-900 mb-6">The Anatomy of a Fast Connection</h2>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            When you drop a WiFi password into Local Share, you aren&apos;t just saving time; you&apos;re improving the security posture of your network. Traditional methods like writing a password on a whiteboard or a sticky note create a permanent, visible record that anyone (including unauthorized visitors) can see at any time.
                         </p>
-                        <ul className="list-disc pl-6 text-gray-600 mb-4 space-y-2">
-                            <li><strong>Local only:</strong> Only people within ~200m can see it (they&apos;re already in your space)</li>
-                            <li><strong>Auto-expiry:</strong> The password disappears after 1 hour</li>
-                            <li><strong>Guest networks:</strong> Use a separate guest network for visitors anyway</li>
-                            <li><strong>You control timing:</strong> Post it when guests arrive, it&apos;s gone by the time they leave</li>
-                        </ul>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            Local Share introduces the concept of **Temporal Availability**. You post the password only when it&apos;s needed. Because every drop on our platform automatically self-destructs after one hour, the window of exposure is minimal. Your guests get what they need, and the digital record vanishes before the day is over.
+                        </p>
+                        <div className="bg-white border border-gray-200 rounded-3xl p-8 my-10 shadow-sm">
+                            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <span className="w-8 h-8 bg-primary-100 text-primary-600 rounded-lg flex items-center justify-center">1</span>
+                                The 10-Second Workflow
+                            </h3>
+                            <ul className="space-y-4">
+                                <li className="flex gap-3">
+                                    <div className="w-5 h-5 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">✓</div>
+                                    <p className="text-gray-600 text-sm"><strong>The Host:</strong> Opens Local Share and pastes: &quot;Guest WiFi: *SummerHouse* / Pass: *LetMeIn2026*&quot;</p>
+                                </li>
+                                <li className="flex gap-3">
+                                    <div className="w-5 h-5 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">✓</div>
+                                    <p className="text-gray-600 text-sm"><strong>The Guest:</strong> Simply opens local-share.tech on their phone browser.</p>
+                                </li>
+                                <li className="flex gap-3">
+                                    <div className="w-5 h-5 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">✓</div>
+                                    <p className="text-gray-600 text-sm"><strong>The Connection:</strong> The guest sees the post, taps to copy, and pastes it into their settings.</p>
+                                </li>
+                            </ul>
+                        </div>
                     </section>
 
-                    <section className="mb-8">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">Pro Tips</h2>
-                        <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                            <li>Format clearly: &quot;Network: [name] | Password: [password]&quot;</li>
-                            <li>Include any special instructions (e.g., &quot;Click Accept on the captive portal&quot;)</li>
-                            <li>For events, consider posting other useful info too (schedule link, venue map, etc.)</li>
-                        </ul>
+                    <section className="mb-12">
+                        <h2 className="text-3xl font-black text-gray-900 mb-6">Security Beyond the Surface</h2>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            Privacy advocates often ask about the safety of &quot;public&quot; local feeds. It&apos;s important to understand the scale of a Geo-Cell. Each cell covers roughly 200 meters. If you are in your home or a private office, the only people who can see your &quot;drop&quot; are those physically within or just outside your building.
+                        </p>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            For a hacker to intercept this password, they would need to be physically present in your immediate vicinity AND actively monitoring the Local Share feed during the specific 60-minute window you chose to post it. Compared to the permanency of a WiFi sticker or an unencrypted shared note, Local Share offers a significantly smaller attack surface.
+                        </p>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            Furthermore, we recommend using Local Share primarily for **Guest Network** credentials. It is always a best practice to keep your primary, administrative network separate from the one you provide to visitors.
+                        </p>
+                    </section>
+
+                    <section className="mb-12">
+                        <h2 className="text-3xl font-black text-gray-900 mb-6">Real-World Scenarios</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="space-y-4">
+                                <h4 className="text-lg font-bold text-gray-900">The Modern AirBnB Host</h4>
+                                <p className="text-gray-600 text-sm leading-relaxed">
+                                    Instead of a printed binder that gets lost or damaged, hosts can have a simple QR code on the fridge. When guests arrive, they scan it, open Local Share, and find the WiFi password along with the door code and trash schedule—all without downloading an app.
+                                </p>
+                            </div>
+                            <div className="space-y-4">
+                                <h4 className="text-lg font-bold text-gray-900">The Coffee Shop Rush</h4>
+                                <p className="text-gray-600 text-sm leading-relaxed">
+                                    In busy urban cafes, baristas are asked for the WiFi password hundreds of times a shift. By keeping a &quot;live&quot; drop on Local Share, regular customers know exactly where to look, reducing the burden on staff and improving the customer experience.
+                                </p>
+                            </div>
+                            <div className="space-y-4">
+                                <h4 className="text-lg font-bold text-gray-900">University Study Groups</h4>
+                                <p className="text-gray-600 text-sm leading-relaxed">
+                                    When a group forms in a library or common area, one person can share a hotspot or institutional login details instantly, allowing the group to get to work without the typical 10-minute &quot;how do I get online?&quot; phase.
+                                </p>
+                            </div>
+                            <div className="space-y-4">
+                                <h4 className="text-lg font-bold text-gray-900">Conference Workshops</h4>
+                                <p className="text-gray-600 text-sm leading-relaxed">
+                                    Presenters can drop the specific &quot;Event WiFi&quot; login during their intro slide. Hundreds of attendees can connect simultaneously without the need for mass-printing codes on paper handouts.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="mb-12">
+                        <h2 className="text-3xl font-black text-gray-900 mb-6">The Future of Proximity Data</h2>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            WiFi sharing is just the beginning. As we move toward a world where our digital tools are more aware of our physical environment, the friction of &quot;data handshakes&quot; will continue to vanish. Local Share is leading this charge by prioritizing privacy-first proximity.
+                        </p>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            We believe that the data you need is often right in front of you—or at least, with the person sitting next to you. Our mission is to make that data accessible without the overhead of the modern, siloed internet.
+                        </p>
                     </section>
 
                 </div>
