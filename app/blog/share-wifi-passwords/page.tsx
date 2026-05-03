@@ -25,7 +25,7 @@ export default function ShareWifiPasswordsPage() {
                         Stop spelling out complex passwords. Drop them in the local feed and everyone can copy-paste.
                     </p>
                     <div className="mt-4 text-sm text-gray-500">
-                        Published: February 2026 • 3 min read
+                        Published: February 2026 • 10 min read
                     </div>
                 </div>
             </header>
@@ -123,6 +123,32 @@ export default function ShareWifiPasswordsPage() {
                                 </p>
                             </div>
                         </div>
+                    </section>
+
+                    <section className="mb-12">
+                        <h2 className="text-3xl font-black text-gray-900 mb-6">Technical Implementation: Behind the Scenes</h2>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            For the technically curious, how does Local Share facilitate this transfer without traditional accounts? It begins with the Browser Geo-location API. When you grant permission, your browser provides approximate coordinates. We then apply a mathematical algorithm to &quot;round&quot; these coordinates into a 200-meter geo-cell identifier. 
+                        </p>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            This identifier acts as a temporary, location-locked channel. When you drop a WiFi password, it is associated with this cell ID in our encrypted database. Any other visitor whose coordinates resolve to the same cell ID is automatically subscribed to that feed. The transfer happens over secure HTTPS, and the clipboard interaction is handled via the modern `navigator.clipboard` API, ensuring that the password never touches your device&apos;s persistent storage unless you explicitly choose to copy it.
+                        </p>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            This &quot;ephemeral storage&quot; model is fundamentally different from cloud-based password managers or shared spreadsheets. By decoupling the data from a user identity and coupling it instead to a physical space and a specific time-window, we achieve a form of security that is intuitively aligned with how we interact in the physical world.
+                        </p>
+                    </section>
+
+                    <section className="mb-12">
+                        <h2 className="text-3xl font-black text-gray-900 mb-6">The Psychology of Local Trust</h2>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            There is a profound psychological shift that occurs when we move from &quot;global&quot; internet interactions to &quot;local&quot; ones. On the global web, we are conditioned to be defensive—we expect bots, spam, and malicious actors from across the globe. However, in a local context—standing in a coffee shop or sitting in a living room—the &quot;social contract&quot; is much stronger.
+                        </p>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            Sharing a WiFi password via Local Share leverages this existing physical trust. You aren&apos;t sharing it with &quot;the internet&quot;; you are sharing it with the people you can see. This proximity-based validation provides a layer of security that digital certificates often fail to replicate. It is a возвращение (return) to the community-centric roots of information exchange, powered by modern web standards.
+                        </p>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            When a guest sees your WiFi drop on Local Share, they recognize the network name and they recognize your presence as the host. This dual-factor authentication—digital proximity and physical presence—creates a seamless and secure experience that feels human rather than algorithmic.
+                        </p>
                     </section>
 
                     <section className="mb-12">
