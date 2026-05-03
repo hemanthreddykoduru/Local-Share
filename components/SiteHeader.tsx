@@ -58,7 +58,7 @@ export default function SiteHeader() {
                             <Link
                                 key={href}
                                 href={href}
-                                className="relative text-[13px] font-bold text-gray-500 hover:text-primary-600 hover:bg-primary-50 px-3 py-2 rounded-lg transition-all flex items-center gap-1.5"
+                                className={`relative text-[13px] font-bold px-3 py-2 rounded-lg transition-all flex items-center gap-1.5 ${label === 'Share PDF' ? 'text-primary-600 bg-primary-50/50' : 'text-gray-500 hover:text-primary-600 hover:bg-primary-50'}`}
                             >
                                 {label}
                                 {isNew && (
