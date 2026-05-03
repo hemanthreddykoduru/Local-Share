@@ -6,6 +6,7 @@ import ClipboardInput from '@/components/ClipboardInput';
 import ClipboardFeed from '@/components/ClipboardFeed';
 import RazorpayButton from '@/components/RazorpayButton';
 import ProfileModal from '@/components/ProfileModal';
+import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import { useState, useEffect, useCallback } from 'react';
 import { useProfile } from '@/hooks/useProfile';
